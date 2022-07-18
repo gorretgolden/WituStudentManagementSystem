@@ -1,41 +1,64 @@
 # Import the required libraries
 from flask import Flask
+import os
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from flask_marshmallow import Marshmallow
 from flask_cors import CORS
+from backend.db import db
+from flask_login import LoginManager
+# from flask_perm import Perm
 
 
-# Create various application instances
-# Order matters: Initialize SQLAlchemy before Marshmallow
-db = SQLAlchemy()
-migrate = Migrate()
-ma = Marshmallow()
 cors = CORS()
+# perm = Perm()
+login_manager = LoginManager()
+login_manager.session_protection = "strong"
+login_manager.login_view = "login"
+login_manager.login_message_category = "info"
 
 
-def create_app():
-    """Application-factory pattern"""
-    app = Flask(__name__)
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-
-    from backend.programs.routes import programs
+def create_app(test_config=None):
+    # create and configure the app
+    app = Flask(__name__, instance_relative_config=True)
     
+
+    if test_config is None:
+        # load the instance config, if it exists, when not testing
+       app.config.from_mapping(
+
+        CORS_HEADERS= 'Content-Type',
+        SQLALCHEMY_DATABASE_URI = "sqlite:///students.db",
+        SQLALCHEMY_TRACK_MODIFICATIONS=False,
+        SECRET_KEY=os.environ.get('SECRET_KEY')
  
+    )
+    else:
+        # load the test config if passed in , resources=r'/*'
+        app.config.from_mapping(test_config)
+    CORS(app,resources={r"/*": {"origins": "*"}})
+    
+  
+    app.static_folder = 'static'
+    login_manager.init_app(app)
+    # perm.init_app(app)
+
+    
+   
+    from backend.programs.routes import programs
+    from backend.users.routes import users
+
     #registering blueprints    
   
     app.register_blueprint(programs)
+    app.register_blueprint(users)
+
     
+   
+    @app.route('/')
+    def index():
+        return "<h1 >Women In Technology Uganda</h1>"
 
-
-
-    # Initialize extensions
-    # To use the application instances above, instantiate with an application:
+    db.app = app
     db.init_app(app)
-    migrate.init_app(app, db)
-    ma.init_app(app)
-    cors.init_app(app)
-
+    db.create_all()
+   
     return app

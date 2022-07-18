@@ -1,5 +1,4 @@
 from flask import  jsonify, request, Blueprint
-from flask_jwt_extended import jwt_required,get_jwt_identity
 from backend import db
 from backend.models.program import Program
 
@@ -17,9 +16,9 @@ def all_programs():
 
 
 #retrieving a single program
-@programs.route("/<int:programId>", methods=['GET'])
-def single_program(programId):
-    program = Program.query.filter_by(id=programId).first()
+@programs.route("/<int:program_id>", methods=['GET'])
+def single_program(program_id):
+    program = Program.query.filter_by(id=program_id).first()
     
     #Program that does'nt exist
     if not program:
@@ -29,18 +28,17 @@ def single_program(programId):
 
 #creating programs
 @programs.route("/", methods=["POST"])
-@jwt_required()
 def new_programs():
     
     if request.method == "POST":
         
-        user_id = get_jwt_identity()
+     
         name = request.json['name']
         description = request.json['description']
         starting_date = request.json['starting_date']
         end_date = request.json['end_date']
         duration = request.json['duration']
-        status = request.json['stsatus']
+        status = request.json['status']
     
         #program status: in_progress, closed
 
@@ -68,7 +66,7 @@ def new_programs():
            
         #For valid data
         #inserting values into the programs_list
-        new_program = Program(user_id=user_id,name=name,description=description,starting_date=starting_date,end_date=end_date,status=status)
+        new_program = Program(name=name,description=description,starting_date=starting_date,end_date=end_date,status=status)
         db.session.add(new_program)
         db.session.commit()
         
@@ -81,9 +79,9 @@ def new_programs():
  
 # #deleting a question
 @programs.route("/remove/<string:programId>", methods=['DELETE'])
-@jwt_required()
+
 def delete_programs(programId):
-    current_user = get_jwt_identity()
+  
 
     program = Program.query.filter_by(user_id=current_user, id=programId).first()
 

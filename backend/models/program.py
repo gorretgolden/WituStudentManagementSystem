@@ -1,6 +1,6 @@
 from datetime import date, datetime
 from dataclasses import dataclass
-from backend import db
+from backend.db import db
 
 
 @dataclass
@@ -21,9 +21,9 @@ class Program(db.Model):
    name = db.Column(db.String(255),unique=True, nullable=False)
    description = db.Column(db.Text(120),  nullable=True)
    start_date = db.Column(db.Date(), nullable=False)
-   duration = db.Column(db.String, nullable=False)
+   duration = db.Column(db.String(), nullable=False)
    end_date = db.Column(db.Date(), nullable=False)
-   status = db.Column(db.Date(), nullable=False,default="Inprogress")
+   status = db.Column(db.String(), nullable=False,default="Closed")
    created_at = db.Column(db.DateTime, default=datetime.now())
    updated_at = db.Column(db.DateTime, onupdate=datetime.now())
    
@@ -31,5 +31,4 @@ class Program(db.Model):
    def __repr__(self):
         return "<Program %r>" % self.name
 
-   def tojson(self):
-       return self.__dict__
+  
