@@ -26,7 +26,7 @@ def single_course(course_id):
 
 
 #creating courses
-@courses.route("/", methods=["POST"])
+@courses.route("/new", methods=["POST"])
 def new_courses():
     
     if request.method == "POST":
@@ -56,18 +56,35 @@ def new_courses():
            
         #For valid data
         #inserting values into the courses_list
-        new_course = Course(name=name,description=description)
+        new_course = Course(name=name,description=description,duration=duration)
         db.session.add(new_course)
         db.session.commit()
         
     return jsonify({'message':'Added a new course successfully','name':name,'description':description,'duration':duration}),200
     
 
+#update courses endpoint 
+@courses.route('/update/<int:course_id>', methods= ['PUT','GET'])
+def update_users(course_id):
+  
+  if request.method == "PUT":
+      course = Course.query.filter_by(id=course_id).first()
+    
+      course.name = request.json['name']
+      course.description = request.json['description']
+      course.duration = request.json['duration']
+
+      updated_course = Course(name=course.name,description=course.description,duration=course.duration)
+      
+      #saving updates
+      db.session.commit()
+      return jsonify({'message':'Course updated successfully','id':course.id,'course_name':updated_course.name,'description':updated_course.description}),200
+  return jsonify({'error':'Failed to updated the course'}),400
+  
 
  
 # #deleting a course
 @courses.route("/<int:course_id>", methods=['DELETE'])
-
 def delete_courses(course_id):
 
     course = Course.query.filter_by(id=course_id).first()
