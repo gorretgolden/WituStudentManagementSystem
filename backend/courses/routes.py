@@ -5,8 +5,6 @@ from backend.models.course import Course
 
 courses = Blueprint('courses', __name__,url_prefix="/courses")
 
-
-
 #retrieving all courses 
 @courses.route("/", methods=['GET'])
 def all_courses():

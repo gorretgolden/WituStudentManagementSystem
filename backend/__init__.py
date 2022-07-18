@@ -45,9 +45,10 @@ def create_app(test_config=None):
    
     from backend.programs.routes import programs
     from backend.users.routes import users
+    from backend.courses.routes import courses
 
     #registering blueprints    
-  
+    app.register_blueprint(courses)
     app.register_blueprint(programs)
     app.register_blueprint(users)
 
