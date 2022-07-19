@@ -21,7 +21,7 @@ def single_course(course_id):
     
     #course that does'nt exist
     if not course:
-        return jsonify({'message': '  Course not found'}), 404
+        return jsonify({'message': 'Course not found'}), 404
     return jsonify(course),200
 
 
@@ -31,7 +31,7 @@ def new_courses():
     
     if request.method == "POST":
         
-     
+
         name = request.json['name']
         description = request.json['description']
         duration = request.json['duration']
@@ -96,8 +96,8 @@ def delete_courses(course_id):
     db.session.commit()
 
     return jsonify({'message':'Course deleted successfully'}), 20
-# #updating a course
-#
+
+
 
 
 

@@ -18,6 +18,7 @@ class Program(db.Model):
 
    __tablename__ = 'programs'   
    id = db.Column(db.Integer, primary_key=True)
+   course_id = db.Column(db.Integer, db.ForeignKey('users.id',ondelete='CASCADE'))
    name = db.Column(db.String(255),unique=True, nullable=False)
    description = db.Column(db.Text(120),  nullable=True)
    start_date = db.Column(db.Date(), nullable=False)
