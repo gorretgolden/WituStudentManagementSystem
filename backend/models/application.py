@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from backend import db
 
 
-@dataclass
+
 class Application(db.Model):
    id: int
    name: str
@@ -16,21 +16,26 @@ class Application(db.Model):
    opened_date:date
    is_uploaded:bool
    is_submitted:bool
+   study_session:str
+   course_id:int
+   program_id:int
    created_at:datetime
    updated_at:datetime
    status:str 
 
-   __tablename__ = 'Applications'   
+   __tablename__ = 'applications'   
    id = db.Column(db.Integer, primary_key=True)
    name = db.Column(db.String(80), nullable=False)
    uace_file = db.Column(db.Text(120), unique=True, nullable=True)
    uce_file = db.Column(db.Text(120), unique=True, nullable=True)
-   status = db.Column(db.Text(120), unique=True, nullable=True)
+   status = db.Column(db.Text(120), default='Pending')
    deadline_date = db.Column(db.Text(120), unique=True, nullable=True)
    opened_date = db.Column(db.Text(120), unique=True, nullable=True)
    intake_type = db.Column(db.Text(120), unique=True, nullable=True)
-   learning_schedule = db.Column(db.Text(120), unique=True, nullable=True)
+   study_session = db.Column(db.Text(120), unique=True, default='Day')
    heard_us = db.Column(db.Text(120), unique=True, nullable=True)
+   course_id = db.Column(db.Integer, db.ForeignKey('courses.id',ondelete='CASCADE'))
+   program_id = db.Column(db.Integer, db.ForeignKey('programs.id',ondelete='CASCADE'))
    created_at = db.Column(db.DateTime, default=datetime.now())
    created_at = db.Column(db.DateTime, default=datetime.now())
    updated_at = db.Column(db.DateTime, onupdate=datetime.now())
@@ -39,5 +44,19 @@ class Application(db.Model):
    def __repr__(self):
         return "<Assignment %r>" % self.name
 
-   def tojson(self):
-       return self.__dict__
+
+   def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+
+   def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+
+   def update(self,title,description):
+        self.title=title
+        self.description=description
+
+        db.session.commit()

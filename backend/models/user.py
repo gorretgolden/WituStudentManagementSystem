@@ -1,22 +1,11 @@
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
-from dataclasses import dataclass
-from backend import db
-from flask_login import UserMixin
+from db import db
 
 
-@dataclass
-class User(UserMixin,db.Model):
-   id: int
-   first_name:str
-   last_name:str
-   email: str
-   contact: str
-   password: str
-   created_at:datetime
-   updated_at:datetime
+
+class User(db.Model):
    __tablename__ = 'users'   
-  
    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
    first_name = db.Column(db.String(50), index=True, unique=True,nullable=False)
    last_name = db.Column(db.String(50), index=True, unique=True,nullable=False)
@@ -27,4 +16,24 @@ class User(UserMixin,db.Model):
    updated_at = db.Column(db.DateTime(), default = datetime.utcnow, index = True)
 
    def __repr__(self):
-        return "<User %r>" % self.email
+        return f"<User {self.email} >"
+        
+   #save a new instance
+   def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+   #delete the item
+   def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+   def update(self,first_name,last_name,email,contact,password):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.email = email
+        self.contact = contact
+        self.password = password
+        
+
+        db.session.commit()     

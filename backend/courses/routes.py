@@ -1,103 +1,111 @@
 from flask import  jsonify, request, Blueprint
-from backend import db
-from backend.models.course import Course
+from db import db
+from models.course import Course
+from flask_restx import Api, Resource, Namespace, fields
+from flask_jwt_extended import jwt_required
 
 
-courses = Blueprint('courses', __name__,url_prefix="/courses")
+courses=Namespace('courses')
 
-#retrieving all courses 
-@courses.route("/", methods=['GET'])
-def all_courses():
-    #ensuring that a user has logged in
-    all_courses = Course.query.all()
-    return jsonify(all_courses),200
+
+course_model=courses.model(
+    "Course",
+    {
+        "id":fields.Integer(),
+        "name":fields.String(),
+        "description":fields.String(),
+        "duration":fields.String()
+    
+    }
+)
+
+
+@courses.route('/')
+class CoursesResource(Resource):
+
+    @courses.marshal_list_with(course_model)
+    def get(self):
+        """Get all courses """
+
+        courses=Course.query.all()
+        
+        return courses
+
+
+        
+
+#creating courses
+@courses.route('/')
+class CoursesResource(Resource):
+
+    @courses.marshal_list_with(course_model)
+    def get(self):
+        """Get all courses """
+
+        courses=Course.query.all()
+        
+        return courses
+
+
+    @courses.marshal_with(course_model)
+    @courses.expect(course_model)
+    @jwt_required()
+    def post(self):
+        """Create a new course"""
+
+        data=request.get_json()
+
+        new_course=Course(
+            name=data.get('name'),
+            description=data.get('description'),
+            duration=data.get('duration')
+          
+        )
+
+        new_course.save()
+
+        return new_course,201
 
 
 
 #retrieving a single course
-@courses.route("/<int:course_id>", methods=['GET'])
-def single_course(course_id):
-    course = Course.query.filter_by(id=course_id).first()
-    
-    #course that does'nt exist
-    if not course:
-        return jsonify({'message': 'Course not found'}), 404
-    return jsonify(course),200
+@courses.route('/<int:id>')
+class CourseResource(Resource):
+
+    @courses.marshal_with(course_model)
+    def get(self,id):
+        """Get a course by id """
+        course=Course.query.get_or_404(id)
+
+        return course
 
 
-#creating courses
-@courses.route("/new", methods=["POST"])
-def new_courses():
-    
-    if request.method == "POST":
+    @courses.marshal_with(course_model)
+    @jwt_required()
+    def put(self,id):
+        """Update a course by id """
         
 
-        name = request.json['name']
-        description = request.json['description']
-        duration = request.json['duration']
+        course=Course.query.get_or_404(id)
 
- 
-       #empty fields for validations
-      
-        if not name:
-                 
-          return jsonify({'error': 'course name is required'}), 400 #bad request
-             
-       
-        if not duration:
-                return jsonify({'error': 'Duration field is required'}), 400
-        
-        #checking if name exists
-        if Course.query.filter_by(name=name).first():
-                return jsonify({
-                'error': 'Course name already exists'
-            }), 409 #conflicts
-      
-           
-        #For valid data
-        #inserting values into the courses_list
-        new_course = Course(name=name,description=description,duration=duration)
-        db.session.add(new_course)
-        db.session.commit()
-        
-    return jsonify({'message':'Added a new course successfully','name':name,'description':description,'duration':duration}),200
-    
-
-#update courses endpoint 
-@courses.route('/update/<int:course_id>', methods= ['PUT','GET'])
-def update_users(course_id):
-  
-  if request.method == "PUT":
-      course = Course.query.filter_by(id=course_id).first()
-    
-      course.name = request.json['name']
-      course.description = request.json['description']
-      course.duration = request.json['duration']
-
-      updated_course = Course(name=course.name,description=course.description,duration=course.duration)
-      
-      #saving updates
-      db.session.commit()
-      return jsonify({'message':'Course updated successfully','id':course.id,'course_name':updated_course.name,'description':updated_course.description}),200
-  return jsonify({'error':'Failed to updated the course'}),400
+        data=request.get_json()
+        name = data.get('name')
+        description = data.get('description')
+        duration = data.get('duration')
   
 
- 
-# #deleting a course
-@courses.route("/<int:course_id>", methods=['DELETE'])
-def delete_courses(course_id):
+        course.update(name,description,duration)
 
-    course = Course.query.filter_by(id=course_id).first()
-
-    if not course:
-        return jsonify({'message': 'Course not found'}), 404
-
-    db.session.delete(course)
-    db.session.commit()
-
-    return jsonify({'message':'Course deleted successfully'}), 20
+        return course
 
 
+    @courses.marshal_with(course_model)
+    @jwt_required()
+    def delete(self,id):
+        """Delete a recipe by id """
 
+        course=Course.query.get_or_404(id)
 
+        course.delete()
 
+        return 
