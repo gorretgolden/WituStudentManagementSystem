@@ -11,8 +11,8 @@ class Assignment(db.Model):
    name: str
    description: str
    file:str
-   start_date:date
-   deadline:date
+   start_date:datetime
+   deadline:datetime
    is_uploaded:bool
    is_submitted:bool
    created_at:datetime
@@ -31,5 +31,16 @@ class Assignment(db.Model):
    def __repr__(self):
         return "<Assignment %r>" % self.name
 
-   def tojson(self):
-       return self.__dict__
+   def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+   def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+   def update(self,title,description):
+        self.title=title
+        self.description=description
+
+        db.session.commit()

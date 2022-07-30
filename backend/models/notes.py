@@ -30,5 +30,18 @@ class Note(db.Model):
    def __repr__(self):
         return "<Note %r>" % self.name
 
-   def tojson(self):
-       return self.__dict__
+  
+
+   def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+   def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+   def update(self,title,description):
+        self.title=title
+        self.description=description
+
+        db.session.commit()

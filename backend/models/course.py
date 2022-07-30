@@ -1,17 +1,11 @@
 from datetime import date, datetime
 from dataclasses import dataclass
-from backend.db import db
+from email.policy import default
+from db import db
 
 
-@dataclass
-#inheritance or creating  a new model instance
+
 class Course(db.Model):
-   id: int
-   name: str
-   description: str
-   duration: str
-   created_at:datetime
-   updated_at:datetime
 
    __tablename__ = 'courses'   
    id = db.Column(db.Integer, primary_key=True)
@@ -24,5 +18,23 @@ class Course(db.Model):
 
    def __repr__(self):
         return "<Course %r>" % self.name
+
+
+   def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+
+   def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+
+   def update(self,title,description,duration):
+        self.title=title
+        self.description=description
+        self.duration=duration
+        db.session.commit()
+    
 
  

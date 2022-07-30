@@ -1,174 +1,164 @@
-import re
-from flask import  jsonify, request, Blueprint
+from flask import jsonify, request, jsonify, make_response
 from validate_email import validate_email
-from werkzeug.security import check_password_hash,generate_password_hash
-from backend.models.user import User
-from backend.db import db
-from flask_login import (login_user,current_user,logout_user,login_required,)
-from backend import login_manager
+from werkzeug.security import check_password_hash, generate_password_hash
+from models.user import User
+from db import db
+from flask_restx import Api, Resource, Namespace, fields
 
-users = Blueprint('users', __name__, url_prefix='/users')
+from flask_jwt_extended import (JWTManager, create_access_token, create_refresh_token, get_jwt_identity, jwt_required)
 
-#user loader,This keeps the current user object loaded in that current session based on the stored id.
-@login_manager.user_loader
-def load_user(user_id):
-    return User.get(user_id)
+users = Namespace('users')
+
+# serialization model
+signup_model = users.model(
+    'SignUp',
+    {
+        "first_name": fields.String(),
+        "last_name": fields.String(),
+        "email": fields.String(),
+        "contact": fields.String(),
+        "password": fields.String()
+    }
+)
+
+# login serialization model
+login_model = users.model(
+    'Login',
+    {
+        'email': fields.String(),
+        'password': fields.String()
+    }
+)
 
 
+@users.route('/signup')
+class SignUp(Resource):
+    @users.expect(signup_model)
+    def post(self):
+        data = request.get_json()
 
-#register users endpoint ie admin and staff
-@users.route('/register', methods= ['POST','GET'])
-def register_users():
-  
-  if request.method == "POST":
-        
-      first_name = request.json['first_name']
-      last_name = request.json['last_name']
-      email = request.json['email']
-      contact = request.json['contact']
-      password = request.json['password']
+        first_name = data.get('first_name')
+        last_name = data.get('last_name')
+        email = data.get('email')
+        contact = data.get('contact')
+        password = data.get('password')
 
-      #username
-      user_name = last_name.upper() + " " + first_name.upper()
+        # email conflicts
+        user_email = User.query.filter_by(email=email).first()
 
-  
-      #validations
-      if not contact:
-              return jsonify({'error':"Contact is required"})
-      
-      if not first_name:
-              return jsonify({'error':"First name is required"})
-      
-      if not last_name:
-              return jsonify({'error':"Last name is required"})
-
-      if len(password) < 6:
-            return jsonify({'error': "Password is too short"}), 400
-
-      if not validate_email(email):
-        return jsonify({'error': "Invalid email address"}), 400
-
-      if User.query.filter_by(email=email).first() is not None:
-        return jsonify({'error': "Email is already in use"}), 409
+        if user_email is not None:
+            return jsonify({"message": f" {email} already exists"})
 
     
-      if User.query.filter_by(contact=contact).first() is not None:
-        return jsonify({'error': "Phone number is already in use"}),409
+        # contact conflicts
+        user_contact = User.query.filter_by(contact=contact).first()
+        if user_contact is not None:
+            return jsonify({"message": f" {contact} already exists"})
+
+        # short password
+        if len(password) < 6:
+            return jsonify({'error': "Password is too short"}), 400
+
+        #email validation
+        if not validate_email(email):
+            return jsonify({'error': "Invalid email address"}), 400
+        
+        if not first_name:
+              return jsonify({'error':"First name is required"})
+      
+        if not last_name:
+              return jsonify({'error':"Last name is required"})
        
+        new_user = User(
+            first_name=data.get('first_name'),
+            last_name=data.get('last_name'),
+            email=data.get('email'),
+            contact=data.get('contact'),
+            password=generate_password_hash(data.get('password'))
+        )
 
-      #creating a hashed password in the database
-      hashed_password = generate_password_hash(password,method="sha256")
-      new_user = User(first_name=first_name,last_name=last_name,email=email,contact=contact,password=hashed_password) 
-      
-      #inserting values
-      db.session.add(new_user)
-      db.session.commit()
-      return jsonify({'message':'New user created','id':new_user.id,'first_name':first_name,'last_name':last_name,'email':email,'contact':contact,'user_name':user_name,'password':password}),200
-  return jsonify({'error':'Failed to register'}),400
-  
+        new_user.save()
+
+        return make_response(jsonify({"message": "User created successfuly"}), 201)
 
 
-# #login endpoint
-@users.route('/login', methods= ['POST'])
+@users.route('/login')
+class Login(Resource):
 
-def login_user():
+    @users.expect(login_model)
+    def post(self):
+        data=request.get_json()
+
+        email=data.get('email')
+        password=data.get('password')
         
-   
-         if request.method == 'POST':
-           email = request.json["email"]
-           password = request.json['password']
-        
-          #empty fields
-      
-           if not email:
-                 
-                return jsonify({'error': 'Please provide your email '}), 400
-          
-           if not password:
-                return jsonify({'error': 'Please provide your password '}), 400
-          
-          #check if email exits
-           user = User.query.filter_by(email=email).first()
-           if user:
-            is_pass_correct = check_password_hash(user.password, password)
+        #check if user email exists
+        user=User.query.filter_by(email=email).first()
 
-            if is_pass_correct:
-              # login_user(user)
+        if user and check_password_hash(user.password, password):
 
-               #username
-              user_name = user.first_name.upper() + " " + user.last_name.upper()
+            access_token=create_access_token(identity=user.email)
+            refresh_token=create_refresh_token(identity=user.email)
+
+            return jsonify(
+                {
+                  "access_token":access_token,
+                "refresh_token":refresh_token
+                }
+            )
+
+        else:
+            return make_response(jsonify({"message":"Invalid username or password"}),200)
 
 
-              return jsonify({
-                'user': {
-                    
-                    'message':'You successfully logged into your account',
-                    'first_name': user.first_name,
-                     'last_name': user.last_name,
-                     'user_name':user_name,
-                    'email': user.email
-                 }
 
-                }), 200
-            else:
-                return jsonify({'error':'Wrong password please try again'})  
- 
-                
-           return jsonify({'error': 'Wrong email address please try again'}), 401
+#refresh token endpoint
+@users.route('/refresh')
+class RefreshResource(Resource):
+    @jwt_required(refresh=True)
+    def post(self):
 
-      
-          
-        
+        current_user=get_jwt_identity()
+
+        new_access_token=create_access_token(identity=current_user)
+
+        return make_response(jsonify({"access_token":new_access_token}),200)
+
 
 # #retrieving all users
-@users.route("/")
-def all_users():
-    users= User.query.all()
-    return jsonify({"users":users}),200
+@users.route('/')
+class UsersResource(Resource):
 
+    @users.marshal_list_with(signup_model)
+    def get(self):
+        """Get all users """
 
-#retrieving users by an id
-@users.route("/<int:user_id>", methods=['GET'])
-def user_id(user_id):
-    #ensuring that a user has logged in
-    user = User.query.filter_by(id=user_id).first()
-    return jsonify(user),200
-
-
-
-#update users endpoint ie admin and staff
-@users.route('/update/<int:user_id>', methods= ['PUT','GET'])
-def update_users(user_id):
+        users=User.query.all()
   
-  if request.method == "PUT":
-      user = User.query.filter_by(id=user_id).first()
-        
-      user.first_name = request.json['first_name']
-      user.last_name = request.json['last_name']
-      user.email = request.json['email']
-      user.contact = request.json['contact']
-      user.password = request.json['password']
+        return users
 
-      #username
-      user_name = user.last_name.upper() + " " + user.first_name.upper()
 
-      #creating a hashed password in the database
-      hashed_password = generate_password_hash(user.password,method="sha256")
-      edit_user = User(first_name=user.first_name,last_name=user.last_name,email=user.email,contact=user.contact,password=hashed_password) 
+@users.route('/<int:id>')
+class UserResource(Resource):
+
+    @users.marshal_with(signup_model)
+    def get(self,id):
+        """Get a user by id """
+        user=User.query.get_or_404(id)
+
+        return user
+
+
+
+
+
+@users.marshal_with(signup_model)
+@jwt_required()
+def delete(self,id):
+
+  deleted_user = User.query.get_or_404(id)
+  deleted_user.delete()
+  return deleted_user
       
-      #saving updates
-      db.session.commit()
-      return jsonify({'message':'User updated successfully','id':user.id,'first_name':user.first_name,'last_name':user.last_name,'email':user.email,'contact':user.contact,'user_name':user_name,'password':user.password}),200
-  return jsonify({'error':'Failed to updated'}),400
-  
 
-#deleting a user by an id
-@users.route("/<int:user_id>", methods=['DELETE'])
-def deleted_user(user_id):
-    #ensuring that a user has logged in
-    user = User.query.filter_by(id=user_id).first()
-    db.session.delete(user)
-    db.session.commit()
-    return jsonify({"message":"User deleted successfully"}),200
-
-
+        
