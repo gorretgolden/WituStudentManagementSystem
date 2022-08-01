@@ -27,14 +27,17 @@ def create_app(config):
     from users.routes import users
     from courses.routes import courses
     from intakes.routes import intakes
+    from roles.routes import roles
+
 
     api=Api(app,doc='/docs')
     
-
+    api.add_namespace(roles)
     api.add_namespace(users)
     api.add_namespace(courses)
     api.add_namespace(programs)
     api.add_namespace(intakes)
+   
 
 
     db.app = app

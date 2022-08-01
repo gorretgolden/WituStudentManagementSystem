@@ -2,7 +2,7 @@ from datetime import date, datetime
 from email.policy import default
 from flask_sqlalchemy import SQLAlchemy
 from dataclasses import dataclass
-from backend import db
+from db import db
 
 @dataclass
 class Role(db.Model):
@@ -11,7 +11,7 @@ class Role(db.Model):
    created_at:datetime
    updated_at:datetime
 
-   __tablename__ = 'Roles'   
+   __tablename__ = 'roles'   
    id = db.Column(db.Integer, primary_key=True)
    name = db.Column(db.String(80), nullable=False)
    created_at = db.Column(db.DateTime, default=datetime.now())

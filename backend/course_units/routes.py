@@ -1,103 +1,107 @@
-# from flask import  jsonify, request, Blueprint
-# from flask_jwt_extended import jwt_required,get_jwt_identity
-# from backend import db
-# from backend.models.course_unit import CourseUnit
-
-# questions = Blueprint('questions', __name__,url_prefix="/questions")
-
-
-
-# #retrieving all questions 
-# @questions.route("/", methods=['GET'])
-# def all_questions():
-#     #ensuring that a user has logged in
-#     all_questions = Question.query.all()
-#     return jsonify(all_questions),200
+from flask import  jsonify, request, Blueprint
+from models.course_unit import CourseUnit
+from db import db
+from models.course import Course
+from flask_restx import Api, Resource, Namespace, fields
+from flask_jwt_extended import jwt_required
 
 
-# #retrieving all questions for a user
-# @questions.route("/users/<int:user_id>", methods=['GET'])
-# @jwt_required()
-# def all_user_questions(user_id):
-#     #ensuring that a user has logged in
-#     user_id= get_jwt_identity()
-#     all_questions = Question.query.filter_by(id=user_id).all()
-#     return jsonify(all_questions),200
+course_units=Namespace('course_units')
 
 
-
-
-# #creating questions
-# @questions.route("/", methods=["POST"])
-# @jwt_required()
-# def new_questions():
+course_unit_model=course_units.model(
+    "CourseUnit",
+    {
+        "id":fields.Integer(),
+        "name":fields.String()
     
-#     if request.method == "POST":
-        
-#         user_id = get_jwt_identity()
-#         title = request.json['title']
-#         body = request.json['body']
-#         tag = request.json['tag']
-       
-       
+    }
+)
 
-#        #empty fields
-      
-#         if not title:
-                 
-#           return jsonify({'error': 'Please provide a title for the question'}), 400 #bad request
+
+@course_units.route('/')
+class CourseUnitResource(Resource):
+
+    @course_units.marshal_list_with(course_unit_model)
+    def get(self):
+        """Get all course_units """
+
+        course_units=CourseUnit.query.all()
+        
+        return course_units
+
+
+        
+
+#creating course_units
+@course_units.route('/')
+class CourseUnitResource(Resource):
+
+    @course_units.marshal_list_with(course_unit_model)
+    def get(self):
+        """Get all course_units """
+
+        course_units=CourseUnit.query.all()
+        
+        return course_units
+
+
+    @course_units.marshal_with(course_unit_model)
+    @course_units.expect(course_unit_model)
+    @jwt_required()
+    def post(self):
+        """Create a new course"""
+
+        data=request.get_json()
+
+        new_course=Course(
+            name=data.get('name')
           
-#         if not body:
-#                 return jsonify({'error': 'Please provide a body for the question'}), 400
-#         #empty fields
-      
-
           
-#         if not tag:
-#                 return jsonify({'error': 'Please add a tag for the question ie python '}), 400
-        
-#         #checking if title exists
-#         if Question.query.filter_by(title=title).first():
-#                 return jsonify({
-#                 'error': 'Question title exists'
-#             }), 409 #conflicts
-        
-#         #checking if body exists
-#         if Question.query.filter_by(body=body).first():
-#                 return jsonify({
-#                 'error': 'Question body already exists'
-#             }), 409
-        
-           
+        )
 
-#         #inserting values into the questions_list
-#         new_question = Question(title=title,body=body,user_id=user_id,tag=tag)
-#         db.session.add(new_question)
-#         db.session.commit()
+        new_course.save()
+
+        return new_course,201
+
+
+
+#retrieving a single course
+@course_units.route('/<int:id>')
+class CourseUnitResource(Resource):
+
+    @course_units.marshal_with(course_unit_model)
+    def get(self,id):
+        """Get a course by id """
+        course_unit=CourseUnit.query.get_or_404(id)
+
+        return course_unit
+
+
+    @course_units.marshal_with(course_unit_model)
+    @jwt_required()
+    def put(self,id):
+        """Update a course by id """
         
-         
-  
-#     return jsonify({'message':'new question posted','tag':tag,'title':title,'body':body,'user_id':user_id}),200
+
+        course_unit=Course.query.get_or_404(id)
+
+        data=request.get_json()
+        name = data.get('name')
+       
     
+        course_unit.update(name)
+
+        return course_unit
 
 
- 
-# # #deleting a question
-# @questions.route("/remove/<string:questionId>", methods=['DELETE'])
-# @jwt_required()
-# def delete_questions(questionId):
-#     current_user = get_jwt_identity()
+    @course_units.marshal_with(course_unit_model)
+    @jwt_required()
+    def delete(self,id):
+        """Delete a recipe by id """
 
-#     question = Question.query.filter_by(user_id=current_user, id=questionId).first()
+        course=Course.query.get_or_404(id)
 
-#     if not question:
-#         return jsonify({'message': 'Item not found'}), 404
+        course.delete()
 
-#     db.session.delete(question)
-#     db.session.commit()
-
-#     return jsonify({}), 204
-
-    
-
-
+        return 

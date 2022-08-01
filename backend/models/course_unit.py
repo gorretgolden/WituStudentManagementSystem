@@ -1,5 +1,6 @@
 from datetime import date, datetime
 from email.policy import default
+from enum import unique
 from flask_sqlalchemy import SQLAlchemy
 from dataclasses import dataclass
 from backend import db
@@ -13,12 +14,11 @@ class CourseUnit(db.Model):
    created_at:datetime
    updated_at:datetime
 
-   __tablename__ = 'CourseUnits'   
+   __tablename__ = 'course_units'   
    id = db.Column(db.Integer, primary_key=True)
-   name = db.Column(db.String(80), nullable=False)
+   name = db.Column(db.String(80), nullable=False,unique=True)
    description = db.Column(db.Text(120), unique=True, nullable=True)
    programe_id = db.Column(db.Integer, db.ForeignKey('programs.id',ondelete='CASCADE'))
-   created_at = db.Column(db.DateTime, default=datetime.now())
    created_at = db.Column(db.DateTime, default=datetime.now())
    updated_at = db.Column(db.DateTime, onupdate=datetime.now())
    
@@ -26,8 +26,6 @@ class CourseUnit(db.Model):
    def __repr__(self):
         return "<CourseUnit %r>" % self.name
 
-   def __repr__(self):
-        return "<Assignment %r>" % self.name
 
    def save(self):
         db.session.add(self)
@@ -37,8 +35,8 @@ class CourseUnit(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-   def update(self,title,description):
-        self.title=title
+   def update(self,name,description,programe_id):
+        self.name = name
         self.description=description
-
+        self.programe_id=programe_id 
         db.session.commit()

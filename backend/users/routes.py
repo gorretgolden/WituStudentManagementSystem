@@ -12,12 +12,15 @@ users = Namespace('users')
 # serialization model
 signup_model = users.model(
     'SignUp',
-    {
+    {   
+        "id":fields.Integer(),
         "first_name": fields.String(),
         "last_name": fields.String(),
         "email": fields.String(),
         "contact": fields.String(),
-        "password": fields.String()
+        "password": fields.String(),
+         "role_id": fields.String()
+       
     }
 )
 

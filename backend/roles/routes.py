@@ -1,183 +1,105 @@
-# from flask import  jsonify, request, Blueprint
-# from flask_jwt_extended import jwt_required,get_jwt_identity
-# from backend.models import db
-# from backend.models import Answer, Question
-
-# questions = Blueprint('questions', __name__,url_prefix="/questions")
-
-
-
-# #retrieving all questions 
-# @questions.route("/", methods=['GET'])
-# def all_questions():
-#     #ensuring that a user has logged in
-#     all_questions = Question.query.all()
-#     return jsonify(all_questions),200
+from flask import  jsonify, request, Blueprint
+from models.roles import Role
+from db import db
+from models.course import Course
+from flask_restx import Api, Resource, Namespace, fields
+from flask_jwt_extended import jwt_required
 
 
-# #retrieving all questions for a user
-# @questions.route("/users/<int:user_id>", methods=['GET'])
-# @jwt_required()
-# def all_user_questions(user_id):
-#     #ensuring that a user has logged in
-#     user_id= get_jwt_identity()
-#     all_questions = Question.query.filter_by(id=user_id).all()
-#     return jsonify(all_questions),200
+roles=Namespace('roles')
 
 
-# #retrieving single questions item
-# @questions.route("/<int:questionId>", methods=['GET'])
-# def single_question(questionId):
-#     single_question = Question.query.filter_by(id=questionId).first()
+roles_model=roles.model(
+    "Role",
+    {
+        "id":fields.Integer(),
+        "name":fields.String()
     
-#     #Question that does'nt exist
-#     if not single_question:
-#         return jsonify({'message': '  Question not found'}), 404
-#     return jsonify(single_question),200
+    }
+)
 
 
-# #retrieving single questions item for a user
-# @questions.route("/<string:questionId>", methods=['GET'])
-# @jwt_required()
-# def single_user_question(questionId):
-#     current_user = get_jwt_identity()
-#     single_question = Question.query.filter_by(user_id=current_user,id=questionId).first()
-    
-#     #if a question doesnt exist
-#     if not single_question:
-#         return jsonify({'message': '  Question not found'}), 404
-#     return jsonify(single_question),200 
+@roles.route('/')
+class RolesResource(Resource):
 
+    @roles.marshal_list_with(roles_model)
+    def get(self):
+        """Get all roles """
 
-# #creating questions
-# @questions.route("/", methods=["POST"])
-# @jwt_required()
-# def new_questions():
-    
-#     if request.method == "POST":
+        roles=Role.query.all()
         
-#         user_id = get_jwt_identity()
-#         title = request.json['title']
-#         body = request.json['body']
-#         tag = request.json['tag']
-       
-       
+        return roles
 
-#        #empty fields
-      
-#         if not title:
-                 
-#           return jsonify({'error': 'Please provide a title for the question'}), 400 #bad request
+
+        
+
+#creating roles
+@roles.route('/')
+class RolesResource(Resource):
+
+    @roles.marshal_list_with(roles_model)
+    def get(self):
+        """Get all roles """
+
+        roles=Role.query.all()
+        
+        return roles
+
+
+    @roles.marshal_with(roles_model)
+    @roles.expect(roles_model)
+    # @jwt_required()
+    def post(self):
+        """Create a new role"""
+
+        data=request.get_json()
+
+        new_role=Role(
+            name=data.get('name')
           
-#         if not body:
-#                 return jsonify({'error': 'Please provide a body for the question'}), 400
-#         #empty fields
-      
+        )
 
-          
-#         if not tag:
-#                 return jsonify({'error': 'Please add a tag for the question ie python '}), 400
+        new_role.save()
+
+        return new_role,201
+
+
+
+#retrieving a single role
+@roles.route('/<int:id>')
+class RoleResource(Resource):
+
+    @roles.marshal_with(roles_model)
+    def get(self,id):
+        """Get a role by id """
+        role=role.query.get_or_404(id)
+
+        return role
+
+
+    @roles.marshal_with(roles_model)
+    @jwt_required()
+    def put(self,id):
+        """Update a role by id """
         
-#         #checking if title exists
-#         if Question.query.filter_by(title=title).first():
-#                 return jsonify({
-#                 'error': 'Question title exists'
-#             }), 409 #conflicts
-        
-#         #checking if body exists
-#         if Question.query.filter_by(body=body).first():
-#                 return jsonify({
-#                 'error': 'Question body already exists'
-#             }), 409
-        
-           
 
-#         #inserting values into the questions_list
-#         new_question = Question(title=title,body=body,user_id=user_id,tag=tag)
-#         db.session.add(new_question)
-#         db.session.commit()
-        
-         
-  
-#     return jsonify({'message':'new question posted','tag':tag,'title':title,'body':body,'user_id':user_id}),200
-    
+        role=role.query.get_or_404(id)
+
+        data=request.get_json()
+        name = data.get('name')
+
+        role.update(name)
+
+        return role
 
 
- 
-# # #deleting a question
-# @questions.route("/remove/<string:questionId>", methods=['DELETE'])
-# @jwt_required()
-# def delete_questions(questionId):
-#     current_user = get_jwt_identity()
+    @roles.marshal_with(roles_model)
+    @jwt_required()
+    def delete(self,id):
+        """Delete a recipe by id """
 
-#     question = Question.query.filter_by(user_id=current_user, id=questionId).first()
+        role=role.query.get_or_404(id)
 
-#     if not question:
-#         return jsonify({'message': 'Item not found'}), 404
+        role.delete()
 
-#     db.session.delete(question)
-#     db.session.commit()
-
-#     return jsonify({}), 204
-
-    
-
-
-# #creating answers
-# @questions.route("/<int:question_id>/answers", methods=["POST"])
-# @jwt_required()
-# def new_answers(question_id):
-#     if request.method == "POST":
-        
-#         question_id =  request.json['question_id']
-#         user_id = get_jwt_identity()
-#         body = request.json['body']
-        
-#         if not body:
-#             return jsonify({'error':'Please provide your content for the answer'}), 400
-        
-#         if not question_id:
-#             return jsonify({'error':'An id for the question being replied to is required'}), 400
-        
-#         #checking if body exists
-#         if Answer.query.filter_by(body=body).first():
-#                 return jsonify({
-#                 'error': 'This answer already exists'
-#             }), 409
-        
-           
-
-#         #inserting values into the questions_list
-#         new_answer = Answer(question_id= int(question_id),body=body,user_id=user_id)
-#         db.session.add(new_answer)
-#         db.session.commit()
-       
-         
-  
-#     return jsonify({'message':'new answer posted','question_id':question_id,'body':body,'user_id':user_id}),200
-    
-
-# #Viewing an answer by id
-# @questions.route("/<int:answer_id>/answers")
-# @jwt_required()
-# def single_answer(answer_id):
-#     single_answer = Answer.query.filter_by(id=answer_id).first()
-  
-#     return jsonify(single_answer),200
-
-# #retrieving all answers for a specific user
-# @questions.route("/answers/<int:user_id>")
-# @jwt_required()
-# def user_answers(user_id):
-#     #ensuring that a user has logged in
-#     user_id = get_jwt_identity()
-#     answers = Answer.query.filter_by(user_id=user_id).first()
-#     return jsonify(answers),200
-
-
-
-# #retrieving all answers
-# @questions.route("/answers", methods=['GET'])
-# def all_answers():
-#     all_answers = Answer.query.all()
-#     return jsonify(all_answers),200
+        return 
