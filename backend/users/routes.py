@@ -10,8 +10,8 @@ from flask_jwt_extended import (JWTManager, create_access_token, create_refresh_
 users = Namespace('users')
 
 # serialization model
-signup_model = users.model(
-    'SignUp',
+user_model = users.model(
+    'User',
     {   
         "id":fields.Integer(),
         "first_name": fields.String(),
@@ -36,7 +36,7 @@ login_model = users.model(
 
 @users.route('/signup')
 class SignUp(Resource):
-    @users.expect(signup_model)
+    @users.expect(user_model)
     def post(self):
         data = request.get_json()
 
@@ -132,7 +132,7 @@ class RefreshResource(Resource):
 @users.route('/')
 class UsersResource(Resource):
 
-    @users.marshal_list_with(signup_model)
+    @users.marshal_list_with(user_model)
     def get(self):
         """Get all users """
 
@@ -144,7 +144,7 @@ class UsersResource(Resource):
 @users.route('/<int:id>')
 class UserResource(Resource):
 
-    @users.marshal_with(signup_model)
+    @users.marshal_with(user_model)
     def get(self,id):
         """Get a user by id """
         user=User.query.get_or_404(id)
@@ -155,7 +155,7 @@ class UserResource(Resource):
 
 
 
-@users.marshal_with(signup_model)
+@users.marshal_with(user_model)
 @jwt_required()
 def delete(self,id):
 
