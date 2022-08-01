@@ -71,7 +71,7 @@ class intakeResource(Resource):
         """Update a intake by id """
         
 
-        intake=intake.query.get_or_404(id)
+        intake=Intake.query.get_or_404(id)
 
         data=request.get_json()
         month = data.get('month')
