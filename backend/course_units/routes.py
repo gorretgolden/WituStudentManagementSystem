@@ -1,6 +1,5 @@
 from flask import  jsonify, request, Blueprint
 from models.course_unit import CourseUnit
-from db import db
 from models.course import Course
 from flask_restx import Api, Resource, Namespace, fields
 from flask_jwt_extended import jwt_required

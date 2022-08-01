@@ -1,11 +1,10 @@
 from datetime import date, datetime
-from email.policy import default
 from flask_sqlalchemy import SQLAlchemy
-from dataclasses import dataclass
-from backend import db
+
+from db import db
 
 
-@dataclass
+
 class Assignment(db.Model):
    id: int
    name: str
@@ -18,7 +17,7 @@ class Assignment(db.Model):
    created_at:datetime
    updated_at:datetime
 
-   __tablename__ = 'Assignments'   
+   __tablename__ = 'assignments'   
    id = db.Column(db.Integer, primary_key=True)
    name = db.Column(db.String(80), nullable=False)
    description = db.Column(db.Text(120), unique=True, nullable=True)

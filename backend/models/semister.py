@@ -1,25 +1,24 @@
 from datetime import date, datetime
-from email.policy import default
 from flask_sqlalchemy import SQLAlchemy
-from dataclasses import dataclass
 from db import db
 
 
-class Role(db.Model):
+
+class Semister(db.Model):
    id: int
    name: str
    created_at:datetime
    updated_at:datetime
 
-   __tablename__ = 'roles'   
+   __tablename__ = 'semisters'   
    id = db.Column(db.Integer, primary_key=True)
-   name = db.Column(db.String(80), nullable=False)
+   name = db.Column(db.String(80), nullable=False,unique=True)
    created_at = db.Column(db.DateTime, default=datetime.now())
    updated_at = db.Column(db.DateTime, onupdate=datetime.now())
    
 
    def __repr__(self):
-        return "<Role %r>" % self.name
+        return "<Semister %r>" % self.name
 
 
    def save(self):
@@ -33,4 +32,3 @@ class Role(db.Model):
    def update(self,name):
         self.name = name
         db.session.commit()
-

@@ -15,7 +15,6 @@ class Intake(db.Model):
    id = db.Column(db.Integer, primary_key=True)
    month = db.Column(db.String(80), nullable=False)
    created_at = db.Column(db.DateTime, default=datetime.now())
-   created_at = db.Column(db.DateTime, default=datetime.now())
    updated_at = db.Column(db.DateTime, onupdate=datetime.now())
    
 

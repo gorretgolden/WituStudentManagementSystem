@@ -1,12 +1,9 @@
 from datetime import date, datetime
-from email.policy import default
-from enum import unique
 from flask_sqlalchemy import SQLAlchemy
-from dataclasses import dataclass
-from backend import db
+from db import db
 
 
-@dataclass
+
 class CourseUnit(db.Model):
    id: int
    name: str
@@ -19,6 +16,7 @@ class CourseUnit(db.Model):
    name = db.Column(db.String(80), nullable=False,unique=True)
    description = db.Column(db.Text(120), unique=True, nullable=True)
    programe_id = db.Column(db.Integer, db.ForeignKey('programs.id',ondelete='CASCADE'))
+   semister_id = db.Column(db.Integer, db.ForeignKey('semisters.id',ondelete='CASCADE'))
    created_at = db.Column(db.DateTime, default=datetime.now())
    updated_at = db.Column(db.DateTime, onupdate=datetime.now())
    

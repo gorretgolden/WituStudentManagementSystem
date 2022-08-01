@@ -10,14 +10,13 @@ from flask_jwt_extended import JWTManager
 
 
     
-
+#application factory function
 def create_app(config):
-    app=Flask(__name__,static_url_path='/',static_folder='./client/build')
+    app=Flask(__name__,static_url_path='/',static_folder='./static')
     app.config.from_object(config)
 
     CORS(app)
 
-    migrate=Migrate(app,db)
 
 
     JWTManager(app)
@@ -28,8 +27,11 @@ def create_app(config):
     from courses.routes import courses
     from intakes.routes import intakes
     from roles.routes import roles
+    from semisters.routes import semisters
+    from course_units.routes import course_units
 
 
+   #creating docs
     api=Api(app,doc='/docs')
     
     api.add_namespace(roles)
@@ -37,12 +39,15 @@ def create_app(config):
     api.add_namespace(courses)
     api.add_namespace(programs)
     api.add_namespace(intakes)
+    api.add_namespace(semisters)
+    api.add_namespace(course_units)
    
 
 
     db.app = app
     db.init_app(app)
     db.create_all()
+  
 
    
     return app

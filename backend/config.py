@@ -13,7 +13,9 @@ class Config:
 class DevConfig(Config):
     SQLALCHEMY_DATABASE_URI="sqlite:///students.db"
     DEBUG=True #exceptions
-    # SQLALCHEMY_ECHO=True
+    IMAGE_UPLOADS="./static/images/profiles"
+    ALLOWED_IMAGE_EXTENSIONS =  ["PDF"]
+    # SQLALCHEMY_ECHO=True"
 
 
 class ProdConfig(Config):

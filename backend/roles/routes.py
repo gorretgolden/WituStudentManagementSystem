@@ -6,9 +6,9 @@ from flask_restx import Api, Resource, Namespace, fields
 from flask_jwt_extended import jwt_required
 
 
-roles=Namespace('roles')
+roles=Namespace('roles')#blueprint
 
-
+#serializers
 roles_model=roles.model(
     "Role",
     {

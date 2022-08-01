@@ -69,14 +69,10 @@ class intakeResource(Resource):
     @jwt_required()
     def put(self,id):
         """Update a intake by id """
-        
-
+    
         intake=Intake.query.get_or_404(id)
-
         data=request.get_json()
         month = data.get('month')
-   
-
         intake.update(month)
 
         return intake
