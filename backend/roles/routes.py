@@ -1,4 +1,4 @@
-from flask import  jsonify, request, Blueprint
+from flask import  jsonify, request, Blueprint,make_response
 from models.roles import Role
 from db import db
 from models.course import Course
@@ -53,15 +53,17 @@ class RolesResource(Resource):
         """Create a new role"""
 
         data=request.get_json()
+        role_name = data.get('name')
 
-        new_role=Role(
-            name=data.get('name')
-          
-        )
+        #validations
+        if not role_name:
+            return jsonify({'error':"Role is required"})
+
+        new_role=Role(name=role_name)
 
         new_role.save()
 
-        return new_role,201
+        return make_response(jsonify({"message":"Role created successfully"}),201)
 
 
 
@@ -72,7 +74,7 @@ class RoleResource(Resource):
     @roles.marshal_with(roles_model)
     def get(self,id):
         """Get a role by id """
-        role=role.query.get_or_404(id)
+        role=Role.query.get_or_404(id)
 
         return role
 
@@ -83,23 +85,23 @@ class RoleResource(Resource):
         """Update a role by id """
         
 
-        role=role.query.get_or_404(id)
+        role=Role.query.get_or_404(id)
 
         data=request.get_json()
         name = data.get('name')
 
         role.update(name)
 
-        return role
+        return make_response(jsonify({"message": "Role updated successfuly","role":role}), 200)
 
 
     @roles.marshal_with(roles_model)
-    @jwt_required()
+    # @jwt_required()
     def delete(self,id):
-        """Delete a recipe by id """
+        """Delete a role by id """
 
-        role=role.query.get_or_404(id)
+        role=Role.query.get_or_404(id)
 
         role.delete()
 
-        return 
+        return make_response(jsonify({"message": "Role deleted successfuly"}), 200)
