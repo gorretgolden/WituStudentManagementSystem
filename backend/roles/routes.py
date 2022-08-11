@@ -56,6 +56,11 @@ class RolesResource(Resource):
         role_name = data.get('name')
 
         #validations
+        #role name conflicts
+        role = Role.query.filter_by(name=role_name).first()
+        if role is not None:
+            return jsonify({"message": f" {role} name already exists"})
+
         if not role_name:
             return jsonify({'error':"Role is required"})
 

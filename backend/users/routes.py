@@ -5,7 +5,7 @@ from models.user import User
 from db import db
 from flask_restx import Api, Resource, Namespace, fields
 
-from flask_jwt_extended import (JWTManager, create_access_token, create_refresh_token, get_jwt_identity, jwt_required)
+from flask_jwt_extended import ( create_access_token, create_refresh_token, get_jwt_identity, jwt_required)
 
 users = Namespace('users')
 
@@ -45,7 +45,7 @@ class SignUp(Resource):
         email = data.get('email')
         contact = data.get('contact')
         password = data.get('password')
-
+        role_id = data.get('role_id')  
         # email conflicts
         user_email = User.query.filter_by(email=email).first()
 
@@ -54,9 +54,9 @@ class SignUp(Resource):
 
     
         # contact conflicts
-        user_contact = User.query.filter_by(contact=contact).first()
-        if user_contact is not None:
-            return jsonify({"message": f" {contact} already exists"})
+        # user_contact = User.query.filter_by(contact=contact).first()
+        # if user_contact is not None:
+        #     return jsonify({"message": f" {contact} already exists"})
 
         # short password
         if len(password) < 6:
@@ -73,10 +73,11 @@ class SignUp(Resource):
               return jsonify({'error':"Last name is required"})
        
         new_user = User(
-            first_name=data.get('first_name'),
-            last_name=data.get('last_name'),
-            email=data.get('email'),
-            contact=data.get('contact'),
+            role_id = role_id,
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            contact=contact,
             password=generate_password_hash(data.get('password'))
         )
 

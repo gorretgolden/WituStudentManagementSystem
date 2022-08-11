@@ -1,17 +1,36 @@
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import {BrowserRouter as Router,Routes,Route} from 'react-router-dom'
+import LoginPage from './components/auth/login';
+import SignUpPage from './components/auth/signup';
+import HomePage from './components/home/home';
+import Navbar from './components/navbar';
 
-// React Context Provider
-import { MaterialUIControllerProvider } from "./context";
 
-ReactDOM.render(
-  // <BrowserRouter>
-  //   <MaterialUIControllerProvider>
-  //     <App />
-  //   </MaterialUIControllerProvider>
-  // </BrowserRouter>,
-  <App/>,
-  document.getElementById("root")
-);
+
+
+const App=()=>{
+
+    
+  return (
+      <Router>
+      <div className="">
+          <Navbar/>
+          <Routes>
+        
+              <Route path="/login" element={<LoginPage/>}/>
+             
+              <Route path="/signup" element={<SignUpPage/>}/>
+                     
+              <Route path="/" element={ <HomePage/>}/>
+        
+
+
+          </Routes>
+      </div>
+      </Router>
+  )
+}
+
+ReactDOM.render(<App/>,document.getElementById('root'))

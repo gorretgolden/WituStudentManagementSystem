@@ -1,4 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
+import Navbar from "./components/navbar";
+import Sidebar from "./components/partials/dashboard/sidenav";
 
 
 const App=()=>{
@@ -8,7 +10,7 @@ const App=()=>{
       fetch('/users/').then(async response => {
         try {
          const data = await response.json()
-         console.log('response data?', data)
+         console.log(data)
        } catch(error) {
          console.log('Error happened here!')
         
@@ -18,8 +20,8 @@ const App=()=>{
 );
 
   return (
-    <div>
-      <h1>Front</h1>
+    <div className="container">
+  
     </div>
   )
 }

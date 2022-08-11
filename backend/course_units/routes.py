@@ -12,22 +12,14 @@ course_unit_model=course_units.model(
     "CourseUnit",
     {
         "id":fields.Integer(),
-        "name":fields.String()
+        "name":fields.String(),
+         "description":fields.String(),
+        "programe_id":fields.Integer(),
+        "semister_id":fields.Integer()
+ 
     
     }
 )
-
-
-@course_units.route('/')
-class CourseUnitResource(Resource):
-
-    @course_units.marshal_list_with(course_unit_model)
-    def get(self):
-        """Get all course_units """
-
-        course_units=CourseUnit.query.all()
-        
-        return course_units
 
 
         
@@ -49,29 +41,32 @@ class CourseUnitResource(Resource):
     @course_units.expect(course_unit_model)
     @jwt_required()
     def post(self):
-        """Create a new course"""
+        """Create a new course unit"""
 
         data=request.get_json()
 
-        new_course=Course(
-            name=data.get('name')
-          
-          
+        new_course_unit=CourseUnit(
+            name=data.get('name'),
+            description=data.get('description'),
+             program_id=data.get('program_id'),
+             semister_id=data.get('semister_id'),
+
+
         )
 
-        new_course.save()
+        new_course_unit.save()
 
-        return new_course,201
+        return new_course_unit,201
 
 
 
-#retrieving a single course
+#retrieving a single course unit
 @course_units.route('/<int:id>')
 class CourseUnitResource(Resource):
 
     @course_units.marshal_with(course_unit_model)
     def get(self,id):
-        """Get a course by id """
+        """Get a course unit by id """
         course_unit=CourseUnit.query.get_or_404(id)
 
         return course_unit
@@ -80,16 +75,18 @@ class CourseUnitResource(Resource):
     @course_units.marshal_with(course_unit_model)
     @jwt_required()
     def put(self,id):
-        """Update a course by id """
+        """Update a course unit by id """
         
 
         course_unit=Course.query.get_or_404(id)
 
         data=request.get_json()
         name = data.get('name')
-       
-    
-        course_unit.update(name)
+        description = data.get('description')
+        program_id = data.get('program_id')
+        semister_id = data.get('semister_id')
+
+        course_unit.update(name,description,program_id,semister_id)
 
         return course_unit
 
@@ -97,10 +94,10 @@ class CourseUnitResource(Resource):
     @course_units.marshal_with(course_unit_model)
     @jwt_required()
     def delete(self,id):
-        """Delete a recipe by id """
+        """Delete a course unit by id """
 
-        course=Course.query.get_or_404(id)
+        course_unit=CourseUnit.query.get_or_404(id)
 
-        course.delete()
+        course_unit.delete()
 
         return 

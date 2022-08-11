@@ -4,7 +4,8 @@ from db import db
 from models.course import Course
 from flask_restx import Api, Resource, Namespace, fields
 from flask_jwt_extended import jwt_required
-
+from werkzeug.utils import secure_filename
+import os
 
 applications=Namespace('applications')
 
@@ -39,29 +40,49 @@ class ApplicationResource(Resource):
         
         return applications
 
+# UPLOAD_FOLDER = '../uploads'
+# ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+# def allowed_file(filename):
+#     return '.' in filename and \
+#            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS       
 
+# #creating applications
+# @applications.route('/')
+# class ApplicationResource(Resource):
+
+#     @applications.marshal_list_with(application_form)
+#     def get(self):
+#         """Get all applications """
+
+#         applications=Application.query.all()
+        
+#         return applications
+
+
+#     @applications.marshal_with(application_form)
+#     @applications.expect(application_form)
+#     @jwt_required()
+#     def post(self):
+#         """Apply for a program"""
+
+#         data=request.get_json()
+#         if 'file' not in request.files:
+            
+#             return jsonify({"message": "No file selected"})
+        
+#         file = request.files['file']
+#         # If the user does not select a file, the browser submits an
+#         # empty file without a filename.
+#         if file.filename == '':
+#             return jsonify({"message": "No file selected"})
+          
+#         if file and allowed_file(file.filename):
+#             filename = secure_filename(file.filename)
+#             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+#             return redirect(url_for('download_file', name=filename))
+        
         
 
-#creating applications
-@applications.route('/')
-class ApplicationResource(Resource):
-
-    @applications.marshal_list_with(application_form)
-    def get(self):
-        """Get all applications """
-
-        applications=Application.query.all()
-        
-        return applications
-
-
-    @applications.marshal_with(application_form)
-    @applications.expect(application_form)
-    @jwt_required()
-    def post(self):
-        """Apply for a program"""
-
-        data=request.get_json()
 
         new_application=Application(
             name=data.get('name')

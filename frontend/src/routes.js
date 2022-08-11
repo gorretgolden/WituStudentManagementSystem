@@ -1,81 +1,70 @@
-// Material Dashboard 2 React layouts
-import Dashboard from "./layouts/dashboard";
-import Tables from "./layouts/tables";
-import Billing from "./layouts/billing";
-import RTL from "./layouts/rtl";
-import Notifications from "./layouts/notifications";
-import Profile from "./layouts/profile";
-import SignIn from "./layouts/authentication/sign-in";
-import SignUp from "./layouts/authentication/sign-up";
+import Dashboard from "./views/Dashboard.js";
+import UserProfile from "./views/UserProfile.js";
+import TableList from "./views/TableList.js";
+import Typography from "./views/Typography.js";
+import Icons from "./views/Icons.js";
+import Maps from "./views/Maps.js";
+import Notifications from "./views/Notifications.js";
+import Upgrade from "./views/Upgrade.js";
 
-// @mui icons
-import Icon from "@mui/material/Icon";
-
-const routes = [
+const dashboardRoutes = [
   {
-    type: "collapse",
+    upgrade: true,
+    path: "/upgrade",
+    name: "Upgrade to PRO",
+    icon: "nc-icon nc-alien-33",
+    component: Upgrade,
+    layout: "/admin"
+  },
+  {
+    path: "/dashboard",
     name: "Dashboard",
-    key: "dashboard",
-    icon: <Icon fontSize="small">dashboard</Icon>,
-    route: "/dashboard",
-    component: <Dashboard />,
+    icon: "nc-icon nc-chart-pie-35",
+    component: Dashboard,
+    layout: "/admin"
   },
   {
-    type: "collapse",
-    name: "Tables",
-    key: "tables",
-    icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/tables",
-    component: <Tables />,
+    path: "/user",
+    name: "User Profile",
+    icon: "nc-icon nc-circle-09",
+    component: UserProfile,
+    layout: "/admin"
   },
   {
-    type: "collapse",
-    name: "Billing",
-    key: "billing",
-    icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/billing",
-    component: <Billing />,
+    path: "/table",
+    name: "Table List",
+    icon: "nc-icon nc-notes",
+    component: TableList,
+    layout: "/admin"
   },
   {
-    type: "collapse",
-    name: "RTL",
-    key: "rtl",
-    icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
-    route: "/rtl",
-    component: <RTL />,
+    path: "/typography",
+    name: "Typography",
+    icon: "nc-icon nc-paper-2",
+    component: Typography,
+    layout: "/admin"
   },
   {
-    type: "collapse",
+    path: "/icons",
+    name: "Icons",
+    icon: "nc-icon nc-atom",
+    component: Icons,
+    layout: "/admin"
+  },
+  {
+    path: "/maps",
+    name: "Maps",
+    icon: "nc-icon nc-pin-3",
+    component: Maps,
+    layout: "/admin"
+  },
+  {
+    path: "/notifications",
     name: "Notifications",
-    key: "notifications",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/notifications",
-    component: <Notifications />,
-  },
-  {
-    type: "collapse",
-    name: "Profile",
-    key: "profile",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/profile",
-    component: <Profile />,
-  },
-  {
-    type: "collapse",
-    name: "Sign In",
-    key: "sign-in",
-    icon: <Icon fontSize="small">login</Icon>,
-    route: "/authentication/sign-in",
-    component: <SignIn />,
-  },
-  {
-    type: "collapse",
-    name: "Sign Up",
-    key: "sign-up",
-    icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/authentication/sign-up",
-    component: <SignUp />,
-  },
+    icon: "nc-icon nc-bell-55",
+    component: Notifications,
+    layout: "/admin"
+  }
 ];
 
-export default routes;
+export default dashboardRoutes;

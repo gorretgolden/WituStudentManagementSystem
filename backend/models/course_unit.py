@@ -6,8 +6,9 @@ from db import db
 
 class CourseUnit(db.Model):
    id: int
+   programe_id:int
+   semister_id:int
    name: str
-   description: str
    created_at:datetime
    updated_at:datetime
 
@@ -33,8 +34,9 @@ class CourseUnit(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-   def update(self,name,description,programe_id):
+   def update(self,name,description,programe_id,semister_id):
         self.name = name
         self.description=description
         self.programe_id=programe_id 
+        self.semister_id=semister_id
         db.session.commit()

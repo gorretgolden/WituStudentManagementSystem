@@ -49,11 +49,25 @@ class CoursesResource(Resource):
 
     @courses.marshal_with(course_model)
     @courses.expect(course_model)
-    @jwt_required()
     def post(self):
         """Create a new course"""
 
         data=request.get_json()
+        name = data.get('name')
+        duration = data.get('duration')
+
+        if not name:
+            return jsonify({'error':"Course name is required"})
+
+        if not duration:
+            return jsonify({'error':"Course duration is required"}) 
+
+         # name conflicts
+        course_name = Course.query.filter_by(name=name).first()
+
+        if course_name is not None:
+            return jsonify({"message": f" {course_name} already exists"})
+       
 
         new_course=Course(
             name=data.get('name'),
