@@ -36,6 +36,7 @@ class Course(db.Model):
         self.description=description
         self.duration=duration
         db.session.commit()
+      
     
 
  

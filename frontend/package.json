@@ -1,60 +1,61 @@
 {
-  "name": "witu_web_project",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@emotion/cache": "11.7.1",
-    "@emotion/react": "11.7.1",
-    "@emotion/styled": "11.6.0",
-    "@fortawesome/fontawesome-free": "5.15.2",
-    "@mui/styled-engine": "5.4.1",
-    "@testing-library/jest-dom": "5.16.2",
-    "@testing-library/react": "12.1.2",
-    "@testing-library/user-event": "13.5.0",
-    "bootstrap": "^5.2.0",
-    "chart.js": "3.4.1",
-    "chartist": "0.11.4",
-    "prop-types": "15.8.1",
-    "react": "17.0.2",
-    "react-bootstrap": "^2.5.0",
-    "react-chartist": "^0.14.4",
-    "react-chartjs-2": "3.0.4",
-    "react-dom": "17.0.2",
-    "react-github-btn": "1.2.1",
-    "react-hook-form": "^7.34.0",
-    "react-notification-alert": "^0.0.13",
-    "react-pro-sidebar": "^0.7.1",
-    "react-router": "5.2.0",
-    "react-router-dom": "6.2.1",
-    "react-scripts": "5.0.0",
-    "react-table": "7.7.0",
-    "react-token-auth": "^2.3.8",
-    "web-vitals": "2.1.4",
-    "yup": "0.32.11"
+  "name": "@coreui/coreui-free-react-admin-template",
+  "version": "4.4.0",
+  "description": "CoreUI Free React Admin Template",
+  "homepage": ".",
+  "bugs": {
+    "url": "https://github.com/coreui/coreui-free-react-admin-template/issues"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:coreui/coreui-free-react-admin-template.git"
+  },
+  "license": "MIT",
+  "author": "The CoreUI Team (https://github.com/orgs/coreui/people)",
   "scripts": {
-    "start": "react-scripts start",
     "build": "react-scripts build",
+    "changelog": "auto-changelog --starting-version 4.4.0 --commit-limit false --hide-credit",
+    "eject": "react-scripts eject",
+    "lint": "eslint \"src/**/*.js\"",
+    "start": "react-scripts start",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test:cov": "npm test -- --coverage --watchAll=false",
+    "test:debug": "react-scripts --inspect-brk test --runInBand"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "dependencies": {
+    "@coreui/chartjs": "^3.0.0",
+    "@coreui/coreui": "^4.2.0",
+    "@coreui/icons": "^2.1.0",
+    "@coreui/icons-react": "^2.1.0",
+    "@coreui/react": "^4.3.0",
+    "@coreui/react-chartjs": "^2.1.0",
+    "@coreui/utils": "^1.3.1",
+    "chart.js": "^3.8.0",
+    "classnames": "^2.3.1",
+    "core-js": "^3.23.4",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-app-polyfill": "^3.0.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.0.2",
+    "react-router-dom": "^6.3.0",
+    "redux": "4.2.0",
+    "simplebar-react": "^2.4.1"
   },
-  "proxy": "http://localhost:5000",
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^14.2.1",
+    "auto-changelog": "~2.4.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "2.7.1",
+    "react-scripts": "5.0.1",
+    "sass": "^1.53.0",
+    "web-vitals": "^2.1.4"
+  },
+  "engines": {
+    "node": ">=10",
+    "npm": ">=6"
   }
 }
