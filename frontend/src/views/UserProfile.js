@@ -26,30 +26,46 @@ function User() {
               <Card.Body>
                 <Form>
                   <Row>
-                    <Col className="pr-1" md="5">
+                    <Col className="pr-1" md="12">
                       <Form.Group>
-                        <label>Company (disabled)</label>
+                      
                         <Form.Control
-                          defaultValue="Creative Code Inc."
+                  
                           disabled
-                          placeholder="Company"
+                          placeholder="Women In Tech Uganda"
                           type="text"
                         ></Form.Control>
                       </Form.Group>
                     </Col>
-                    <Col className="px-1" md="3">
+                   
+                    
+                  </Row>
+                  <Row className="mt-4">
+                    <Col className="pr-1" md="4">
                       <Form.Group>
-                        <label>Username</label>
+                        <label>First Name</label>
                         <Form.Control
-                          defaultValue="michael23"
-                          placeholder="Username"
+                          defaultValue="Admin"
+                          placeholder="Enter your first name"
                           type="text"
                         ></Form.Control>
                       </Form.Group>
                     </Col>
+
                     <Col className="pl-1" md="4">
                       <Form.Group>
-                        <label htmlFor="exampleInputEmail1">
+                        <label>Last Name</label>
+                        <Form.Control
+                          defaultValue="WITU"
+                          placeholder="Enter your first name"
+                          type="text"
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+
+                    <Col className="pl-1" md="4">
+                      <Form.Group>
+                        <label htmlFor="email">
                           Email address
                         </label>
                         <Form.Control
@@ -60,87 +76,20 @@ function User() {
                     </Col>
                   </Row>
                   <Row>
-                    <Col className="pr-1" md="6">
-                      <Form.Group>
-                        <label>First Name</label>
-                        <Form.Control
-                          defaultValue="Mike"
-                          placeholder="Company"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="pl-1" md="6">
-                      <Form.Group>
-                        <label>Last Name</label>
-                        <Form.Control
-                          defaultValue="Andrew"
-                          placeholder="Last Name"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
                     <Col md="12">
                       <Form.Group>
                         <label>Address</label>
                         <Form.Control
-                          defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
+                          defaultValue="Kamokya"
                           placeholder="Home Address"
                           type="text"
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                   </Row>
-                  <Row>
-                    <Col className="pr-1" md="4">
-                      <Form.Group>
-                        <label>City</label>
-                        <Form.Control
-                          defaultValue="Mike"
-                          placeholder="City"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="px-1" md="4">
-                      <Form.Group>
-                        <label>Country</label>
-                        <Form.Control
-                          defaultValue="Andrew"
-                          placeholder="Country"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="pl-1" md="4">
-                      <Form.Group>
-                        <label>Postal Code</label>
-                        <Form.Control
-                          placeholder="ZIP Code"
-                          type="number"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md="12">
-                      <Form.Group>
-                        <label>About Me</label>
-                        <Form.Control
-                          cols="80"
-                          defaultValue="Lamborghini Mercy, Your chick she so thirsty, I'm in
-                          that two seat Lambo."
-                          placeholder="Here can be your description"
-                          rows="4"
-                          as="textarea"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                  </Row>
+               
                   <Button
-                    className="btn-fill pull-right"
+                    className="btn-fill pull-right mt-4 mb-3"
                     type="submit"
                     variant="info"
                   >
@@ -151,6 +100,8 @@ function User() {
               </Card.Body>
             </Card>
           </Col>
+        
+        
           <Col md="4">
             <Card className="card-user">
               <div className="card-image">
@@ -159,6 +110,7 @@ function User() {
                   src={require("assets/img/photo-1431578500526-4d9613015464.jpeg")}
                 ></img>
               </div>
+              
               <Card.Body>
                 <div className="author">
                   <a href="#pablo" onClick={(e) => e.preventDefault()}>
@@ -167,21 +119,26 @@ function User() {
                       className="avatar border-gray"
                       src={require("assets/img/faces/face-3.jpg")}
                     ></img>
-                    <h5 className="title">Mike Andrew</h5>
+                    <h4 className="name">Witu Admin</h4>
                   </a>
-                  <p className="description">michael24</p>
+                 
                 </div>
                 <p className="description text-center">
-                  "Lamborghini Mercy <br></br>
-                  Your chick she so thirsty <br></br>
-                  I'm in that two seat Lambo"
+                  admin@gmail.com
+                </p>
+                <p className="description text-center">
+                  Kamokya
+                </p>
+                <p className="description text-center">
+                0751547654
                 </p>
               </Card.Body>
               <hr></hr>
+              
               <div className="button-container mr-auto ml-auto">
                 <Button
                   className="btn-simple btn-icon"
-                  href="#pablo"
+                  href="#"
                   onClick={(e) => e.preventDefault()}
                   variant="link"
                 >
@@ -189,7 +146,7 @@ function User() {
                 </Button>
                 <Button
                   className="btn-simple btn-icon"
-                  href="#pablo"
+                  href="#"
                   onClick={(e) => e.preventDefault()}
                   variant="link"
                 >
@@ -197,7 +154,7 @@ function User() {
                 </Button>
                 <Button
                   className="btn-simple btn-icon"
-                  href="#pablo"
+                  href="#"
                   onClick={(e) => e.preventDefault()}
                   variant="link"
                 >
