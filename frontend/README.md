@@ -1,195 +1,181 @@
-[![@coreui coreui](https://img.shields.io/badge/@coreui%20-coreui-lightgrey.svg?style=flat-square)](https://github.com/coreui/coreui)
-[![npm package][npm-coreui-badge]][npm-coreui]
-[![NPM downloads][npm-coreui-download]][npm-coreui]  
-[![@coreui react](https://img.shields.io/badge/@coreui%20-react-lightgrey.svg?style=flat-square)](https://github.com/coreui/react)
-[![npm package][npm-coreui-react-badge]][npm-coreui-react]
-[![NPM downloads][npm-coreui-react-download]][npm-coreui-react]  
+# [Light Bootstrap Dashboard React](https://demos.creative-tim.com/light-bootstrap-dashboard-react/#/?ref=lbdr-readme) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/tweet?url=https%3A%2F%2Fcreativetimofficial.github.io%2Flight-bootstrap-dashboard-react&text=Light%20Bootstrap%20Dashboard%20React%20-%20Free%20Bootstrap%20Admin%20Template&original_referer=https%3A%2F%2Fdemos.creative-tim.com%2Flight-bootstrap-dashboard-react%2F&via=creativetim&hashtags=react%2Cbootstrap%2Creact-bootstrap%2Ccreativetim%2Ccreative-tim)
 
-[npm-coreui]: https://www.npmjs.com/package/@coreui/coreui
-[npm-coreui-badge]: https://img.shields.io/npm/v/@coreui/coreui.png?style=flat-square
-[npm-coreui-download]: https://img.shields.io/npm/dm/@coreui/coreui.svg?style=flat-square
-[npm-coreui-react]: https://www.npmjs.com/package/@coreui/react
-[npm-coreui-react-badge]: https://img.shields.io/npm/v/@coreui/react.png?style=flat-square
-[npm-coreui-react-download]: https://img.shields.io/npm/dm/@coreui/react.svg?style=flat-square
-[npm]: https://www.npmjs.com/package/@coreui/react
+![version](https://img.shields.io/badge/version-2.0.1-blue.svg) ![license](https://img.shields.io/badge/license-MIT-blue.svg) [![GitHub issues open](https://img.shields.io/github/issues/creativetimofficial/light-bootstrap-dashboard-react.svg?maxAge=2592000)]() [![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/creativetimofficial/light-bootstrap-dashboard-react.svg?maxAge=2592000)]() [![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/E4aHAQy)
 
-# CoreUI Free React Admin Template v4
+![Product Gif](https://raw.githubusercontent.com/creativetimofficial/public-assets/master/light-bootstrap-dashboard-react/light-bootstrap-dashboard-react.gif)
 
-CoreUI is meant to be the UX game changer. Pure & transparent code is devoid of redundant components, so the app is light enough to offer ultimate user experience. This means mobile devices also, where the navigation is just as easy and intuitive as on a desktop or laptop. The CoreUI Layout API lets you customize your project for almost any device – be it Mobile, Web or WebApp – CoreUI covers them all!
+**[Light Bootstrap Dashboard React](https://demos.creative-tim.com/light-bootstrap-dashboard-react/#/?ref=lbdr-readme)** is an admin dashboard template designed to be beautiful and simple. It is built on top of [React Bootstrap](https://5c507d49471426000887a6a7--react-bootstrap.netlify.com/), using [Light Bootstrap Dashboard](https://www.creative-tim.com/product/light-bootstrap?ref=lbdr-readme) and it is fully responsive. It comes with a big collections of elements that will offer you multiple possibilities to create the app that best fits your needs. It can be used to create admin panels, project management systems, web applications backend, CMS or CRM.
+
+The product represents a big suite of front-end developer tools that can help you jump start your project. We have created it thinking about things you actually need in a dashboard. Light Bootstrap Dashboard React contains multiple handpicked and optimized plugins. Everything is designed to fit with one another. As you will be able to see, the dashboard you can access on Creative Tim is a customization of this product.
+
+It comes with 6 filter colors for the sidebar (`black`, `azure`,`green`,`orange`,`red`,`purple`) and an option to have a background image.
 
 ## Table of Contents
 
-* [Versions](#versions)
-* [CoreUI Pro](#coreui-pro)
-* [Quick Start](#quick-start)
-* [Installation](#installation)
-* [Basic usage](#basic-usage)
-* [What's included](#whats-included)
-* [Documentation](#documentation)
-* [Versioning](#versioning)
-* [Creators](#creators)
-* [Community](#community)
-* [Support CoreUI Development](#support-coreui-development)
-* [Copyright and License](#copyright-and-license)
+- [Versions](#versions)
+- [Demo](#demo)
+- [Quick Start](#quick-start)
+- [Documentation](#documentation)
+- [File Structure](#file-structure)
+- [Browser Support](#browser-support)
+- [Resources](#resources)
+- [Reporting Issues](#reporting-issues)
+- [Technical Support or Questions](#technical-support-or-questions)
+- [Licensing](#licensing)
+- [Useful Links](#useful-links)
 
 ## Versions
 
-* [CoreUI Free Bootstrap Admin Template](https://github.com/coreui/coreui-free-bootstrap-admin-template)
-* [CoreUI Free Angular Admin Template](https://github.com/coreui/coreui-free-angular-admin-template)
-* [CoreUI Free React.js Admin Template](https://github.com/coreui/coreui-free-react-admin-template)
-* [CoreUI Free Vue.js Admin Template](https://github.com/coreui/coreui-free-vue-admin-template)
+[<img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/html-logo.jpg" width="60" height="60" />](https://www.creative-tim.com/product/light-bootstrap-dashboard?ref=lbdr-readme)[<img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/react-logo.jpg" width="60" height="60" />](https://www.creative-tim.com/product/light-bootstrap-dashboard-react?ref=lbdr-readme)[<img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/vue-logo.jpg" width="60" height="60" />](https://www.creative-tim.com/product/vue-light-bootstrap-dashboard?ref=lbdr-readme)[<img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/angular-logo.jpg" width="60" height="60" />](https://www.creative-tim.com/product/light-bootstrap-dashboard-angular2?ref=lbdr-readme)
 
-## CoreUI Pro
+| HTML                                                                                                                                                                                                                                                   | React                                                                                                                                                                                                                                                                     | Vue                                                                                                                                                                                                                                                               | Angular                                                                                                                                                                                                                                                                            |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [![Light Bootstrap Dashboard HTML](https://github.com/creativetimofficial/public-assets/blob/master/light-bootstrap-dashboard/light-bootstrap-dashboard.jpg?raw=true)](https://www.creative-tim.com/product/light-bootstrap-dashboard?ref=lbdr-readme) | [![Light Bootstrap Dashboard React](https://github.com/creativetimofficial/public-assets/blob/master/light-bootstrap-dashboard-react/light-bootstrap-dashboard-react.jpg?raw=true)](https://www.creative-tim.com/product/light-bootstrap-dashboard-react?ref=lbdr-readme) | [![Vue Light Bootstrap Dashboard](https://github.com/creativetimofficial/public-assets/blob/master/vue-light-bootstrap-dashboard/vue-light-bootstrap-dashboard.jpg?raw=true)](https://www.creative-tim.com/product/vue-light-bootstrap-dashboard?ref=lbdr-readme) | [![Light Bootstrap Dashboard Angular](https://github.com/creativetimofficial/public-assets/blob/master/light-bootstrap-dashboard-angular/light-bootstrap-dashboard-angular.jpg?raw=true)](https://www.creative-tim.com/product/light-bootstrap-dashboard-angular2?ref=lbdr-readme) |
 
-* 💪  [CoreUI Pro Angular Admin Template](https://coreui.io/product/angular-dashboard-template/)
-* 💪  [CoreUI Pro Bootstrap Admin Template](https://coreui.io/product/bootstrap-dashboard-template/)
-* 💪  [CoreUI Pro React Admin Template](https://coreui.io/product/react-dashboard-template/)
-* 💪  [CoreUI Pro Vue Admin Template](https://coreui.io/product/vue-dashboard-template/)
+## Demo
 
-## Quick Start
+| Dashboard                                                                                                                                                                                                                                        | User Profile                                                                                                                                                                                                                                       | Tables                                                                                                                                                                                                                                           | Maps                                                                                                                                                                                                                                                             |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [![Start page](https://raw.githubusercontent.com/creativetimofficial/public-assets/master/light-bootstrap-dashboard-react/dashboard-page.png)](https://demos.creative-tim.com/light-bootstrap-dashboard-react/#/admin/dashboard?ref=lbdr-readme) | [![User profile page](https://raw.githubusercontent.com/creativetimofficial/public-assets/master/light-bootstrap-dashboard-react/user-page.png)](https://demos.creative-tim.com/light-bootstrap-dashboard-react/#/admin/user-page?ref=lbdr-readme) | [![Tables page ](https://raw.githubusercontent.com/creativetimofficial/public-assets/master/light-bootstrap-dashboard-react/tables-page.png)](https://demos.creative-tim.com/light-bootstrap-dashboard-react/#/admin/table-list?ref=lbdr-readme) | [![Notifications Page](https://raw.githubusercontent.com/creativetimofficial/public-assets/master/light-bootstrap-dashboard-react/notifications-page.png)](https://demos.creative-tim.com/light-bootstrap-dashboard-react/#/admin/notifications?ref=lbdr-readme) |
 
-- [Download the latest release](https://github.com/coreui/coreui-free-react-admin-template/archive/refs/heads/main.zip)
-- Clone the repo: `git clone https://github.com/coreui/coreui-free-react-admin-template.git`
+[View More](https://demos.creative-tim.com/light-bootstrap-dashboard-react/#/admin/dashboard?ref=lbdr-readme).
 
-### Installation
+## Quick start
 
-``` bash
-$ npm install
-```
+Quick start options:
 
-or
-
-``` bash
-$ yarn install
-```
-
-### Basic usage
-
-``` bash
-# dev server with hot reload at http://localhost:3000
-$ npm start 
-```
-
-or 
-
-``` bash
-# dev server with hot reload at http://localhost:3000
-$ yarn start
-```
-
-Navigate to [http://localhost:3000](http://localhost:3000). The app will automatically reload if you change any of the source files.
-
-#### Build
-
-Run `build` to build the project. The build artifacts will be stored in the `build/` directory.
-
-```bash
-# build for production with minification
-$ npm run build
-```
-
-or
-
-```bash
-# build for production with minification
-$ yarn build
-```
-
-## What's included
-
-Within the download you'll find the following directories and files, logically grouping common assets and providing both compiled and minified variations. You'll see something like this:
-
-```
-coreui-free-react-admin-template
-├── public/          # static files
-│   └── index.html   # html template
-│
-├── src/             # project root
-│   ├── assets/      # images, icons, etc.
-│   ├── components/  # common components - header, footer, sidebar, etc.
-│   ├── layouts/     # layout containers
-│   ├── scss/        # scss styles
-│   ├── views/       # application views
-│   ├── _nav.js      # sidebar navigation config
-│   ├── App.js
-│   ├── ...
-│   ├── index.js
-│   ├── routes.js    # routes config
-│   └── store.js     # template state example 
-│
-└── package.json
-```
+- Clone the repo: `git clone https://github.com/creativetimofficial/light-bootstrap-dashboard-react.git`.
+- [Download from Github](https://github.com/creativetimofficial/light-bootstrap-dashboard-react/archive/master.zip).
+- [Download from Creative Tim](https://www.creative-tim.com/product/light-bootstrap-dashboard-react?ref=lbdr-readme).
 
 ## Documentation
 
-The documentation for the CoreUI Admin Template is hosted at our website [CoreUI for React](https://coreui.io/react/)
+The documentation for the Light Bootstrap Dashboard React is hosted at our [website](https://demos.creative-tim.com/light-bootstrap-dashboard-react/#/documentation/?ref=lbdr-readme).
 
-## Versioning
+## File Structure
 
-For transparency into our release cycle and in striving to maintain backward compatibility, CoreUI Free Admin Template is maintained under [the Semantic Versioning guidelines](http://semver.org/).
+Within the download you'll find the following directories and files:
 
-See [the Releases section of our project](https://github.com/coreui/coreui-free-react-admin-template/releases) for changelogs for each release version.
+```
+light-bootstrap-dashboard-react
+.
+├── CHANGELOG.md
+├── ISSUE_TEMPLATE.md
+├── LICENSE.md
+├── README.md
+├── gulpfile.js
+├── jsconfig.json
+├── package.json
+├── Documentation
+│   ├── css
+│   │   ├── demo.css
+│   │   ├── documentation.css
+│   │   └── light-bootstrap-dashboard.css
+│   ├── img
+│   └── tutorial-components.html
+├── public
+│   ├── favicon.ico
+│   ├── index.html
+│   └── manifest.json
+└── src
+    ├── index.js
+    ├── logo.svg
+    ├── routes.js
+    ├── assets
+    │   ├── css
+    │   │   ├── animate.min.css
+    │   │   ├── demo.css
+    │   │   ├── light-bootstrap-dashboard-react.css
+    │   │   ├── light-bootstrap-dashboard-react.css.map
+    │   │   └── light-bootstrap-dashboard-react.min.css
+    │   ├── fonts
+    │   │   ├── nucleo-icons.eot
+    │   │   ├── nucleo-icons.svg
+    │   │   ├── nucleo-icons.ttf
+    │   │   ├── nucleo-icons.woff
+    │   │   └── nucleo-icons.woff2
+    │   ├── img
+    │   │   └── faces
+    │   └── scss
+    │       ├── lbd
+    │       │   ├── mixins
+    │       │   └── plugins
+    │       ├── lbdr
+    │       │   ├── plugins
+    │       │   └── react-differences.scss
+    │       └── light-bootstrap-dashboard-react.scss
+    ├── layouts
+    │   └── Admin.js
+    ├── components
+    │   ├── FixedPlugin
+    │   │   └── FixedPlugin.js
+    │   ├── Footer
+    │   │   └── Footer.js
+    │   ├── Navbars
+    │   │   └── AdminNavbar.js
+    │   └── Sidebar
+    │       └── Sidebar.js
+    └── views
+        ├── Dashboard.js
+        ├── Icons.js
+        ├── Maps.js
+        ├── Notifications.js
+        ├── TableList.js
+        ├── Typography.js
+        ├── Upgrade.js
+        └── UserProfile.js
+```
 
-## Creators
+## Browser Support
 
-**Łukasz Holeczek**
-* <https://twitter.com/lukaszholeczek>
-* <https://github.com/mrholek>
-* <https://github.com/coreui>
+At present, we officially aim to support the last two versions of the following browsers:
 
-**CoreUI team**
-* https://github.com/orgs/coreui/people
+<img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/chrome.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/firefox.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/edge.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/safari.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/opera.png" width="64" height="64">
 
-## Community
+## Resources
 
-Get updates on CoreUI's development and chat with the project maintainers and community members.
+- Demo: https://demos.creative-tim.com/light-bootstrap-dashboard-react/#/admin/dashboard?ref=lbdr-readme
+- Download Page: https://www.creative-tim.com/product/light-bootstrap-dashboard-react?ref=lbdr-readme
+- Documentation: https://demos.creative-tim.com/light-bootstrap-dashboard-react/#/documentation/tutorial?ref=lbdr-readme
+- License Agreement: https://www.creative-tim.com/license?ref=lbdr-readme
+- Support: https://www.creative-tim.com/contact-us?ref=lbdr-readme
+- Issues: [Github Issues Page](https://github.com/creativetimofficial/light-bootstrap-dashboard-react/issues)
 
-- Follow [@core_ui on Twitter](https://twitter.com/core_ui).
-- Read and subscribe to [CoreUI Blog](https://coreui.ui/blog/).
+## Reporting Issues
 
-## Support CoreUI Development
+We use GitHub Issues as the official bug tracker for the Light Bootstrap Dashboard React. Here are some advices for our users that want to report an issue:
 
-CoreUI is an MIT-licensed open source project and is completely free to use. However, the amount of effort needed to maintain and develop new features for the project is not sustainable without proper financial backing. You can support development by buying the [CoreUI PRO](https://coreui.io/pricing/) or by becoming a sponsor via [Open Collective](https://opencollective.com/coreui/).
+1. Make sure that you are using the latest version of the Light Bootstrap Dashboard React. Check the CHANGELOG from your dashboard on our [website](https://www.creative-tim.com/?ref=lbdr-readme).
+2. Providing us reproducible steps for the issue will shorten the time it takes for it to be fixed.
+3. Some issues may be browser specific, so specifying in what browser you encountered the issue might help.
 
-<!--- StartOpenCollectiveBackers -->
+## Technical Support or Questions
 
-### Platinum Sponsors
+If you have questions or need help integrating the product please [contact us](https://www.creative-tim.com/contact-us?ref=lbdr-readme) instead of opening an issue.
 
-Support this project by [becoming a Platinum Sponsor](https://opencollective.com/coreui/contribute/platinum-sponsor-40959/). A large company logo will be added here with a link to your website.
+## Licensing
 
-<a href="https://opencollective.com/coreui/contribute/platinum-sponsor-40959/checkout"><img src="https://opencollective.com/coreui/tiers/platinum-sponsor/0/avatar.svg?avatarHeight=100"></a>
+- Copyright 2022 Creative Tim (https://www.creative-tim.com?ref=lbdr-readme)
+- Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard-react/blob/master/LICENSE.md)
 
-### Gold Sponsors
+## Useful Links
 
-Support this project by [becoming a Gold Sponsor](https://opencollective.com/coreui/contribute/gold-sponsor-40960/). A big company logo will be added here with a link to your website.
+More products from Creative Tim: <https://www.creative-tim.com/products?ref=lbdr-readme>
 
-<a href="https://opencollective.com/coreui/contribute/gold-sponsor-40960/checkout"><img src="https://opencollective.com/coreui/tiers/gold-sponsor/0/avatar.svg?avatarHeight=100"></a> 
+Tutorials: <https://www.youtube.com/channel/UCVyTG4sCw-rOvB9oHkzZD1w>
 
-### Silver Sponsors
+Freebies: <https://www.creative-tim.com/products?ref=lbdr-readme>
 
-Support this project by [becoming a Silver Sponsor](https://opencollective.com/coreui/contribute/silver-sponsor-40967/). A medium company logo will be added here with a link to your website.
+Affiliate Program (earn money): <https://www.creative-tim.com/affiliates/new?ref=lbdr-readme>
 
-<a href="https://opencollective.com/coreui/contribute/silver-sponsor-40967/checkout"><img src="https://opencollective.com/coreui/tiers/gold-sponsor/0/avatar.svg?avatarHeight=100"></a>
+Social Media:
 
-### Bronze Sponsors
+Twitter: <https://twitter.com/CreativeTim>
 
-Support this project by [becoming a Bronze Sponsor](https://opencollective.com/coreui/contribute/bronze-sponsor-40966/). The company avatar will show up here with a link to your OpenCollective Profile.
+Facebook: <https://www.facebook.com/CreativeTim>
 
-<a href="https://opencollective.com/coreui/contribute/bronze-sponsor-40966/checkout"><img src="https://opencollective.com/coreui/tiers/bronze-sponsor/0/avatar.svg?avatarHeight=100"></a> 
+Dribbble: <https://dribbble.com/creativetim>
 
-### Backers
+Google+: <https://plus.google.com/+CreativetimPage>
 
-Thanks to all the backers and sponsors! Support this project by [becoming a backer](https://opencollective.com/coreui/contribute/backer-40965/).
-
-<a href="https://opencollective.com/coreui/contribute/backer-40965/checkout" target="_blank" rel="noopener"><img src="https://opencollective.com/coreui/backers.svg?width=890"></a>
-
-<!--- EndOpenCollectiveBackers -->
-
-## Copyright and License
-
-copyright 2022 creativeLabs Łukasz Holeczek.   
-
- 
-Code released under [the MIT license](https://github.com/coreui/coreui-free-react-admin-template/blob/master/LICENSE).
-There is only one limitation you can't can’t re-distribute the CoreUI as stock. You can’t do this if you modify the CoreUI. In past we faced some problems with persons who tried to sell CoreUI based templates.
-
+Instagram: <https://instagram.com/creativetimofficial>

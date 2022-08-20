@@ -1,61 +1,246 @@
-### Changelog
+# Change Log
 
-All notable changes to this project will be documented in this file. Dates are displayed in UTC.
+## [2.0.1] 2022-07-04
 
-#### [3.2.0](https://github.com/coreui/coreui-free-react-admin-template/compare/3.1.1...3.2.0)
+- Update dependencies
+- Migration to React 18
+- Migration to sass from node-sass
 
-> 14 December 2020
+## [2.0.0] 2021-01-21
 
-- fix(BrandButtons): minor temp fixes with stylings [`f0c0585`](https://github.com/coreui/coreui-free-react-admin-template/commit/f0c05858329430c9487bdcfcf36d0aa98f60776d)
-- refactor: polyfills cleanup [`9522ade`](https://github.com/coreui/coreui-free-react-admin-template/commit/9522ade1f1eb2c5a26d5208fe6e44be803123bd2)
-- test: refactor, import temp update [`f3f91c5`](https://github.com/coreui/coreui-free-react-admin-template/commit/f3f91c5d721754a2dac26143f312415c94c7ed68)
-- chore: React 17 and dependencies update [`f6a710f`](https://github.com/coreui/coreui-free-react-admin-template/commit/f6a710ffd6996c9b6b026b8eebed6ff390757fe1)
-- fix(_nav): no anonymous default export [`ed83c9a`](https://github.com/coreui/coreui-free-react-admin-template/commit/ed83c9a3d4199b8c6566a6e01396cdcbca80cf42)
+### IMPORTANT
 
-#### [3.1.1](https://github.com/coreui/coreui-free-react-admin-template/compare/3.1.0...3.1.1)
+- We have updated this product from Bootstrap 3 to Bootstrap 4, so in essence, this is a new product
+- For this, we have followed the guidelines from [here](https://react-bootstrap.github.io/migrating/) and [here](https://getbootstrap.com/docs/4.0/migration/)
+- We also did not add Bootstrap variables as part of our styles (we will do so in one of our next updates, probably in version 3.0.0 when we'll add Bootstrap 5)
 
-> 26 November 2020
+### Bug fixing
 
-- chore: dependencies update [`5b70904`](https://github.com/coreui/coreui-free-react-admin-template/commit/5b70904d8f22f61a71def3306ea96ad640573c39)
-- chore: add changelog [`de605cc`](https://github.com/coreui/coreui-free-react-admin-template/commit/de605cc1aadec9fb066625c6bc7b656590efc7bb)
-- chore: limit changelog to version 3 [`6ac9a1d`](https://github.com/coreui/coreui-free-react-admin-template/commit/6ac9a1d094d4d293ddacb3f3562216a98be8e129)
-- chore: add migration docs [`b661344`](https://github.com/coreui/coreui-free-react-admin-template/commit/b661344485a38404b8c2b1326e3a4258009b071c)
-- chore: changelog update [`f9f1927`](https://github.com/coreui/coreui-free-react-admin-template/commit/f9f19274f046cf5f11f68d6c7eb7ae04c553f219)
-- chore: .gitignore cleanup [`ba21e00`](https://github.com/coreui/coreui-free-react-admin-template/commit/ba21e001944322fb48e43264719b94368c589732)
-- chore: 3.1.1 release [`081b957`](https://github.com/coreui/coreui-free-react-admin-template/commit/081b957291a8020e3d2e3b42c1f0a1455a49c524)
+- Renamed all files to `.js`, instead of `.jsx`
+- Refactor all files from class components to functional ones, so now, you can use React Hooks
+- https://github.com/creativetimofficial/light-bootstrap-dashboard-react/issues/62
+- https://github.com/creativetimofficial/light-bootstrap-dashboard-react/issues/58
+- https://github.com/creativetimofficial/light-bootstrap-dashboard-react/issues/52
+- https://github.com/creativetimofficial/light-bootstrap-dashboard-react/issues/50
 
-#### [3.1.0](https://github.com/coreui/coreui-free-react-admin-template/compare/3.0.0...3.1.0)
+### Major style changes
 
-> 12 August 2020
+- Since the update from Bootstrap 3 to Bootstrap 4, all styles have been changed
 
-- docs(readme): CoreUI react theme setup with laravel tutorial link add into readme [`#226`](https://github.com/coreui/coreui-free-react-admin-template/pull/226)
-- fix: fix template testing [`68ce41d`](https://github.com/coreui/coreui-free-react-admin-template/commit/68ce41db6831d6995121766a5771dc9d667cc61a)
-- chore: 3.1.0 release - update dependencies [`92f55b8`](https://github.com/coreui/coreui-free-react-admin-template/commit/92f55b8cdfd748a9e72649d5da62b93015a1c8e6)
-- refactor: add reusable folder with DocsLink component [`eef84db`](https://github.com/coreui/coreui-free-react-admin-template/commit/eef84dbbd770c7253080a6f69443c40e4fecefd2)
-- feat: add CSwitch examples to forms [`b31e452`](https://github.com/coreui/coreui-free-react-admin-template/commit/b31e452fd0ea736763d3032d7204cd478863b505)
-- refactor: add CIcon example in _nav.js [`be5d1f0`](https://github.com/coreui/coreui-free-react-admin-template/commit/be5d1f0618f981f18c45be87afb56c4409bd3389)
+### Deleted components
 
-### [3.0.0](https://github.com/coreui/coreui-free-react-admin-template/compare/v2.6.1...3.0.0)
+- src/components/Card/Card.jsx (we'll use the simple React Bootstrap tags instead)
+- src/components/CustomButton/CustomButton.jsx (we'll use the simple React Bootstrap tags instead)
+- src/components/CustomCheckbox/CustomCheckbox.jsx (we'll use the simple React Bootstrap tags instead)
+- src/components/CustomRadio/CustomRadio.jsx (we'll use the simple React Bootstrap tags instead)
+- src/components/FormInputs/FormInputs.jsx (we'll use the simple React Bootstrap tags instead)
+- src/components/StatsCard/StatsCard.jsx (we'll use the simple React Bootstrap tags instead)
+- src/components/Tasks/Tasks.jsx (we'll use the simple React Bootstrap tags instead)
+- src/components/UserCard/UserCard.jsx (we'll use the simple React Bootstrap tags instead)
 
-> 17 June 2020
+### Added components
 
-- feat: update template to version 3 [`cc79542`](https://github.com/coreui/coreui-free-react-admin-template/commit/cc795425bbf610873fcdf6938b5fb0aba49a4d97)
-- refactor: update folder casing to kebab-case [`75138b0`](https://github.com/coreui/coreui-free-react-admin-template/commit/75138b0d0340cc21d58bcc2f800f042f86e54346)
-- refactor: temporarily delete views folder [`cb4433a`](https://github.com/coreui/coreui-free-react-admin-template/commit/cb4433a3e33cb943bc1f47199110ead28fab517b)
-- docs: README update [`188e0b1`](https://github.com/coreui/coreui-free-react-admin-template/commit/188e0b1c09fd7d47dc87d0410303ae43e8ee79de)
-- chore: clear packages [`e236aad`](https://github.com/coreui/coreui-free-react-admin-template/commit/e236aad4ab0129e3611adfc2127670da64696e54)
-- fix: delete obsolete files, fix logos [`f479a5d`](https://github.com/coreui/coreui-free-react-admin-template/commit/f479a5dc72bb5bb75b95a4b904d1c350be8fe7bc)
-- chore: 3.0.0-beta.1 release [`d940f92`](https://github.com/coreui/coreui-free-react-admin-template/commit/d940f92ef741d7eab021af4fbcf385823c80421a)
-- fix: fix accordion, delete aside [`0e6506e`](https://github.com/coreui/coreui-free-react-admin-template/commit/0e6506ea3303ca30bc21ba2bcf3717a3f009dc8c)
-- refactor: optimize icon bundle size, update icons [`9fed168`](https://github.com/coreui/coreui-free-react-admin-template/commit/9fed168a534b88cb27371d6364b922418a5a13b4)
-- refacotor: template updates [`1df8c15`](https://github.com/coreui/coreui-free-react-admin-template/commit/1df8c15030d45779f6adc5031153eaff09701d97)
-- refactor: turn logos extensions from svg to js [`8c0deee`](https://github.com/coreui/coreui-free-react-admin-template/commit/8c0deeed169267155323a5b6bdbbdfaf8a856a41)
-- refactor: rename containers from 'Default' to 'The', small fixes [`bfc79da`](https://github.com/coreui/coreui-free-react-admin-template/commit/bfc79da4039dd534ee49b4526978f7b949cea90b)
-- refactor: update icons to version 2, rtl fixes [`8e4fbc2`](https://github.com/coreui/coreui-free-react-admin-template/commit/8e4fbc2aa8786b00a004282260c52986e1cd2430)
-- fix: delete unneded icons, aside, fix readme.md [`1ee0561`](https://github.com/coreui/coreui-free-react-admin-template/commit/1ee05619ba15d050b73df21c8d1347e8329942d5)
-- chore: 3.0.0 version release - update dependencies [`fd5236d`](https://github.com/coreui/coreui-free-react-admin-template/commit/fd5236d47340b336bf641041cbf6d48ec8b1081a)
-- feat: add query parameters to Users view [`98f8b67`](https://github.com/coreui/coreui-free-react-admin-template/commit/98f8b677edb96f9175b7d4c20370c3d6744543bd)
-- docs: add license [`db85786`](https://github.com/coreui/coreui-free-react-admin-template/commit/db85786be465fdb7a84b7337dbe876afc5e957bc)
-- chore: update react.md [`5aa0cc3`](https://github.com/coreui/coreui-free-react-admin-template/commit/5aa0cc3ce15c841032cd75392418cfeb2e4d094f)
-- docs: README cleanup [`82a4351`](https://github.com/coreui/coreui-free-react-admin-template/commit/82a4351daa6c8d452e19c7141dbadecc3f721c1b)
-- fix: fix Icons views [`1777a09`](https://github.com/coreui/coreui-free-react-admin-template/commit/1777a092f6444497120e85c8852a1e4779640e71)
+### Deleted dependencies
+
+- react-notification-system (we'll use react-notification-alert from now on)
+- @types/googlemaps
+- @types/markerclustererplus
+- @types/react
+- react-google-maps (we'll use simple Google Maps API with Vanilla JS)
+- react-toggle (we'll use the simple React-Bootstrap Form.Check as a switch instead)
+
+### Added dependencies
+
+- react-notification-alert@0.0.13 (instead of the react-notification-system)
+- reactstrap@8.9.0 (as part of the react-notification-alert)
+- jquery@3.5.1 (since Bootstrap requires it)
+- @fortawesome/fontawesome-free@5.15.2 (For easier update of the package - instead of a link inside public/index.html)
+- gulp-append-prepend@1.0.8 (For Creative Tim licenses)
+- gulp@4.0.2 (For Creative Tim licenses)
+
+### Updated dependencies
+
+```
+bootstrap           3.3.7   →    4.6.0
+node-sass          4.12.0   →   4.14.1
+react              16.8.6   →   17.0.1
+react-bootstrap    0.32.4   →    1.4.3
+react-chartist     0.13.3   →   0.14.3
+react-dom          16.8.6   →   17.0.1
+react-router        5.0.0   →    5.2.0
+react-router-dom    5.0.0   →    5.2.0
+react-scripts       3.0.0   →    4.0.1
+typescript          3.4.3   →    4.1.3
+```
+
+### Warning
+
+**The TypeScript and jQuery dependencies are installed only to stop console warnings on install. They are not actually used in our product. So the product is not based on TypeScript or jQuery!**
+_The following warnings will appear when running the installation command, but they do not affect the UI or the functionality of the product (they will be solved in our next update):_
+
+```
+npm WARN react-chartist@0.14.3 requires a peer of react@^0.14.9 || ^15.0.0 || ^16.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN react-popper@1.3.7 requires a peer of react@0.14.x || ^15.0.0 || ^16.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN create-react-context@0.3.0 requires a peer of react@^0.14.0 || ^15.0.0 || ^16.0.0 but none is installed. You must install peer dependencies yourself.
+```
+
+_If they will persist in our 2.4.\* version, we will drop their usages and replace them with other plugins._
+_In development mode, some of the above plugins will throw a warning because they still use React v16 syntax. If the error will persist in our 2.4.\* version, we will drop their usage and replace them with other plugins._
+
+### Upgrade details
+
+- Updated all packages from `package.json` using `npm-upgrade`, link here: https://www.npmjs.com/package/npm-upgrade
+- Renamed all `ControlLabel` components to `FormLabel` (this refers to the react-bootstrap components)
+- Renamed all `Grid` components to `Container` (this refers to the react-bootstrap components)
+- Rename all `HelpBlock` components to `FormText`
+- Rename all `MenuItem` components to `Dropdown.Item` and `NavDropdown.Item`
+- Rename all Panel components to Card
+- Deleted variables folder
+- Change the usage of `React Big Calendar` to the new API, so instead of
+
+```
+import BigCalendar from "react-big-calendar";
+```
+
+- And
+
+```
+const localizer = BigCalendar.momentLocalizer(moment);
+```
+
+- We will have:
+
+```
+import { Calendar as BigCalendar, momentLocalizer } from "react-big-calendar";
+```
+
+- And
+
+```
+const localizer = momentLocalizer(moment);
+```
+
+- Change Panels with new react-bootstrap components
+- For Col componets, replaced `size={number1} sizeOffest={number2}` with `size={{span: number1, offset: number2}}` where size can be `xs`, `sm`, `md`, `lg`
+- Changed `bsStyle` to `variant`
+- Changed `bsSize` to `size`
+- Replace `<Navbar.Header>` with `<div className=“navbar-header”>`
+- Replace `<Navbar.Form>` with `<div className="navbar-search-form navbar-form navbar-left">`
+- Replace `<FormGroup>` with `<Form.Group>`
+- Replace `<InputGroup.Addon>` with `<InputGroup.Prepend><InputGroup.Text>` and `<InputGroup.Append><InputGroup.Text>`
+- All required images have a default prop at the end now, example: `const us_flag = require("../assets/img/flags/US.png");` was changed to `const us_flag = require("../assets/img/flags/US.png");`
+- Rename all .jsx files to .js
+- Added Row and Col inside StatsCard
+- Delete eventKey from NavDropdown components
+- Deleted noCaret from NavDropdown components
+- Replace Navbar fluid with Navbar → Container fluid
+- Add fontawesome as dependencie instead of font link insde public/index.html, it is now imported insde src/index.js
+- In addition to these changes, we’ve chaned the structure of the pages and components as well to match those from the HTML version of the product: https://www.creative-tim.com/product/light-bootstrap-dashboard
+
+## [1.3.0] 2019-05-03
+
+### Bug fixing
+
+- Renamed `src/layouts/Dashboard/Dashboard.jsx` to `src/layouts/Admin.jsx`
+- Renamed `src/views/Dashboard/Dashboard.jsx` to `src/views/Dashboard.jsx`
+- Renamed `src/views/Dashboard/Dashboard.jsx` to `src/views/Icons.jsx`
+- Renamed `src/views/Dashboard/Dashboard.jsx` to `src/views/Maps.jsx`
+- Renamed `src/views/Dashboard/Dashboard.jsx` to `src/views/Notifications.jsx`
+- Renamed `src/views/Dashboard/Dashboard.jsx` to `src/views/TableList.jsx`
+- Renamed `src/views/Dashboard/Dashboard.jsx` to `src/views/Typography.jsx`
+- Renamed `src/views/Dashboard/Dashboard.jsx` to `src/views/Upgrade.jsx`
+- Renamed `src/views/Dashboard/Dashboard.jsx` to `src/views/UserProfile.jsx`
+- Renamed `src/components/Header` to `src/components/Navbars`
+- Renamed `src/components/Navbars/Header.jsx` to `src/components/Navbars/AdminNavbar.jsx`
+- Renamed `src/components/Navbars/HeaderLinks.jsx` to `src/components/Navbars/AdminNavbarLinks.jsx`
+- Changes caused by running [the prettier command](https://prettier.io/docs/en/install.html) for _.jsx_, _.js_, _.html_ and _.css_ files
+- Changed our buggy routing system, now it should work flawlessly, for more info, please refer to our [live docs here](https://demos.creative-tim.com/light-bootstrap-dashboard-react/#/documentation/routing-system)
+- Solved
+  - https://github.com/creativetimofficial/light-bootstrap-dashboard-react/issues/48
+  - https://github.com/creativetimofficial/light-bootstrap-dashboard-react/issues/47
+  - https://github.com/creativetimofficial/light-bootstrap-dashboard-react/issues/34
+  - https://github.com/creativetimofficial/light-bootstrap-dashboard-react/issues/30
+  - https://github.com/creativetimofficial/light-bootstrap-dashboard-react/issues/19
+  - https://github.com/creativetimofficial/light-bootstrap-dashboard-react/issues/17
+  - https://github.com/creativetimofficial/light-bootstrap-dashboard-react/issues/15
+- Removed `.env` file and replaced it with `jsconfig.json`
+- Small bug fixes
+
+### Removed dependencies/components
+
+- Deleted `src/routes/*` folder
+- node-sass-chokidar
+- npm-run-all
+
+### Added dependencies/components
+
+- Added `src/routes.js` file (instead of the three files from `src/routes/*`)
+- @types/markerclustererplus@2.1.33 (to stop install warnings)
+- @types/googlemaps@3.30.19 (to stop install warnings)
+- @types/react@16.8.13 (to stop install warnings)
+- typescript@3.4.3 (to stop install warnings)
+- react-router@5.0.0 (react-router-dom auto-installs this package, but it is better to have them both inside package.json)
+- react-toggle@4.0.2
+
+### Update dependencies
+
+- node-sass 4.6.1 → 4.12.0
+- react 16.2.0 → 16.8.6
+- react-bootstrap 0.32.1 → 0.32.4
+- react-chartist 0.13.1 → 0.13.3
+- react-dom 16.2.0 → 16.8.6
+- react-router-dom 4.2.2 → 5.0.0
+- react-scripts 1.1.1 → 3.0.0
+
+## [1.2.0] 2018-04-12
+
+### Bug fixing
+
+- Added `fluid` prop on `Grid` component in `Footer`
+- Moved all the contents of `elements` folder to `components` folder and delete it
+- Renamed `containers` folder to `layouts`
+- Renamed `App/App.jsx` to `Dashboard/Dashboard.jsx`
+- Renamed `src/routes/app.jsx` to `src/routes/dashboard.jsx`
+- Renamed `appRoutes` to `dashboardRoutes`
+- Added `src/routes/index.jsx` and made the routes in `src/index.js` dynamically based on `indexRoutes` from `src/routes/index.jsx` (users can now make new layouts and routes for them easier)
+
+### Removed dependencies/components
+
+- `google-maps-react@1.1.0`
+- `react-router@4.1.2`
+
+### Added dependencies/components
+
+- `node-sass@4.6.1`
+- `react-google-maps@9.4.5` (insted of `google-maps-react@1.1.0`)
+- `bootstrap@3.3.7` (and deleted `src/assets/bootstrap.min.css?v=3.3.5`)
+
+### Update dependencies
+
+- `npm-run-all@4.1.1` to `npm-run-all@4.1.2`
+- `react@15.6.1` to `react@16.2.0`
+- `react-bootstrap@0.31.1` to `react-bootstrap@0.32.1`
+- `react-chartist@0.13.0` to `react-chartist@0.13.1`
+- `react-dom@15.6.1` to `react-dom@16.2.0`
+- `react-notification-system@0.2.15` to `react-notification-system@0.2.17`
+- `react-router-dom@4.1.2` to `react-router-dom@4.2.2`
+- `react-scripts@1.0.10` to `react-scripts@1.1.1`
+
+## [1.1.0] 2017-10-30
+
+### Bug fixing
+
+- Changed property of `isChecked` in `CustomCheckbox`
+- Removed hover state for checkboxes and radios
+- Moved `NotificationSystem` outside of `.main-panel` (for responsive issues)
+- All `div`'s with Bootstrap classes (`.container`,`.container-fluid`,`.row`,`.col-*`) were changed in React-Bootstrap components
+- Changed `Notifications Places` buttons from buttons with `className` to our own button component `CustomButton`
+- Added property `round` in `CustomButton` (for the button class `.btn-round`)
+- Added dynamic routes
+
+## [1.0.0] 2017-09-20
+
+### Original Release
+
+- Added React-Bootstrap as base framework
+- Added design from Light Bootstrap Dashboard by Creative Tim
