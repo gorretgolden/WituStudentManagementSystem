@@ -1,4 +1,3 @@
-
 import React from "react";
 import ReactDOM from "react-dom/client";
 
@@ -12,6 +11,8 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import AdminLayout from "layouts/Admin.js";
 import LandingPage from "views/LandingPage";
+import Login from "views/Login";
+import AddStudent from "views/students/add-student";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -19,11 +20,17 @@ root.render(
   <BrowserRouter>
     <Switch>
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-     
-      <Route path="/">
-      <LandingPage/>
-          </Route>
 
+      <Route exact path="/">
+        <LandingPage />
+      </Route>
+
+      <Route path="/login">
+        <Login />
+      </Route>
+      <Route path="/students/new">
+        <AddStudent/>
+      </Route>
     </Switch>
   </BrowserRouter>
 );

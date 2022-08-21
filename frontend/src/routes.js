@@ -41,6 +41,13 @@ const dashboardRoutes = [
     component: StudentList,
     layout: "/admin"
   },
+   {
+    path: "/students",
+    name: "Students",
+    icon: "nc-icon nc-notes",
+    component: StudentList,
+    layout: "/admin"
+  },
   {
     path: "/tutors",
     name: "Tutors",

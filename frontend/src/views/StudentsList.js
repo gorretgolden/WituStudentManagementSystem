@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 // react-bootstrap components
 import {
   Badge,
@@ -30,7 +31,11 @@ function StudentList() {
       <Container fluid>
         <Row>
         <Col md="12">
-          <Button className="float-right mb-2">Add New Student</Button>
+          <Button className="float-right mb-2">
+            <Link to="/students/new">
+            Add New Student
+            </Link>
+          </Button>
           </Col>
 
           <Col md="12">

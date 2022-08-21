@@ -79,8 +79,8 @@ function LandingPage() {
             <Nav.Item>
               <Nav.Link
                 className="m-0"
-                href="#"
-                onClick={(e) => e.preventDefault()}
+                href="/login"
+              
               >
                 <span className="border:2px solid black">Login</span>
               </Nav.Link>

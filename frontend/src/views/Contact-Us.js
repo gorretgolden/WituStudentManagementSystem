@@ -13,7 +13,7 @@ import {
   Col,
 
 } from "react-bootstrap";
-function Login() {
+function Contact() {
   return (
     <>
       <Container className="mt-5 py-5" >
@@ -64,4 +64,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Contact;
