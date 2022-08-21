@@ -11,6 +11,7 @@ import "./assets/css/demo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import AdminLayout from "layouts/Admin.js";
+import LandingPage from "views/LandingPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -18,7 +19,11 @@ root.render(
   <BrowserRouter>
     <Switch>
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-      <Redirect from="/" to="/admin/dashboard" />
+     
+      <Route path="/">
+      <LandingPage/>
+          </Route>
+
     </Switch>
   </BrowserRouter>
 );

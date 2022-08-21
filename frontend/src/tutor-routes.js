@@ -11,92 +11,92 @@ import Assignments from "views/Assignments";
 import Exams from "views/Exams";
 import Results from "views/Results";
 
-const dashboardRoutes = [
+const tutorDashboardRoutes = [
   {
     upgrade: true,
     path: "/upgrade",
     name: "View Site",
     icon: "nc-icon nc-alien-33",
     component: Upgrade,
-    layout: "/admin"
+    layout: "/tutor"
   },
   {
     path: "/dashboard",
-    name: "Admin Dashboard",
+    name: "tutor Dashboard",
     icon: "nc-icon nc-chart-pie-35",
     component: Dashboard,
-    layout: "/admin"
+    layout: "/tutor"
   },
   {
     path: "/user",
-    name: "Admin Profile",
+    name: "tutor Profile",
     icon: "nc-icon nc-circle-09",
     component: UserProfile,
-    layout: "/admin"
+    layout: "/tutor"
   },
   {
     path: "/students",
     name: "Students",
     icon: "nc-icon nc-notes",
     component: StudentList,
-    layout: "/admin"
+    layout: "/tutor"
   },
   {
     path: "/tutors",
     name: "Tutors",
     icon: "nc-icon nc-notes",
     component: TutorsList,
-    layout: "/admin"
+    layout: "/tutor"
   },
   {
     path: "/courses",
     name: "Courses",
     icon: "nc-icon nc-paper-2",
     component: Courses,
-    layout: "/admin"
+    layout: "/tutor"
   },
   {
     path: "/programs",
     name: "Programs",
     icon: "nc-icon nc-atom",
     component: Programs,
-    layout: "/admin"
+    layout: "/tutor"
   },
   {
     path: "/notes",
     name: "Notes",
     icon: "nc-icon nc-pin-3",
     component: Notes,
-    layout: "/admin"
+    layout: "/tutor"
   },
   {
     path: "/assigments",
     name: "Assignments",
     icon: "nc-icon nc-pin-3",
     component: Assignments,
-    layout: "/admin"
+    layout: "/tutor"
   },
   {
     path: "/exams",
     name: "Exams",
     icon: "nc-icon nc-pin-3",
     component: Exams,
-    layout: "/admin"
+    layout: "/tutor"
   },
   {
     path: "/results",
     name: "Results",
     icon: "nc-icon nc-pin-3",
     component: Results,
-    layout: "/admin"
+    layout: "/tutor"
   },
   // {
   //   path: "/notifications",
   //   name: "Notifications",
   //   icon: "nc-icon nc-bell-55",
   //   component: Notifications,
-  //   layout: "/admin"
+  //   layout: "/tutor"
   // }
 ];
 
-export default dashboardRoutes;
+export default tutorDashboardRoutes;
