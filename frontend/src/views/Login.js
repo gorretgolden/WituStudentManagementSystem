@@ -21,7 +21,10 @@ function Login() {
          
          <Col md="2">
          </Col>
-
+         <Col md="4"  className=" py-5 align-items-center  shadow-lg mb-5 bg-white rounded ">
+          <img   className="rounded img-fluid" src={require('assets/img/login-img.jpg')}/>
+            
+          </Col>
           <Col md="4"  className=" align-items-center shadow-lg p-3 mb-5 bg-white rounded">
           
             <Form >
@@ -51,10 +54,7 @@ function Login() {
                 </Form.Text>
             </Form>
           </Col>
-          <Col md="4"  className=" py-5 align-items-center  shadow-lg mb-5 bg-white rounded ">
-          <img   className="rounded img-fluid" src={require('assets/img/login-img.jpg')}/>
-            
-          </Col>
+        
 
           <Col md="2">
          </Col>
