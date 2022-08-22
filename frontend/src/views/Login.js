@@ -41,18 +41,18 @@ function Login() {
                 <Form.Control type="password" placeholder="Password" name="password" />
               </Form.Group>
             
-              <Button variant="primary" type="submit" className=" btn-lg btn-block">
-                Submit
+              <Button type="submit" className=" btn-block mt-4 text-muted lead">
+                Login
               </Button>
-              <Form.Text className="text-muted mt-3">
+              <Form.Text className="text-muted mt-3 mt-4">
                   <Link to="/">
                   Back to home
                   </Link>
                 </Form.Text>
             </Form>
           </Col>
-          <Col md="4"  className=" py-5 align-items-center  shadow-lg mb-5 bg-white rounded">
-          
+          <Col md="4"  className=" py-5 align-items-center  shadow-lg mb-5 bg-white rounded ">
+          <img   className="rounded img-fluid" src={require('assets/img/login-img.jpg')}/>
             
           </Col>
 

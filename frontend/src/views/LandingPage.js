@@ -77,11 +77,7 @@ function LandingPage() {
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link
-                className="m-0"
-                href="/login"
-              
-              >
+              <Nav.Link className="m-0" href="/login">
                 <span className="border:2px solid black">Login</span>
               </Nav.Link>
             </Nav.Item>
@@ -96,42 +92,22 @@ function LandingPage() {
               <Carousel.Item>
                 <img
                   className=" w-100"
-                  src="https://img.freepik.com/free-photo/portrait-three-smiling-graduate-friends-graduation-robes-university-campus-with-diploma_496169-1363.jpg?size=626&ext=jpg&uid=R46484519&ga=GA1.2.865723822.1660061549"
+                  src={require("assets/img/slider-1.jpg")}
                 />
-                <Carousel.Caption>
-                  <h3>First slide label</h3>
-                  <p>
-                    Nulla vitae elit libero, a pharetra augue mollis interdum.
-                  </p>
-                </Carousel.Caption>
+                <Carousel.Caption></Carousel.Caption>
               </Carousel.Item>
               <Carousel.Item>
                 <img
                   className="d-block w-100 h-50"
-                  src="https://img.freepik.com/free-photo/photo-smart-graduate-student-showing-her-diploma-book-wall-high-quality-photo_144627-73613.jpg?size=626&ext=jpg&uid=R46484519&ga=GA1.2.865723822.1660061549"
+                  src={require("assets/img/slider-2.jpg")}
                 />
-
-                <Carousel.Caption>
-                  <h3>Second slide label</h3>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </p>
-                </Carousel.Caption>
               </Carousel.Item>
               <Carousel.Item>
                 <img
                   className="d-block w-100"
-                  src="https://img.freepik.com/free-photo/young-female-african-american-student-with-diploma-poses-outdoorsxa_627829-3973.jpg?size=626&ext=jpg&uid=R46484519&ga=GA1.2.865723822.1660061549"
+                  src={require("assets/img/slider-3.jpg")}
                   alt="Third slide"
                 />
-
-                <Carousel.Caption>
-                  <h3>Third slide label</h3>
-                  <p>
-                    Praesent commodo cursus magna, vel scelerisque nisl
-                    consectetur.
-                  </p>
-                </Carousel.Caption>
               </Carousel.Item>
             </Carousel>
           </Col>
@@ -139,31 +115,191 @@ function LandingPage() {
       </section>
 
       <section className="mt-5 py-5">
-        <Container className="bg-dark py-2 rounded">
+        <Container className="shadow-sm bg-light rounded">
           <Row>
-            <Col md="6" className="text-white px-4 mt-5 ">
-              <h3 className="font-weight-bold">Women In Tech Uganda</h3>
+            <Col md="6" className=" px-4 mt-5 ">
+              <h3 className="font-weight-bold">Women In Technology Uganda</h3>
 
-              <p>
+              <p className="mt-3">
+                Looking to start your undergraduate studies? We have a number of
+                entry options and free pathway programmes to support you. Our
+                University stands as a global leader distinguished by our
+                commitment to Excellence, Innovation and Transformation.
                 Looking to start your undergraduate studies? We have a number of
                 entry options and free pathway programmes to support you. Our
                 University stands as a global leader distinguished by our
                 commitment to Excellence, Innovation and Transformation.
               </p>
-              <Button className="mt-4 ">Apply</Button>
+              <Button className="mt-4 bg-lg ">Apply Today</Button>
+            </Col>
+
+            <Col md="6">
+
+              <iframe
+                width="500"
+                height="438"
+                src="https://www.youtube.com/embed/8VZTtRX4HIk"
+                title="Women in Tech: Advice from Five Female Leaders"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                autoplay
+              ></iframe>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+
+     
+
+      <section className="mt-5 px-4">
+        <Container>
+          <h3 className="text-center mb-4 font-weight-bold">
+            Available Courses
+          </h3>
+          <Row>
+            <Col md="4">
+              <Card className="card-stats shadow-sm ">
+                <Card.Body>
+                  <Row>
+                    <Col xs="12">
+                      <div className="icon-big text-center icon-warning">
+                        <i className="nc-icon nc-chart text-warning"></i>
+                      </div>
+                    </Col>
+                  </Row>
+                </Card.Body>
+                <Card.Footer>
+                  <hr></hr>
+                  <div className="px-5">
+                    <h5 className="text-center">Diploma In Computer Science</h5>
+                  </div>
+                </Card.Footer>
+              </Card>
+            </Col>
+
+            <Col md="4">
+              <Card className="card-stats shadow-sm ">
+                <Card.Body>
+                  <Row>
+                    <Col xs="12">
+                      <div className="icon-big text-center icon-warning">
+                        <i className="nc-icon nc-chart text-warning"></i>
+                      </div>
+                    </Col>
+                  </Row>
+                </Card.Body>
+                <Card.Footer>
+                  <hr></hr>
+                  <div className="px-5">
+                    <h5 className="text-center">Elevate Computer Programs</h5>
+                  </div>
+                </Card.Footer>
+              </Card>
+            </Col>
+
+            <Col md="4">
+              <Card className="card-stats shadow-sm ">
+                <Card.Body>
+                  <Row>
+                    <Col xs="12">
+                      <div className="icon-big text-center icon-warning">
+                        <i className="nc-icon nc-chart text-warning"></i>
+                      </div>
+                    </Col>
+                  </Row>
+                </Card.Body>
+                <Card.Footer>
+                  <hr></hr>
+                  <div className="px-5">
+                    <h5 className="text-center">Business Recovery Programs</h5>
+                  </div>
+                </Card.Footer>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+
+      <section className="py-5 mt-5 bg-gray">
+        <Container>
+          <Row>
+            <Col md="6" className="mt-5">
+              <h4 className="font-weight-bold">Diploma in Computer Science</h4>
+              <p>
+                As one of the most innovative academic institutions in Uganda,
+                we’re renowned for our accredited programmes, quality education
+                and student-centred way of doing business that transforms and
+                inspires students to reach their full potential in employment,
+                entrepreneurship, and ethical leadership. As one of the most
+                innovative academic institutions in Uganda, we’re renowned for
+                our accredited programmes.
+              </p>
+              <div className="mb-3">
+                <Button>Learn More</Button>
+              </div>
             </Col>
 
             <Col md="6">
               <img
-                className="w-10 rounded img-thumbnail"
+                className="img-thumbnail ml-5"
                 src="https://img.freepik.com/free-photo/joyful-black-author-works-writing-new-book-readers_273609-28047.jpg?size=626&ext=jpg&uid=R46484519&ga=GA1.2.865723822.1660061549"
+              ></img>
+            </Col>
+          </Row>
+          <Row className="mt-5 py-5">
+            <Col md="6">
+              <img
+                className="img-thumbnail"
+                src="https://witi.ac.ug/wp-content/uploads/2022/01/sponsorship-1-scaled.jpeg"
+              ></img>
+            </Col>
+            <Col md="6" className="mt-5 px-5">
+              <h4 className="font-weight-bold">Elevate Computer Programs</h4>
+              <p>
+                As one of the most innovative academic institutions in Uganda,
+                we’re renowned for our accredited programmes, quality education
+                and student-centred way of doing business that transforms and
+                inspires students to reach their full potential in employment,
+                entrepreneurship, and ethical leadership. As one of the most
+                innovative academic institutions in Uganda, we’re renowned for
+                our accredited programmes.
+              </p>
+              <div className="mb-3">
+                <Button>Learn More</Button>
+              </div>
+            </Col>
+          </Row>
+
+          <Row className="mt-5 py-5">
+            <Col md="6" className="mt-5">
+              <h4 className="font-weight-bold">Business Recovery Programs</h4>
+              <p>
+                As one of the most innovative academic institutions in Uganda,
+                we’re renowned for our accredited programmes, quality education
+                and student-centred way of doing business that transforms and
+                inspires students to reach their full potential in employment,
+                entrepreneurship, and ethical leadership. As one of the most
+                innovative academic institutions in Uganda, we’re renowned for
+                our accredited programmes.
+              </p>
+              <div className="mb-3">
+                <Button>Learn More</Button>
+              </div>
+            </Col>
+
+            <Col md="6">
+              <img
+                className="img-thumbnail ml-5"
+                src="https://img.freepik.com/premium-photo/female-student-graduate-is-standing-university-hall-mantle-smiling-with-diploma-hands_115086-791.jpg?size=626&ext=jpg&uid=R46484519&ga=GA1.2.865723822.1660061549"
               ></img>
             </Col>
           </Row>
         </Container>
       </section>
 
-      {/* <section>
+
+ {/* <section>
         <Container>
           <Row>
             <Col md="4">
@@ -188,159 +324,6 @@ function LandingPage() {
           </Row>
         </Container>
       </section> */}
-
-      <section className="mt-5 px-4">
-        <Container>
-          <h3 className="text-center mb-4 font-weight-bold">
-            Available Courses
-          </h3>
-          <Row>
-            <Col md="4">
-              <Card className="card-stats shadow-sm ">
-                <Card.Body>
-                  <Row>
-                    <Col xs="12">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-chart text-warning"></i>
-                      </div>
-                    </Col>
-                  </Row>
-                </Card.Body>
-                <Card.Footer>
-                  <hr></hr>
-                  <div className="stats">
-                    <h5 className="text-center">
-                      {" "}
-                      Diploma In Computer Science
-                    </h5>
-                  </div>
-                </Card.Footer>
-              </Card>
-            </Col>
-
-            <Col md="4">
-              <Card className="card-stats shadow-sm ">
-                <Card.Body>
-                  <Row>
-                    <Col xs="12">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-chart text-warning"></i>
-                      </div>
-                    </Col>
-                  </Row>
-                </Card.Body>
-                <Card.Footer>
-                  <hr></hr>
-                  <div className="stats">
-                    <h5 className="text-center">Certificate in Computing</h5>
-                  </div>
-                </Card.Footer>
-              </Card>
-            </Col>
-
-            <Col md="4">
-              <Card className="card-stats shadow-sm ">
-                <Card.Body>
-                  <Row>
-                    <Col xs="12">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-chart text-warning"></i>
-                      </div>
-                    </Col>
-                  </Row>
-                </Card.Body>
-                <Card.Footer>
-                  <hr></hr>
-                  <div className="stats">
-                    <h5 className="text-center">
-                      {" "}
-                      Diploma In Computer Science
-                    </h5>
-                  </div>
-                </Card.Footer>
-              </Card>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-
-      <section className="py-5 mt-5 bg-gray">
-        <Container>
-          <Row>
-            <Col md="6" className="mt-5">
-              <h4 className="font-weight-bold">Computer Science</h4>
-              <p>
-                As one of the most innovative academic institutions in Uganda,
-                we’re renowned for our accredited programmes, quality education
-                and student-centred way of doing business that transforms and
-                inspires students to reach their full potential in employment,
-                entrepreneurship, and ethical leadership. As one of the most
-                innovative academic institutions in Uganda, we’re renowned for
-                our accredited programmes.
-              </p>
-              <div className="mb-3">
-                <Button>Learn More</Button>
-              </div>
-            </Col>
-
-            <Col md="6">
-              <img
-                className="img-thumbnail"
-                src="https://img.freepik.com/premium-photo/female-student-graduate-is-standing-university-hall-mantle-smiling-with-diploma-hands_115086-791.jpg?size=626&ext=jpg&uid=R46484519&ga=GA1.2.865723822.1660061549"
-              ></img>
-            </Col>
-          </Row>
-          <Row className="mt-5 py-5">
-            <Col md="6">
-              <img
-                className="img-thumbnail"
-                src="https://img.freepik.com/premium-photo/female-student-graduate-is-standing-university-hall-mantle-smiling-with-diploma-hands_115086-791.jpg?size=626&ext=jpg&uid=R46484519&ga=GA1.2.865723822.1660061549"
-              ></img>
-            </Col>
-            <Col md="6" className="mt-5">
-              <h4 className="font-weight-bold">Computer Science</h4>
-              <p>
-                As one of the most innovative academic institutions in Uganda,
-                we’re renowned for our accredited programmes, quality education
-                and student-centred way of doing business that transforms and
-                inspires students to reach their full potential in employment,
-                entrepreneurship, and ethical leadership. As one of the most
-                innovative academic institutions in Uganda, we’re renowned for
-                our accredited programmes.
-              </p>
-              <div className="mb-3">
-                <Button>Learn More</Button>
-              </div>
-            </Col>
-          </Row>
-
-          <Row className="mt-5 py-5">
-            <Col md="6" className="mt-5">
-              <h4 className="font-weight-bold">Computer Science</h4>
-              <p>
-                As one of the most innovative academic institutions in Uganda,
-                we’re renowned for our accredited programmes, quality education
-                and student-centred way of doing business that transforms and
-                inspires students to reach their full potential in employment,
-                entrepreneurship, and ethical leadership. As one of the most
-                innovative academic institutions in Uganda, we’re renowned for
-                our accredited programmes.
-              </p>
-              <div className="mb-3">
-                <Button>Learn More</Button>
-              </div>
-            </Col>
-
-            <Col md="6">
-              <img
-                className="img-thumbnail"
-                src="https://img.freepik.com/premium-photo/female-student-graduate-is-standing-university-hall-mantle-smiling-with-diploma-hands_115086-791.jpg?size=626&ext=jpg&uid=R46484519&ga=GA1.2.865723822.1660061549"
-              ></img>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-
       <section>
         <Container>
           <Row>
