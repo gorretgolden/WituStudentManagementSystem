@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { login } from "utils/auth";
 import { useHistory } from "react-router-dom";
 // react-bootstrap components
 import {
@@ -21,38 +20,20 @@ function Login() {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm();
+
   const history = useHistory();
 
-  //logging in a user
-  const loginUser = (data) => {
+  const submitForm = (data) => {
     console.log(data);
-
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    };
-
-    fetch("/users/login", requestOptions)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data.access_token);
-
-        if (data) {
-          login(data.access_token);
-
-          history.push("/");
-        } else {
-          alert("Invalid username or password");
-        }
-      });
 
     reset();
   };
+
+  console.log(watch("email"));
+  console.log(watch("password"));
 
   return (
     <>
@@ -72,53 +53,62 @@ function Login() {
             md="4"
             className=" align-items-center shadow-lg p-3 mb-5 bg-white rounded"
           >
-            <form>
+            <Form>
               <h3 className="font-weight-bold">Welcome Back</h3>
               <small>Log into your account</small>
               <br></br>
-             
-              {/* email address */}
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
                   type="email"
                   placeholder="Enter your email"
-                  name="email"
                   {...register("email", { required: true, maxLength: 25 })}
                 />
-                <Form.Text className="text-muted">
-                  We'll never share your email with anyone else.
-                </Form.Text>
+
+                {errors.email && (
+                  <p style={{ color: "red" }}>
+                    <small>Email is required</small>
+                  </p>
+                )}
+                {errors.email?.type === "maxLength" && (
+                  <p style={{ color: "red" }}>
+                    <small>Email should be 25 characters</small>
+                  </p>
+                )}
               </Form.Group>
-
-              {/* email address errors*/}
-              {errors.email && <p style={{color:'red'}}><small>Email is required</small></p>}
-                {errors.email?.type === "maxLength" && <p style={{color:'red'}}><small>Email should be 25 characters</small></p>}
-                <br></br>
-
 
               <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   type="password"
                   placeholder="Password"
-                  name="password"
-                  {...register('password',{required:true,minLength:8})}
+                  {...register("password", { required: true, maxLength: 25 })}
                 />
               </Form.Group>
 
-              {errors.password && <p style={{color:'red'}}><small>Password is required</small></p>}
-                {errors.password?.type === "maxLength" && <p style={{color:'red'}}>
-                    <small>Password should be more than 8 characters</small>
-                    </p>}
+              {errors.password && (
+                <p style={{ color: "red" }}>
+                  <small>Password is required</small>
+                </p>
+              )}
+              {errors.password?.type === "minLength" && (
+                <p style={{ color: "red" }}>
+                  <small>Min characters should be 8</small>
+                </p>
+              )}
+              <br></br>
 
-              <Button type="submit" className=" btn-block mt-4 text-muted lead" onClick={handleSubmit(loginUser)}>
+              <Button
+                type="submit"
+                className=" btn-block mt-4 text-muted lead"
+                onClick={handleSubmit(submitForm)}
+              >
                 Login
               </Button>
               <Form.Text className="text-muted mt-3 mt-4">
                 <Link to="/">Back to home</Link>
               </Form.Text>
-            </form>
+            </Form>
           </Col>
 
           <Col md="2"></Col>
