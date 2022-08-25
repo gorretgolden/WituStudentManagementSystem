@@ -1,4 +1,4 @@
-from flask import  jsonify, request, Blueprint
+from flask import  jsonify, request, Blueprint,make_response
 from db import db
 from models.course import Course
 from flask_restx import Api, Resource, Namespace, fields
@@ -54,6 +54,7 @@ class CoursesResource(Resource):
 
         data=request.get_json()
         name = data.get('name')
+        description = data.get('description')
         duration = data.get('duration')
 
         if not name:
@@ -70,15 +71,16 @@ class CoursesResource(Resource):
        
 
         new_course=Course(
-            name=data.get('name'),
-            description=data.get('description'),
-            duration=data.get('duration')
+            name=name,
+            description=description,
+            duration=duration
+            )
           
-        )
+        
 
         new_course.save()
 
-        return new_course,201
+        return make_response(jsonify({"message": "Course created successfully"}), 201)
 
 
 
@@ -122,4 +124,4 @@ class CourseResource(Resource):
 
         course.delete()
 
-        return 
+        return make_r

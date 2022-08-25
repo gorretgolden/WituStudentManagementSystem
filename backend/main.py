@@ -17,11 +17,7 @@ def create_app(config):
 
     CORS(app)
 
-
-
     JWTManager(app)
-
-
     from programs.routes import programs
     from users.routes import users
     from courses.routes import courses

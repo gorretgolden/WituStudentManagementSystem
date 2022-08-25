@@ -12,8 +12,9 @@ class User(db.Model):
    first_name = db.Column(db.String(50), index=True, unique=True,nullable=False)
    last_name = db.Column(db.String(50), index=True, unique=True,nullable=False)
    email = db.Column(db.String(150), unique = True, nullable=False)
-   contact = db.Column(db.String(150), unique = True, nullable=False)
-   password = db.Column(db.String(150))
+   contact = db.Column(db.String(150), nullable=False)
+   address = db.Column(db.String(150), nullable=True)
+   password = db.Column(db.String(150),nullable=False)
    created_at = db.Column(db.DateTime(), default = datetime.utcnow, index = True)
    updated_at = db.Column(db.DateTime(), default = datetime.utcnow, index = True)
 
@@ -30,11 +31,12 @@ class User(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-   def update(self,first_name,last_name,email,contact,password,role_id ):
+   def update(self,first_name,last_name,email,contact,address,password,role_id ):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
         self.contact = contact
+        self.address = address
         self.password = password
         self.role_id = role_id 
         

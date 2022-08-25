@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
@@ -17,6 +17,19 @@ import {
 } from "react-bootstrap";
 
 function StudentList() {
+   
+  const [students,setStudents] = useState([])
+
+  useEffect(() => {
+    fetch('/users/students')
+    .then(res=>res.json())
+    .then(data=>{
+      console.log(data)
+      setStudents(data)
+    })
+    .catch(error=>console.log(error))
+  }, [])
+
   let active = 1;
   let items = [];
   for (let number = 1; number <= 5; number++) {

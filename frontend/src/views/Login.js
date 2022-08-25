@@ -4,6 +4,7 @@ import { faPencil, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+import { login } from "../utils/auth";
 // react-bootstrap components
 import {
   Badge,
@@ -26,14 +27,29 @@ function Login() {
 
   const history = useHistory();
 
-  const submitForm = (data) => {
+  const loginUser = (data) => {
     console.log(data);
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+
+    fetch("/users/login", requestOptions)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.access_token);
+        login(data.access_token)
+        history.push('/admin/dashboard')
+   
+      });
 
     reset();
   };
 
-  console.log(watch("email"));
-  console.log(watch("password"));
 
   return (
     <>
@@ -62,7 +78,15 @@ function Login() {
                 <Form.Control
                   type="email"
                   placeholder="Enter your email"
-                  {...register("email", { required: true, maxLength: 25 })}
+                  {...register("email", {
+                    required: true,
+                    maxLength: 25,
+                    pattern: {
+                      value:
+                        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                      message: "Please enter a valid email",
+                    },
+                  })}
                 />
 
                 {errors.email && (
@@ -82,7 +106,11 @@ function Login() {
                 <Form.Control
                   type="password"
                   placeholder="Password"
-                  {...register("password", { required: true, maxLength: 25 })}
+                  {...register("password", {
+                    required: true,
+                    maxLength: 10,
+                    minLength: 4,
+                  })}
                 />
               </Form.Group>
 
@@ -101,7 +129,7 @@ function Login() {
               <Button
                 type="submit"
                 className=" btn-block mt-4 text-muted lead"
-                onClick={handleSubmit(submitForm)}
+                onClick={handleSubmit(loginUser)}
               >
                 Login
               </Button>

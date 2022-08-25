@@ -140,10 +140,10 @@ function LandingPage() {
                 height="438"
                 src="https://www.youtube.com/embed/8VZTtRX4HIk"
                 title="Women in Tech: Advice from Five Female Leaders"
-                frameborder="0"
+                frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-                autoplay
+                allowFullScreen
+                autoPlay
               ></iframe>
             </Col>
           </Row>

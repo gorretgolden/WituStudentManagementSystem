@@ -1,4 +1,4 @@
-from flask import  jsonify, request, Blueprint
+from flask import  jsonify, request, Blueprint,make_response
 import db
 from models.program import Program
 from flask_restx import Api, Resource, Namespace, fields
@@ -15,7 +15,8 @@ program_model=programs.model(
         "start_date":fields.Date(),
         "end_date":fields.Date(),
         "description":fields.String(),
-        "status":fields.String()
+        "status":fields.String(),
+        "course_id":fields.Integer()
     }
 )
 
@@ -50,7 +51,7 @@ class ProgramsResource(Resource):
 
     @programs.marshal_with(program_model)
     @programs.expect(program_model)
-    @jwt_required()
+    # @jwt_required()
     def post(self):
         """Create a new program"""
 
@@ -61,12 +62,13 @@ class ProgramsResource(Resource):
             description=data.get('description'),
             start_date=data.get('start_date'),
             end_date=data.get('end_date'),
-            status = data.get('status')
+            status = data.get('status'),
+            course_id = data.get('course_id')  
         )
 
         new_program.save()
 
-        return new_program,201
+        return make_response(jsonify({"message": "Program created successfully"}), 201)
 
 
 

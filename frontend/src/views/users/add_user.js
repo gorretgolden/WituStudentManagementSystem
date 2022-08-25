@@ -1,6 +1,5 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
+import React, { useState } from "react";
+import { Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
@@ -14,7 +13,10 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
-function AddStudent() {
+function AddUser() {
+  const [show, setShow] = useState(false);
+  const [serverResponse, setServerResponse] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -27,8 +29,6 @@ function AddStudent() {
 
   //registering a user
   const addUser = (data) => {
-
-
     if (data.password === data.confirm_password) {
       const body = {
         first_name: data.first_name,
@@ -37,6 +37,7 @@ function AddStudent() {
         email: data.email,
         address: data.address,
         password: data.password,
+        role_id: data.role_id,
       };
 
       const requestOptions = {
@@ -47,12 +48,13 @@ function AddStudent() {
         body: JSON.stringify(body),
       };
 
-      fetch("/auth/signup", requestOptions)
+      fetch("/users/signup", requestOptions)
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
           setServerResponse(data.message);
           setShow(true);
+          console.log(data.message);
         })
         .catch((err) => console.log(err));
 
@@ -73,9 +75,29 @@ function AddStudent() {
             md="6"
             className=" align-items-center shadow-lg p-3 mb-5 bg-white rounded"
           >
+            {show ? (
+              <>
+                <div
+                  className="alert alert-success alert-dismissible fade show"
+                  role="alert"
+                >
+                  <strong>{serverResponse}</strong>
+                  <button
+                    type="button"
+                    className="close"
+                    data-dismiss="alert"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </>
+            ) : (
+              <h3 className="font-weight-bold">Add New User</h3>
+            )}
             <Form>
-              <h3 className="font-weight-bold">Add New Student</h3>
-
+            
+            
               <br></br>
 
               <Form.Group className="mb-3">
@@ -83,11 +105,18 @@ function AddStudent() {
                 <Form.Control
                   type="text"
                   placeholder="Enter your first name"
-                  {...register("first_name", { required: true, maxLength: 25 })}
+                  {...register("first_name", {
+                    required: true,
+                    maxLength: 25,
+                    pattern: /^[A-Za-z]+$/i,
+                  })}
                 />
                 {errors.first_name && (
                   <p style={{ color: "red" }}>
-                    <small>First name is required</small>
+                    <small>
+                      First name is required and should not have numbers, space
+                      or characters
+                    </small>
                   </p>
                 )}
                 {errors.first_name?.type === "maxLength" && (
@@ -102,12 +131,19 @@ function AddStudent() {
                 <Form.Control
                   type="text"
                   placeholder="Enter last name"
-                  {...register("last_name", { required: true, maxLength: 25 })}
+                  {...register("last_name", {
+                    required: true,
+                    maxLength: 25,
+                    pattern: /^[A-Za-z]+$/i,
+                  })}
                 />
 
                 {errors.last_name && (
                   <p style={{ color: "red" }}>
-                    <small>Last name is required</small>
+                    <small>
+                      Last name is required and should not have numbers, space
+                      or characters
+                    </small>
                   </p>
                 )}
                 {errors.last_name?.type === "maxLength" && (
@@ -142,11 +178,18 @@ function AddStudent() {
                 <Form.Control
                   type="text"
                   placeholder="Enter address"
-                  {...register("address", { required: true, maxLength: 25 })}
+                  {...register("address", {
+                    required: true,
+                    maxLength: 25,
+                    pattern: /^[A-Za-z]+$/i,
+                  })}
                 />
                 {errors.address && (
                   <p style={{ color: "red" }}>
-                    <small>address is required</small>
+                    <small>
+                      User address is required and should not have numbers,
+                      space or characters
+                    </small>
                   </p>
                 )}
                 {errors.address?.type === "maxLength" && (
@@ -175,28 +218,43 @@ function AddStudent() {
                 )}
               </Form.Group>
 
-              <Form.Select aria-label="Default select example">
-                <option>Selct User role</option>
+              <Form.Select
+                aria-label="Default select example"
+                className={`w-100 p-2 mt-3  ${
+                  errors.role_id && (
+                    <p style={{ color: "red" }}>
+                      <small>{errors.role_id.message}</small>
+                    </p>
+                  )
+                }`}
+                {...register("role_id", { required: "User role is required" })}
+              >
+                <option value="">Select User role</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
               </Form.Select>
+              {errors.role_id && (
+                <p style={{ color: "red" }}>
+                  <small>{errors.role_id.message}</small>
+                </p>
+              )}
 
-              <Form.Group className="mb-3">
+              <Form.Group className="mb-3 mt-3">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   type="password"
                   placeholder="Password"
-                  {...register("password", { required: true, maxLength: 25 })}
+                  {...register("password", { required: true, minLength: 8 })}
                 />
                 {errors.password && (
                   <p style={{ color: "red" }}>
                     <small>password is required</small>
                   </p>
                 )}
-                {errors.password?.type === "maxLength" && (
+                {errors.password?.type === "minLength" && (
                   <p style={{ color: "red" }}>
-                    <small>password should be 25 characters</small>
+                    <small>Password should be 8 characters</small>
                   </p>
                 )}
               </Form.Group>
@@ -208,7 +266,7 @@ function AddStudent() {
                   placeholder="Confirm Password"
                   {...register("confirm_password", {
                     required: true,
-                    maxLength: 25,
+                    minLength: 8,
                   })}
                 />
 
@@ -217,9 +275,9 @@ function AddStudent() {
                     <small>confirm_password is required</small>
                   </p>
                 )}
-                {errors.confirm_password?.type === "maxLength" && (
+                {errors.confirm_password?.type === "minLength" && (
                   <p style={{ color: "red" }}>
-                    <small>confirm_password should be 25 characters</small>
+                    <small>confirm_password should be 8 characters</small>
                   </p>
                 )}
               </Form.Group>
@@ -242,4 +300,4 @@ function AddStudent() {
   );
 }
 
-export default AddStudent;
+export default AddUser;

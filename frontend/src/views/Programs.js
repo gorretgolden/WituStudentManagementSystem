@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 // react-bootstrap components
@@ -13,8 +13,57 @@ import {
   Row,
   Col,
   Pagination,
+  Modal,
+  Form,
 } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+
 function Programs() {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const [message, setMessage] = useState(false);
+  const [serverResponse, setServerResponse] = useState("");
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const addNewProgram = (data) => {
+    const body = {
+      name: data.name,
+      start_date: data.start_date,
+      end_date: data.end_date,
+      description: data.description,
+      status: data.status,
+    };
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(body),
+    };
+
+    fetch("/programs/", requestOptions)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setServerResponse(data.message);
+        setMessage(true);
+        console.log(data.message);
+      })
+      .catch((err) => console.log(err));
+
+    reset();
+  };
 
   let active = 1;
   let items = [];
@@ -27,11 +76,12 @@ function Programs() {
   }
   return (
     <>
-    <Container fluid>
+      <Container fluid>
         <Row>
-
           <Col md="12">
-          <Button className="float-right mb-2">Add New Program</Button>
+            <Button className="float-right mb-2" onClick={handleShow}>
+              Add New Program
+            </Button>
           </Col>
           <Col md="12">
             <Card className="strpied-tabled-with-hover">
@@ -40,12 +90,12 @@ function Programs() {
               </Card.Header>
               <Card.Body className="table-full-width table-responsive px-0">
                 <Table className="table-hover table-striped">
-                <thead>
+                  <thead>
                     <tr>
                       <th className="border-0">ID</th>
                       <th className="border-0">Name</th>
                       <th className="border-0">Description</th>
-                      <th className="border-0">Duration</th>
+                      <th className="border-0">start_date</th>
                       <th className="border-0">Start Date</th>
                       <th className="border-0">End Date</th>
                       <th className="border-0">View</th>
@@ -59,12 +109,11 @@ function Programs() {
                       <td>Programming</td>
                       <td>Cohort 2</td>
                       <td>2years</td>
-               
+
                       <td>7th/05/2022</td>
                       <td>15th/03/2024</td>
 
                       <td>
-                    
                         <FontAwesomeIcon icon={faEye} />
                       </td>
                       <td>
@@ -74,7 +123,6 @@ function Programs() {
                         <FontAwesomeIcon icon={faTrash} />
                       </td>
                     </tr>
-                  
                   </tbody>
                 </Table>
               </Card.Body>
@@ -83,9 +131,190 @@ function Programs() {
               <Pagination>{items}</Pagination>
             </div>
           </Col>
-
-         
         </Row>
+
+        <div className="py-5">
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header>
+              {message ? (
+                <>
+                  <div
+                    className="alert alert-success alert-dismissible fade show"
+                    role="alert"
+                  >
+                    <strong>{serverResponse}</strong>
+                    <button
+                      type="button"
+                      className="close"
+                      data-dismiss="alert"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <Modal.Title className="font-weight-bold">
+                  Add New Program
+                </Modal.Title>
+              )}
+            </Modal.Header>
+            <Modal.Body>
+              <Row>
+                <Col md="12" xs="12" className=" align-items-center">
+                  <Form>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Label>Program Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter Program name"
+                        {...register("name", {
+                          required: true,
+                          minLength: 10,
+                        })}
+                        className="border border-dark rounded"
+                      />
+
+                      {errors.name && (
+                        <p style={{ color: "red" }}>
+                          <small>Program name is required</small>
+                        </p>
+                      )}
+                      {errors.name?.type === "minLength" && (
+                        <p style={{ color: "red" }}>
+                          <small>
+                            Program name should be more than 10 characters
+                          </small>
+                        </p>
+                      )}
+                    </Form.Group>
+
+                    <Form.Group
+                      className="mb-3 mt-2"
+                      controlId="formBasicPassword"
+                    >
+                      <Form.Label>Program Start Date</Form.Label>
+                      <Form.Control
+                        type="date"
+                        placeholder="Program start date"
+                        {...register("start_date", {
+                          required: true,
+                        })}
+                        className="border border-dark rounded"
+                      />
+                    </Form.Group>
+                    {errors.start_date && (
+                      <p style={{ color: "red" }}>
+                        <small>Program start_date is required</small>
+                      </p>
+                    )}
+
+                    <Form.Group
+                      className="mb-3 mt-2"
+                      controlId="formBasicPassword"
+                    >
+                      <Form.Label>Program End Date</Form.Label>
+                      <Form.Control
+                        type="date"
+                        placeholder="Program start date"
+                        {...register("end_date", {
+                          required: true,
+                        })}
+                        className="border border-dark rounded"
+                      />
+                    </Form.Group>
+                    {errors.end_date && (
+                      <p style={{ color: "red" }}>
+                        <small>Program end date is required</small>
+                      </p>
+                    )}
+
+                    <br></br>
+
+                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                      <Form.Label>Description</Form.Label>
+                      <Form.Control
+                        type="text"
+                        as="textarea"
+                        rows="3"
+                        placeholder="Program description"
+                        {...register("description", {
+                          maxLength: 100,
+                          minLength: 4,
+                        })}
+                        className="border border-dark rounded"
+                      />
+                    </Form.Group>
+                    {errors.description?.type === "minLength" && (
+                      <p style={{ color: "red" }}>
+                        <small>Min characters should be 8</small>
+                      </p>
+                    )}
+
+                    <Form.Label>Program Course</Form.Label>
+                    <Form.Select
+                      aria-label="Default select example"
+                      className={`w-100 p-2 mt-3  ${
+                        errors.course_id && (
+                          <p style={{ color: "red" }}>
+                            <small>{errors.course_id.message}</small>
+                          </p>
+                        )
+                      }`}
+                      {...register("course_id", {
+                        required: "Program course is required",
+                      })}
+                    >
+                      <option value="">Select Program Status</option>
+                      <option value="1">Elevate</option>
+                      <option value="2">Computer Science</option>
+                    </Form.Select>
+                    {errors.status && (
+                      <p style={{ color: "red" }}>
+                        <small>{errors.status.message}</small>
+                      </p>
+                    )}
+
+                    <Form.Label>Program Status</Form.Label>
+                    <Form.Select
+                      aria-label="Default select example"
+                      className={`w-100 p-2 mt-3  ${
+                        errors.status && (
+                          <p style={{ color: "red" }}>
+                            <small>{errors.status.message}</small>
+                          </p>
+                        )
+                      }`}
+                      {...register("status", {
+                        required: "Program status is required",
+                      })}
+                    >
+                      <option value="">Select Program Status</option>
+                      <option value="1">Inprogress</option>
+                      <option value="2">Closed</option>
+                    </Form.Select>
+                    {errors.status && (
+                      <p style={{ color: "red" }}>
+                        <small>{errors.status.message}</small>
+                      </p>
+                    )}
+                  </Form>
+                </Col>
+              </Row>
+            </Modal.Body>
+            <Modal.Footer className="mt-2">
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={handleSubmit(addNewProgram)}>
+                Save
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </div>
+
+        <br></br>
+        <br></br>
       </Container>
     </>
   );
@@ -93,7 +322,8 @@ function Programs() {
 
 export default Programs;
 
-{/* <Col md="12">
+{
+  /* <Col md="12">
 <Card>
   <Card.Header>
     <Card.Title as="h4">100 Awesome Nucleo Icons</Card.Title>
@@ -707,4 +937,5 @@ export default Programs;
     </Row>
   </Card.Body>
 </Card>
-</Col> */}
+</Col> */
+}

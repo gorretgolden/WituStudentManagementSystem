@@ -18,6 +18,7 @@ user_model = users.model(
         "last_name": fields.String(),
         "email": fields.String(),
         "contact": fields.String(),
+         "address": fields.String(),
         "password": fields.String(),
          "role_id": fields.String()
        
@@ -43,7 +44,8 @@ class SignUp(Resource):
         first_name = data.get('first_name')
         last_name = data.get('last_name')
         email = data.get('email')
-        contact = data.get('contact')
+        contact = data.get('copSntact')
+        address = data.get('address')
         password = data.get('password')
         role_id = data.get('role_id')  
         # email conflicts
@@ -78,12 +80,13 @@ class SignUp(Resource):
             last_name=last_name,
             email=email,
             contact=contact,
+            address=address,
             password=generate_password_hash(data.get('password'))
         )
 
         new_user.save()
 
-        return make_response(jsonify({"message": "User created successfuly"}), 201)
+        return make_response(jsonify({"message": "User created successfully"}), 201)
 
 
 @users.route('/login')
@@ -136,10 +139,24 @@ class UsersResource(Resource):
     @users.marshal_list_with(user_model)
     def get(self):
         """Get all users """
-
         users=User.query.all()
-  
         return users
+
+
+
+
+#retrieving users by roles
+
+@users.route('/students')
+class StudentsRoleResource(Resource):
+
+    @users.marshal_list_with(user_model)
+    def get(self):
+        """Get all students """
+
+        students=User.query.filter_by(role_id=1).all()
+        return students
+ 
 
 
 @users.route('/<int:id>')

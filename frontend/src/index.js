@@ -12,7 +12,9 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import AdminLayout from "layouts/Admin.js";
 import LandingPage from "views/LandingPage";
 import Login from "views/Login";
-import AddStudent from "views/students/add-student";
+import AddUser from "views/users/add_user";
+import { Modal } from "react-bootstrap";
+import Modals from "views/modal";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -28,8 +30,12 @@ root.render(
       <Route path="/login">
         <Login />
       </Route>
-      <Route path="/students/new">
-        <AddStudent/>
+      <Route path="/users/new">
+        <AddUser/>
+      </Route>
+
+      <Route path="/modal">
+        <Modals/>
       </Route>
     </Switch>
   </BrowserRouter>
