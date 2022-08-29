@@ -1,8 +1,8 @@
-from flask import  jsonify, request, Blueprint
+from flask import  jsonify, request, Blueprint,make_response
 from models.course_unit import CourseUnit
-from models.course import Course
+from models.course import StudentCourse
 from flask_restx import Api, Resource, Namespace, fields
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required,get_jwt_identity
 
 
 course_units=Namespace('course_units')
@@ -13,9 +13,9 @@ course_unit_model=course_units.model(
     {
         "id":fields.Integer(),
         "name":fields.String(),
-         "description":fields.String(),
         "programe_id":fields.Integer(),
-        "semister_id":fields.Integer()
+        "semister_id":fields.Integer(),
+        "created_by":fields.Integer()
  
     
     }
@@ -47,16 +47,14 @@ class CourseUnitResource(Resource):
 
         new_course_unit=CourseUnit(
             name=data.get('name'),
-            description=data.get('description'),
              program_id=data.get('program_id'),
              semister_id=data.get('semister_id'),
-
-
+             created_by = get_jwt_identity()
         )
 
         new_course_unit.save()
 
-        return new_course_unit,201
+        return make_response(jsonify({"message": "User created successfully"}), 201)
 
 
 

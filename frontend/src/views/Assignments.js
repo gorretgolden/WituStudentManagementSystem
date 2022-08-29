@@ -2,21 +2,12 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 // react-bootstrap components
-import {
-  Badge,
-  Button,
-  Card,
-  Navbar,
-  Nav,
-  Table,
-  Container,
-  Row,
-  Col,
-  Pagination,
-} from "react-bootstrap";
+import {Badge,Button,Card,Navbar,Nav,Table,Row,Col,Pagination,Container} from "react-bootstrap";
 
 function Assignments() {
 
+  
+  let token=localStorage.getItem('REACT_TOKEN_AUTH_KEY')
   let active = 1;
   let items = [];
   for (let number = 1; number <= 5; number++) {
@@ -27,6 +18,41 @@ function Assignments() {
     );
   }
  
+
+
+
+
+
+
+const updateProfile=(data)=>{
+    console.log(data)
+
+    
+
+    const requestOptions={
+        method:'PUT',
+        headers:{
+            'content-type':'application/json',
+            'Authorization':`Bearer ${JSON.parse(token)}`
+        },
+        body:JSON.stringify(data)
+    }
+
+
+    fetch(`/users/${adminId}`,requestOptions)
+    .then(res=>res.json())
+    .then(data=>{
+        console.log(data)
+
+        const reload =window.location.reload()
+        reload() 
+    })
+    .catch(err=>console.log(err))
+}
+
+
+
+
   return (
     <>
     <Container fluid>

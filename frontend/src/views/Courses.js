@@ -1,32 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 // react-bootstrap components
-import {
-  Badge,
-  Button,
-  Card,
-  Navbar,
-  Nav,
-  Table,
-  Container,
-  Row,
-  Col,
-  Pagination,
-  Modal,
-} from "react-bootstrap";
+import {Badge,Button,Card,Navbar,Nav,Table,Container,Row,Col,Pagination,Modal,} from "react-bootstrap";
 import { Link } from "react-router-dom";
+import ViewCourse from "components/courses/course";
 
 function Courses() {
   const [show, setShow] = useState(false);
-
+  const [courses, setCourses] = useState([]);
+  const [courseId, setCourseId] = useState(0);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
   const [message, setMessage] = useState(false);
   const [serverResponse, setServerResponse] = useState("");
+  const {register,handleSubmit,reset,watch,setValue,formState: { errors },} = useForm();
+  let token = localStorage.getItem("REACT_TOKEN_AUTH_KEY");
+
+  //fetching all courses
+  useEffect(() => {
+    fetch("/courses/")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setCourses(data);
+      });
+  }, []);
+
 
   let active = 1;
   let items = [];
@@ -38,40 +40,105 @@ function Courses() {
     );
   }
 
-  const {register,handleSubmit, reset, watch,formState: { errors },} = useForm();
-
   const addNewCourse = (data) => {
- 
-      const body = {
-        name: data.name,
-        duration:data.duration,
-        description:data.description
-      };
 
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(body),
-      };
+    console.log(data)
+    const body = {
+      name: data.name,
+      duration: data.duration,
+      description: data.description,
+    };
 
-      fetch("/courses/", requestOptions)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          setServerResponse(data.message);
-          setMessage(true);
-          console.log(data.message);
-        })
-        .catch((err) => console.log(err));
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${JSON.parse(token)}`,
+      },
+      body: JSON.stringify(body),
+    };
 
-      reset();
-    
+    fetch("/courses/", requestOptions)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setServerResponse(data.message);
+        setMessage(true);
+        console.log(data.message);
+      })
+      .catch((err) => console.log(err));
+
+    reset();
   };
 
+  //fetch all courses
+  const getAllCourses = () => {
+    fetch("/courses")
+      .then((res) => res.json())
+      .then((data) => {
+        setCourses(data);
+      })
+      .catch((err) => console.log(err));
+  };
 
-  
+  //delete a course by id
+  const deleteCourse = (id) => {
+    console.log(id);
+
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${JSON.parse(token)}`,
+      },
+    };
+
+    fetch(`/courses/course/${id}`, requestOptions)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        getAllCourses();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  //show course by id
+  const showUpdateModal = (id) => {
+    setShow(true);
+    setCourseId(id);
+    courses.map((course) => {
+      if (course.id == id) {
+        setValue("name", course.title);
+        setValue("duration", course.description);
+        setValue("description", course.description);
+      }
+    });
+  };
+
+  //update course
+  const updateCourse = (data) => {
+    console.log(data);
+
+    const requestOptions = {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${JSON.parse(token)}`,
+      },
+      body: JSON.stringify(data),
+    };
+
+    fetch(`/courses/course${recipeId}`, requestOptions)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+
+        const reload = window.location.reload();
+        reload();
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <>
       <Container fluid>
@@ -94,43 +161,26 @@ function Courses() {
                       <th className="border-0">ID</th>
                       <th className="border-0">Name</th>
                       <th className="border-0">Description</th>
-
-                      <th className="border-0">View</th>
+                 
                       <th className="border-0">Edit</th>
                       <th className="border-0">Delete</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Computer Science</td>
-                      <td>Programming</td>
-                      <td>2years</td>
-
-                      <td>
-                        <FontAwesomeIcon icon={faEye} />
-                      </td>
-                      <td>
-                        <FontAwesomeIcon icon={faPencil} />
-                      </td>
-                      <td>
-                        <FontAwesomeIcon icon={faTrash} />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Computer Science</td>
-                      <td>Programming</td>
-                      <td>2years</td>
-
-                      <td>
-                        <FontAwesomeIcon icon={faEye} />
-                      </td>
-                      <td>
-                        <FontAwesomeIcon icon={faPencil} />
-                      </td>
-                      <td>
-                        <FontAwesomeIcon icon={faTrash} />
-                      </td>
-                    </tr>
+                  {courses.map((course, index) => (
+                      <ViewCourse
+                        id={course.id}
+                        name={course.name}
+                        duration={course.duration}
+                        key={index}
+                        onClick={() => {
+                          showUpdateModal(course.id);
+                        }}
+                        onDelete={() => {
+                          deleteCourse(course.id);
+                        }}
+                      />
+                    ))}
                   </tbody>
                 </Table>
               </Card.Body>
@@ -144,34 +194,34 @@ function Courses() {
         <div className="py-5">
           <Modal show={show} onHide={handleClose}>
             <Modal.Header>
-            {message? (
-              <>
-                <div
-                  className="alert alert-success alert-dismissible fade show"
-                  role="alert"
-                >
-                  <strong>{serverResponse}</strong>
-                  <button
-                    type="button"
-                    className="close"
-                    data-dismiss="alert"
-                    aria-label="Close"
+            {message ? (
+                <>
+                  <div
+                    className="alert alert-success alert-dismissible fade show"
+                    role="alert"
                   >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-              </>
-            ) : (
-              <Modal.Title className="font-weight-bold">Add New Course</Modal.Title>
-            )}
-              
+                    <strong>{serverResponse}</strong>
+                    <button
+                      type="button"
+                      className="close"
+                      data-dismiss="alert"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <Modal.Title className="font-weight-bold">
+                  Add New  Course
+                </Modal.Title>
+              )}
+            
             </Modal.Header>
             <Modal.Body>
-         
               <Row>
                 <Col md="12" xs="12" className=" align-items-center">
                   <Form>
-              
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>Course Name</Form.Label>
                       <Form.Control
@@ -191,13 +241,17 @@ function Courses() {
                       )}
                       {errors.name?.type === "minLength" && (
                         <p style={{ color: "red" }}>
-                          <small>Course name should be more than 10 characters</small>
+                          <small>
+                            Course name should be more than 10 characters
+                          </small>
                         </p>
                       )}
                     </Form.Group>
-                   
-                   
-                    <Form.Group className="mb-3 mt-2" controlId="formBasicPassword">
+
+                    <Form.Group
+                      className="mb-3 mt-2"
+                      controlId="formBasicPassword"
+                    >
                       <Form.Label>Duration</Form.Label>
                       <Form.Control
                         type="text"
@@ -211,10 +265,10 @@ function Courses() {
                       />
                     </Form.Group>
                     {errors.duration && (
-                        <p style={{ color: "red" }}>
-                          <small>Course duration is required</small>
-                        </p>
-                      )}
+                      <p style={{ color: "red" }}>
+                        <small>Course duration is required</small>
+                      </p>
+                    )}
                     {errors.duration?.type === "minLength" && (
                       <p style={{ color: "red" }}>
                         <small>Min characters should be 8</small>
@@ -225,7 +279,8 @@ function Courses() {
                       <Form.Label>Description</Form.Label>
                       <Form.Control
                         type="text"
-                        as="textarea" rows="3" 
+                        as="textarea"
+                        rows="3"
                         placeholder="Course description"
                         {...register("description", {
                           maxLength: 100,
@@ -240,10 +295,8 @@ function Courses() {
                       </p>
                     )}
                     <br></br>
-                  
                   </Form>
                 </Col>
-
               </Row>
             </Modal.Body>
             <Modal.Footer>
@@ -251,14 +304,13 @@ function Courses() {
                 Close
               </Button>
               <Button variant="primary" onClick={handleSubmit(addNewCourse)}>
-                Save 
+                Save
               </Button>
             </Modal.Footer>
           </Modal>
         </div>
 
-        <br>
-        </br>
+        <br></br>
         <br></br>
       </Container>
     </>

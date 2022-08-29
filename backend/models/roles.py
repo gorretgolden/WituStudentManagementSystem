@@ -1,15 +1,8 @@
 from datetime import date, datetime
-from email.policy import default
-from flask_sqlalchemy import SQLAlchemy
-from dataclasses import dataclass
 from db import db
 
 
 class Role(db.Model):
-   id: int
-   name: str
-   created_at:datetime
-   updated_at:datetime
 
    __tablename__ = 'roles'   
    id = db.Column(db.Integer, primary_key=True)

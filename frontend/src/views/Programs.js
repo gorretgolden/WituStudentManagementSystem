@@ -1,40 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
-// react-bootstrap components
-import {
-  Badge,
-  Button,
-  Card,
-  Navbar,
-  Nav,
-  Table,
-  Container,
-  Row,
-  Col,
-  Pagination,
-  Modal,
-  Form,
-} from "react-bootstrap";
+import {Badge,Button,Card,Navbar,Nav,Table,Container,Row,Col,Pagination,Modal,Form,} from "react-bootstrap";
 import { useForm } from "react-hook-form";
 
 function Programs() {
+  //constants
   const [show, setShow] = useState(false);
-
+  const [programs, setPrograms] = useState([]);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
   const [message, setMessage] = useState(false);
   const [serverResponse, setServerResponse] = useState("");
+  const {register,handleSubmit,reset,watch,formState: { errors }} = useForm();
+  let token=localStorage.getItem('REACT_TOKEN_AUTH_KEY')
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    watch,
-    formState: { errors },
-  } = useForm();
 
+  //fetching all programs
+  useEffect(() => {
+    fetch("/programs/")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setPrograms(data);
+      });
+  }, []);
+
+  //mapping through the response
+  const programlists = programs.map((program) => (
+    <tr key={program.id}>
+      <td>{program.id}</td>
+      <td>{program.name}</td>
+      <td>{program.start_date}</td>
+      <td>{program.end_date}</td>
+
+      <td>
+        <FontAwesomeIcon icon={faEye} />
+      </td>
+      <td>
+        <FontAwesomeIcon icon={faPencil} />
+      </td>
+      <td>
+        <FontAwesomeIcon icon={faTrash} />
+      </td>
+    </tr>
+  ));
+
+  //adding new programs
   const addNewProgram = (data) => {
     const body = {
       name: data.name,
@@ -48,6 +60,7 @@ function Programs() {
       method: "POST",
       headers: {
         "content-type": "application/json",
+        Authorization: `Bearer ${JSON.parse(token)}`,
       },
       body: JSON.stringify(body),
     };
@@ -63,6 +76,62 @@ function Programs() {
       .catch((err) => console.log(err));
 
     reset();
+  };
+
+  //update a program
+  const updateProgram = (data) => {
+    console.log(data);
+
+    const requestOptions = {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${JSON.parse(token)}`,
+      },
+      body: JSON.stringify(data),
+    };
+
+    fetch(`/programs/program/${programId}`, requestOptions)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+
+        const reload = window.location.reload();
+        reload();
+      })
+      .catch((err) => console.log(err));
+  };
+
+
+  //get all programs
+  const getAllPrograms=()=>{
+    fetch('/programs')
+    .then(res => res.json())
+    .then(data => {
+        setPrograms(data)
+    })
+    .catch(err => console.log(err))
+}
+ 
+//delete a program
+  const deleteProgram = (id) => {
+    console.log(id);
+
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${JSON.parse(token)}`,
+      },
+    };
+
+    fetch(`/program/program/${id}`, requestOptions)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        getAllPrograms();
+      })
+      .catch((err) => console.log(err));
   };
 
   let active = 1;
@@ -94,8 +163,6 @@ function Programs() {
                     <tr>
                       <th className="border-0">ID</th>
                       <th className="border-0">Name</th>
-                      <th className="border-0">Description</th>
-                      <th className="border-0">start_date</th>
                       <th className="border-0">Start Date</th>
                       <th className="border-0">End Date</th>
                       <th className="border-0">View</th>
@@ -103,27 +170,7 @@ function Programs() {
                       <th className="border-0">Delete</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td>Computer Science</td>
-                      <td>Programming</td>
-                      <td>Cohort 2</td>
-                      <td>2years</td>
-
-                      <td>7th/05/2022</td>
-                      <td>15th/03/2024</td>
-
-                      <td>
-                        <FontAwesomeIcon icon={faEye} />
-                      </td>
-                      <td>
-                        <FontAwesomeIcon icon={faPencil} />
-                      </td>
-                      <td>
-                        <FontAwesomeIcon icon={faTrash} />
-                      </td>
-                    </tr>
-                  </tbody>
+                  <tbody>{programlists}</tbody>
                 </Table>
               </Card.Body>
             </Card>
@@ -265,7 +312,7 @@ function Programs() {
                         required: "Program course is required",
                       })}
                     >
-                      <option value="">Select Program Status</option>
+                      <option value="">Select Program Course</option>
                       <option value="1">Elevate</option>
                       <option value="2">Computer Science</option>
                     </Form.Select>

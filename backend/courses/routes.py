@@ -1,6 +1,5 @@
 from flask import  jsonify, request, Blueprint,make_response
-from db import db
-from models.course import Course
+from models.course import StudentCourse
 from flask_restx import Api, Resource, Namespace, fields
 from flask_jwt_extended import jwt_required
 
@@ -15,24 +14,11 @@ course_model=courses.model(
         "name":fields.String(),
         "description":fields.String(),
         "duration":fields.String()
+      
     
     }
 )
 
-
-@courses.route('/')
-class CoursesResource(Resource):
-
-    @courses.marshal_list_with(course_model)
-    def get(self):
-        """Get all courses """
-
-        courses=Course.query.all()
-        
-        return courses
-
-
-        
 
 #creating courses
 @courses.route('/')
@@ -42,13 +28,14 @@ class CoursesResource(Resource):
     def get(self):
         """Get all courses """
 
-        courses=Course.query.all()
+        courses=StudentCourse.query.all()
         
         return courses
 
 
     @courses.marshal_with(course_model)
     @courses.expect(course_model)
+
     def post(self):
         """Create a new course"""
 
@@ -56,6 +43,7 @@ class CoursesResource(Resource):
         name = data.get('name')
         description = data.get('description')
         duration = data.get('duration')
+    
 
         if not name:
             return jsonify({'error':"Course name is required"})
@@ -64,34 +52,29 @@ class CoursesResource(Resource):
             return jsonify({'error':"Course duration is required"}) 
 
          # name conflicts
-        course_name = Course.query.filter_by(name=name).first()
+        course_name = StudentCourse.query.filter_by(name=name).first()
 
         if course_name is not None:
             return jsonify({"message": f" {course_name} already exists"})
        
 
-        new_course=Course(
-            name=name,
-            description=description,
-            duration=duration
-            )
+        new_course=StudentCourse(name=name,description=description,duration=duration)
           
-        
 
         new_course.save()
 
-        return make_response(jsonify({"message": "Course created successfully"}), 201)
+        return new_course
 
 
 
-#retrieving a single course
-@courses.route('/<int:id>')
+#single course
+@courses.route('/course/<int:id>')
 class CourseResource(Resource):
 
     @courses.marshal_with(course_model)
     def get(self,id):
         """Get a course by id """
-        course=Course.query.get_or_404(id)
+        course=StudentCourse.query.get_or_404(id)
 
         return course
 
@@ -102,7 +85,7 @@ class CourseResource(Resource):
         """Update a course by id """
         
 
-        course=Course.query.get_or_404(id)
+        course=StudentCourse.query.get_or_404(id)
 
         data=request.get_json()
         name = data.get('name')
@@ -118,10 +101,10 @@ class CourseResource(Resource):
     @courses.marshal_with(course_model)
     @jwt_required()
     def delete(self,id):
-        """Delete a recipe by id """
+        """Delete a course by id """
 
-        course=Course.query.get_or_404(id)
+        course=StudentCourse.query.get_or_404(id)
 
         course.delete()
 
-        return make_r
+        return make_response(jsonify({"message": "Course Deleted successfully"}), 201)

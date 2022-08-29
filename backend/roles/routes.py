@@ -1,7 +1,6 @@
 from flask import  jsonify, request, Blueprint,make_response
 from models.roles import Role
 from db import db
-from models.course import Course
 from flask_restx import Api, Resource, Namespace, fields
 from flask_jwt_extended import jwt_required
 
@@ -13,22 +12,10 @@ roles_model=roles.model(
     "Role",
     {
         "id":fields.Integer(),
-        "name":fields.String()
+        "name":fields.String(),
     
     }
 )
-
-
-@roles.route('/')
-class RolesResource(Resource):
-
-    @roles.marshal_list_with(roles_model)
-    def get(self):
-        """Get all roles """
-
-        roles=Role.query.all()
-        
-        return roles
 
 
         
@@ -48,14 +35,13 @@ class RolesResource(Resource):
 
     @roles.marshal_with(roles_model)
     @roles.expect(roles_model)
-    # @jwt_required()
     def post(self):
         """Create a new role"""
 
         data=request.get_json()
         role_name = data.get('name')
 
-        #validations
+ 
         #role name conflicts
         role = Role.query.filter_by(name=role_name).first()
         if role is not None:
@@ -73,7 +59,7 @@ class RolesResource(Resource):
 
 
 #retrieving a single role
-@roles.route('/<int:id>')
+@roles.route('/role/<int:id>')
 class RoleResource(Resource):
 
     @roles.marshal_with(roles_model)
@@ -90,23 +76,23 @@ class RoleResource(Resource):
         """Update a role by id """
         
 
-        role=Role.query.get_or_404(id)
+        updated_role=Role.query.get_or_404(id)
 
         data=request.get_json()
         name = data.get('name')
 
-        role.update(name)
+        updated_role.update(name)
 
-        return make_response(jsonify({"message": "Role updated successfuly","role":role}), 200)
+        return updated_role
 
 
     @roles.marshal_with(roles_model)
-    # @jwt_required()
+    @jwt_required()
     def delete(self,id):
         """Delete a role by id """
 
-        role=Role.query.get_or_404(id)
+        role_deleted=Role.query.get_or_404(id)
 
-        role.delete()
+        role_deleted.delete()
 
-        return make_response(jsonify({"message": "Role deleted successfuly"}), 200)
+        return role_deleted 

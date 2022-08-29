@@ -1,183 +1,121 @@
-# from flask import  jsonify, request, Blueprint
-# from flask_jwt_extended import jwt_required,get_jwt_identity
-# from StackOverFlow.models.models import db
-# from StackOverFlow.models.models import Answer, Question
+import os
+from flask import  jsonify, request, Blueprint,make_response
+from backend.models.notes import Note
+from db import db
+from models.course import Course
+from flask_restx import Api, Resource, Namespace, fields
+from flask_jwt_extended import jwt_required
+from werkzeug.utils import secure_filename
 
-# questions = Blueprint('questions', __name__,url_prefix="/questions")
-
-
-
-# #retrieving all questions 
-# @questions.route("/", methods=['GET'])
-# def all_questions():
-#     #ensuring that a user has logged in
-#     all_questions = Question.query.all()
-#     return jsonify(all_questions),200
+notes=Namespace('notes')
 
 
-# #retrieving all questions for a user
-# @questions.route("/users/<int:user_id>", methods=['GET'])
-# @jwt_required()
-# def all_user_questions(user_id):
-#     #ensuring that a user has logged in
-#     user_id= get_jwt_identity()
-#     all_questions = Question.query.filter_by(id=user_id).all()
-#     return jsonify(all_questions),200
-
-
-# #retrieving single questions item
-# @questions.route("/<int:questionId>", methods=['GET'])
-# def single_question(questionId):
-#     single_question = Question.query.filter_by(id=questionId).first()
+note_model=notes.model(
+    "note",
+    {
+        "id":fields.Integer(),
+        "flile":fields.String(),
+        "course_unit_id":fields.Integer(),
+        
     
-#     #Question that does'nt exist
-#     if not single_question:
-#         return jsonify({'message': '  Question not found'}), 404
-#     return jsonify(single_question),200
-
-
-# #retrieving single questions item for a user
-# @questions.route("/<string:questionId>", methods=['GET'])
-# @jwt_required()
-# def single_user_question(questionId):
-#     current_user = get_jwt_identity()
-#     single_question = Question.query.filter_by(user_id=current_user,id=questionId).first()
+    }
+)
+UPLOAD_FOLDER = 'static/uploads'
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
     
-#     #if a question doesnt exist
-#     if not single_question:
-#         return jsonify({'message': '  Question not found'}), 404
-#     return jsonify(single_question),200 
+#creating notes
+@notes.route('/')
+class NotesResource(Resource):
+
+    @notes.marshal_list_with(note_model)
+    def get(self):
+        """Get all notes """
+
+        notes=Note.query.all()
+        
+        return notes
 
 
-# #creating questions
-# @questions.route("/", methods=["POST"])
-# @jwt_required()
-# def new_questions():
-    
-#     if request.method == "POST":
-        
-#         user_id = get_jwt_identity()
-#         title = request.json['title']
-#         body = request.json['body']
-#         tag = request.json['tag']
-       
-       
+    @notes.marshal_with(note_model)
+    @notes.expect(note_model)
+    def post(self):
 
-#        #empty fields
-      
-#         if not title:
-                 
-#           return jsonify({'error': 'Please provide a title for the question'}), 400 #bad request
-          
-#         if not body:
-#                 return jsonify({'error': 'Please provide a body for the question'}), 400
-#         #empty fields
-      
+        """Create new notes"""
 
-          
-#         if not tag:
-#                 return jsonify({'error': 'Please add a tag for the question ie python '}), 400
-        
-#         #checking if title exists
-#         if Question.query.filter_by(title=title).first():
-#                 return jsonify({
-#                 'error': 'Question title exists'
-#             }), 409 #conflicts
-        
-#         #checking if body exists
-#         if Question.query.filter_by(body=body).first():
-#                 return jsonify({
-#                 'error': 'Question body already exists'
-#             }), 409
-        
-           
+        data=request.get_json()
+        file = data.get('name')
+        course_unit_id= data.get('course_unit_id')
 
-#         #inserting values into the questions_list
-#         new_question = Question(title=title,body=body,user_id=user_id,tag=tag)
-#         db.session.add(new_question)
-#         db.session.commit()
+        if 'files[]' not in request.files:
+            resp = make_response(jsonify({'message':'No file exists'}))
+            resp.status_code = 400
+            return resp
         
-         
+
+        files = request.files.getlist('files[]')
+        errors = {}
+        success = False
+
+
+        for file in files:
+            if file in allowed_file(file.filename):
+                file_name = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+                success = True
+            else:
+
+                errors[file.filename] = 'File type is not allowed'    
+
+   
+        
+
   
-#     return jsonify({'message':'new question posted','tag':tag,'title':title,'body':body,'user_id':user_id}),200
-    
+
+        return make_response(jsonify({"message": "note created successfully"}), 201)
 
 
- 
-# # #deleting a question
-# @questions.route("/remove/<string:questionId>", methods=['DELETE'])
-# @jwt_required()
-# def delete_questions(questionId):
-#     current_user = get_jwt_identity()
 
-#     question = Question.query.filter_by(user_id=current_user, id=questionId).first()
+#retrieving a single note
+@notes.route('/<int:id>')
+class noteResource(Resource):
 
-#     if not question:
-#         return jsonify({'message': 'Item not found'}), 404
+    @notes.marshal_with(note_model)
+    def get(self,id):
+        """Get a note by id """
+        note=note.query.get_or_404(id)
 
-#     db.session.delete(question)
-#     db.session.commit()
-
-#     return jsonify({}), 204
-
-    
+        return note
 
 
-# #creating answers
-# @questions.route("/<int:question_id>/answers", methods=["POST"])
-# @jwt_required()
-# def new_answers(question_id):
-#     if request.method == "POST":
+    @notes.marshal_with(note_model)
+    @jwt_required()
+    def put(self,id):
+        """Update a course by id """
         
-#         question_id =  request.json['question_id']
-#         user_id = get_jwt_identity()
-#         body = request.json['body']
-        
-#         if not body:
-#             return jsonify({'error':'Please provide your content for the answer'}), 400
-        
-#         if not question_id:
-#             return jsonify({'error':'An id for the question being replied to is required'}), 400
-        
-#         #checking if body exists
-#         if Answer.query.filter_by(body=body).first():
-#                 return jsonify({
-#                 'error': 'This answer already exists'
-#             }), 409
-        
-           
 
-#         #inserting values into the questions_list
-#         new_answer = Answer(question_id= int(question_id),body=body,user_id=user_id)
-#         db.session.add(new_answer)
-#         db.session.commit()
-       
-         
+        course=Course.query.get_or_404(id)
+
+        data=request.get_json()
+        name = data.get('name')
+        description = data.get('description')
+        duration = data.get('duration')
   
-#     return jsonify({'message':'new answer posted','question_id':question_id,'body':body,'user_id':user_id}),200
-    
 
-# #Viewing an answer by id
-# @questions.route("/<int:answer_id>/answers")
-# @jwt_required()
-# def single_answer(answer_id):
-#     single_answer = Answer.query.filter_by(id=answer_id).first()
-  
-#     return jsonify(single_answer),200
+        course.update(name,description,duration)
 
-# #retrieving all answers for a specific user
-# @questions.route("/answers/<int:user_id>")
-# @jwt_required()
-# def user_answers(user_id):
-#     #ensuring that a user has logged in
-#     user_id = get_jwt_identity()
-#     answers = Answer.query.filter_by(user_id=user_id).first()
-#     return jsonify(answers),200
+        return course
 
 
+    @notes.marshal_with(note_model)
+    @jwt_required()
+    def delete(self,id):
+        """Delete a recipe by id """
 
-# #retrieving all answers
-# @questions.route("/answers", methods=['GET'])
-# def all_answers():
-#     all_answers = Answer.query.all()
-#     return jsonify(all_answers),200
+        course=Course.query.get_or_404(id)
+
+        course.delete()
+
+        return make_r

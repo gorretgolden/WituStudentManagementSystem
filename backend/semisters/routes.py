@@ -17,18 +17,6 @@ semister_model=semisters.model(
 )
 
 
-@semisters.route('/')
-class SemisterResource(Resource):
-
-    @semisters.marshal_list_with(semister_model)
-    def get(self):
-        """Get all semisters """
-
-        semisters=Semister.query.all()
-        
-        return semisters
-
-
         
 
 #creating semisters
@@ -65,7 +53,7 @@ class SemisterResource(Resource):
 
 
 #retrieving a single Semister
-@semisters.route('/<int:id>')
+@semisters.route('/semister/<int:id>')
 class SemisterResource(Resource):
 
     @semisters.marshal_with(semister_model)
@@ -102,4 +90,4 @@ class SemisterResource(Resource):
 
         semister.delete()
 
-        return 
+        return semister

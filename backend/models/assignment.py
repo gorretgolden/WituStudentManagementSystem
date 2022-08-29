@@ -6,16 +6,6 @@ from db import db
 
 
 class Assignment(db.Model):
-   id: int
-   name: str
-   description: str
-   file:str
-   start_date:datetime
-   deadline:datetime
-   is_uploaded:bool
-   is_submitted:bool
-   created_at:datetime
-   updated_at:datetime
 
    __tablename__ = 'assignments'   
    id = db.Column(db.Integer, primary_key=True)

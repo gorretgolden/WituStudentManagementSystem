@@ -1,14 +1,12 @@
 from datetime import date, datetime
-from dataclasses import dataclass
-from email.policy import default
 from db import db
 
 
 
-class Course(db.Model):
+class StudentCourse(db.Model):
+   
    __tablename__ = 'courses'   
    id = db.Column(db.Integer, primary_key=True)
-#    user_id = db.Column(db.Integer, db.ForeignKey('users.id',ondelete='CASCADE'))
    name = db.Column(db.String(255),unique=True, nullable=False)
    description = db.Column(db.Text(120), nullable=True)
    duration = db.Column(db.String(), nullable=False)
@@ -17,16 +15,13 @@ class Course(db.Model):
    
 
    def __repr__(self):
-        return "<Course %r>" % self.name
+        return "<StudentCourse %r>" % self.name
 
 
    def save(self):
       db.session.add(self)
       db.session.commit()
 
-   def delete(self):
-        db.session.delete(self)
-        db.session.commit()
 
 
    def update(self,name,description,duration):  
@@ -34,6 +29,11 @@ class Course(db.Model):
         self.description=description
         self.duration=duration
         db.session.commit()
+
+   def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+      
       
     
 

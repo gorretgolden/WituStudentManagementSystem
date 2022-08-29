@@ -12,8 +12,8 @@ program_model=programs.model(
     {
         "id":fields.Integer(),
         "name":fields.String(),
-        "start_date":fields.Date(),
-        "end_date":fields.Date(),
+        "start_date":fields.String(),
+        "end_date":fields.String(),
         "description":fields.String(),
         "status":fields.String(),
         "course_id":fields.Integer()
@@ -51,7 +51,7 @@ class ProgramsResource(Resource):
 
     @programs.marshal_with(program_model)
     @programs.expect(program_model)
-    # @jwt_required()
+    @jwt_required()
     def post(self):
         """Create a new program"""
 

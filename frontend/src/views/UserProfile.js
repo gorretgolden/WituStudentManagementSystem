@@ -10,7 +10,7 @@ import {
   Nav,
   Container,
   Row,
-  Col
+  Col,
 } from "react-bootstrap";
 
 function User() {
@@ -28,17 +28,13 @@ function User() {
                   <Row>
                     <Col className="pr-1" md="12">
                       <Form.Group>
-                      
                         <Form.Control
-                  
                           disabled
                           placeholder="Women In Tech Uganda"
                           type="text"
                         ></Form.Control>
                       </Form.Group>
                     </Col>
-                   
-                    
                   </Row>
                   <Row className="mt-4">
                     <Col className="pr-1" md="4">
@@ -65,9 +61,7 @@ function User() {
 
                     <Col className="pl-1" md="4">
                       <Form.Group>
-                        <label htmlFor="email">
-                          Email address
-                        </label>
+                        <label htmlFor="email">Email address</label>
                         <Form.Control
                           placeholder="Email"
                           type="email"
@@ -75,8 +69,19 @@ function User() {
                       </Form.Group>
                     </Col>
                   </Row>
+
                   <Row>
-                    <Col md="12">
+                    <Col className="pl-1" md="6">
+                      <Form.Group>
+                        <label htmlFor="email">Contact</label>
+                        <Form.Control
+                          placeholder="Contact"
+                          type="number"
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+
+                    <Col md="6">
                       <Form.Group>
                         <label>Address</label>
                         <Form.Control
@@ -87,7 +92,21 @@ function User() {
                       </Form.Group>
                     </Col>
                   </Row>
-               
+                  <Row>
+                    <Col md="12">
+                      <Form.Group>
+                        <Form.Select
+                          aria-label="Default select example"
+                          class="mt-4 w-20"
+                        >
+                          <option value="">Update Role</option>
+                          <option value="1">Student</option>
+                          <option value="2">Tutor</option>
+                          <option value="3">Admin</option>
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+                  </Row>
                   <Button
                     className="btn-fill pull-right mt-4 mb-3"
                     type="submit"
@@ -100,8 +119,7 @@ function User() {
               </Card.Body>
             </Card>
           </Col>
-        
-        
+
           <Col md="4">
             <Card className="card-user">
               <div className="card-image">
@@ -110,7 +128,7 @@ function User() {
                   src={require("assets/img/photo-1431578500526-4d9613015464.jpeg")}
                 ></img>
               </div>
-              
+
               <Card.Body>
                 <div className="author">
                   <a href="#pablo" onClick={(e) => e.preventDefault()}>
@@ -121,20 +139,13 @@ function User() {
                     ></img>
                     <h4 className="name">Witu Admin</h4>
                   </a>
-                 
                 </div>
-                <p className="description text-center">
-                  admin@gmail.com
-                </p>
-                <p className="description text-center">
-                  Kamokya
-                </p>
-                <p className="description text-center">
-                0751547654
-                </p>
+                <p className="description text-center">admin@gmail.com</p>
+                <p className="description text-center">Kamokya</p>
+                <p className="description text-center">0751547654</p>
               </Card.Body>
               <hr></hr>
-              
+
               <div className="button-container mr-auto ml-auto">
                 <Button
                   className="btn-simple btn-icon"

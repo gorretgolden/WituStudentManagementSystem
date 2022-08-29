@@ -1,11 +1,10 @@
 from datetime import date, datetime
 from email.policy import default
 from flask_sqlalchemy import SQLAlchemy
-from dataclasses import dataclass
-from backend import db
+from db import db
 
 
-@dataclass
+
 class test(db.Model):
    id: int
    name: str

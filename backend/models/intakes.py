@@ -1,14 +1,9 @@
 from datetime import date, datetime
-from email.policy import default
 from flask_sqlalchemy import SQLAlchemy
 from db import db
 
 
 class Intake(db.Model):
-   id: int
-   month: str
-   created_at:datetime
-   updated_at:datetime
 
 
    __tablename__ = 'intakes'   

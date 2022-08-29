@@ -17,18 +17,18 @@ import {
 } from "react-bootstrap";
 
 function Login() {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const {register,handleSubmit,reset,watch,formState: {errors},} = useForm();
 
   const history = useHistory();
 
   const loginUser = (data) => {
     console.log(data);
+
+    const body={
+      email: data.email,
+      password:data.password
+       
+    }
 
     const requestOptions = {
       method: "POST",
@@ -42,8 +42,15 @@ function Login() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data.access_token);
-        login(data.access_token)
-        history.push('/admin/dashboard')
+        if (data){
+          login(data.access_token)
+
+          history.push('/admin/dashboard')
+         }
+         else{
+             alert('Invalid username or password')
+         }
+      
    
       });
 

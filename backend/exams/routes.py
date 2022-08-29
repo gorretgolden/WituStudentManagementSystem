@@ -1,183 +1,103 @@
-# from flask import  jsonify, request, Blueprint
-# from flask_jwt_extended import jwt_required,get_jwt_identity
-# from StackOverFlow.models.models import db
-# from StackOverFlow.models.models import Answer, Question
-
-# questions = Blueprint('questions', __name__,url_prefix="/questions")
-
+from flask import  jsonify, request, Blueprint,make_response
+from models.exam import Exam
+from db import db
+from flask_restx import Api, Resource, Namespace, fields
+from flask_jwt_extended import jwt_required
 
 
-# #retrieving all questions 
-# @questions.route("/", methods=['GET'])
-# def all_questions():
-#     #ensuring that a user has logged in
-#     all_questions = Question.query.all()
-#     return jsonify(all_questions),200
+exams=Namespace('exams')#blueprint
 
-
-# #retrieving all questions for a user
-# @questions.route("/users/<int:user_id>", methods=['GET'])
-# @jwt_required()
-# def all_user_questions(user_id):
-#     #ensuring that a user has logged in
-#     user_id= get_jwt_identity()
-#     all_questions = Question.query.filter_by(id=user_id).all()
-#     return jsonify(all_questions),200
-
-
-# #retrieving single questions item
-# @questions.route("/<int:questionId>", methods=['GET'])
-# def single_question(questionId):
-#     single_question = Question.query.filter_by(id=questionId).first()
+#serializers
+exams_model=exams.model(
+    "Exam",
+    {
+        "id":fields.Integer(),
+        "mark":fields.Integer(),
+        "student_id":fields.Integer(),
+        "course_unit_id":fields.Integer()
     
-#     #Question that does'nt exist
-#     if not single_question:
-#         return jsonify({'message': '  Question not found'}), 404
-#     return jsonify(single_question),200
+    }
+)
 
 
-# #retrieving single questions item for a user
-# @questions.route("/<string:questionId>", methods=['GET'])
-# @jwt_required()
-# def single_user_question(questionId):
-#     current_user = get_jwt_identity()
-#     single_question = Question.query.filter_by(user_id=current_user,id=questionId).first()
-    
-#     #if a question doesnt exist
-#     if not single_question:
-#         return jsonify({'message': '  Question not found'}), 404
-#     return jsonify(single_question),200 
-
-
-# #creating questions
-# @questions.route("/", methods=["POST"])
-# @jwt_required()
-# def new_questions():
-    
-#     if request.method == "POST":
         
-#         user_id = get_jwt_identity()
-#         title = request.json['title']
-#         body = request.json['body']
-#         tag = request.json['tag']
-       
-       
 
-#        #empty fields
-      
-#         if not title:
-                 
-#           return jsonify({'error': 'Please provide a title for the question'}), 400 #bad request
-          
-#         if not body:
-#                 return jsonify({'error': 'Please provide a body for the question'}), 400
-#         #empty fields
-      
+#creating exams
+@exams.route('/')
+class ExamsResource(Resource):
 
-          
-#         if not tag:
-#                 return jsonify({'error': 'Please add a tag for the question ie python '}), 400
-        
-#         #checking if title exists
-#         if Question.query.filter_by(title=title).first():
-#                 return jsonify({
-#                 'error': 'Question title exists'
-#             }), 409 #conflicts
-        
-#         #checking if body exists
-#         if Question.query.filter_by(body=body).first():
-#                 return jsonify({
-#                 'error': 'Question body already exists'
-#             }), 409
-        
-           
+    @exams.marshal_list_with(exams_model)
+    def get(self):
+        """Get all exam marks """
 
-#         #inserting values into the questions_list
-#         new_question = Question(title=title,body=body,user_id=user_id,tag=tag)
-#         db.session.add(new_question)
-#         db.session.commit()
+        exam_marks=Exam.query.all()
         
-         
-  
-#     return jsonify({'message':'new question posted','tag':tag,'title':title,'body':body,'user_id':user_id}),200
-    
+        return exam_marks
 
+
+    @exams.marshal_with(exams_model)
+    @exams.expect(exams_model)
+    def post(self):
+        """Create a new exam mark"""
+
+        data=request.get_json()
+        mark = data.get('mark')
+        student_id= data.get('student_id')
+        course_unit_id = data.get('course_unit_id')
 
  
-# # #deleting a question
-# @questions.route("/remove/<string:questionId>", methods=['DELETE'])
-# @jwt_required()
-# def delete_questions(questionId):
-#     current_user = get_jwt_identity()
+        #exam name conflicts
+        exam = Exam.query.filter_by(mark=mark,student_id=student_id,course_unit_id=course_unit_id).first()
+        if exam is not None:
+            return jsonify({"message": f" {exam} name already exists"})
 
-#     question = Question.query.filter_by(user_id=current_user, id=questionId).first()
+        if not mark:
+            return jsonify({'error':"Exam mark  is required"})
 
-#     if not question:
-#         return jsonify({'message': 'Item not found'}), 404
+        new_mark=Exam(mark=mark,student_id=student_id,course_unit_id=course_unit_id)
 
-#     db.session.delete(question)
-#     db.session.commit()
+        new_mark.save()
 
-#     return jsonify({}), 204
-
-    
+        return make_response(jsonify({"message":"exam created successfully"}),201)
 
 
-# #creating answers
-# @questions.route("/<int:question_id>/answers", methods=["POST"])
-# @jwt_required()
-# def new_answers(question_id):
-#     if request.method == "POST":
+
+#retrieving a single exam
+@exams.route('/exam/<int:id>')
+class ExamResource(Resource):
+
+    @exams.marshal_with(exams_model)
+    def get(self,id):
+        """Get a exam by id """
+        exam=Exam.query.get_or_404(id)
+
+        return exam
+
+
+    @exams.marshal_with(exams_model)
+    @jwt_required()
+    def put(self,id):
+        """Update a exam by id """
         
-#         question_id =  request.json['question_id']
-#         user_id = get_jwt_identity()
-#         body = request.json['body']
-        
-#         if not body:
-#             return jsonify({'error':'Please provide your content for the answer'}), 400
-        
-#         if not question_id:
-#             return jsonify({'error':'An id for the question being replied to is required'}), 400
-        
-#         #checking if body exists
-#         if Answer.query.filter_by(body=body).first():
-#                 return jsonify({
-#                 'error': 'This answer already exists'
-#             }), 409
-        
-           
 
-#         #inserting values into the questions_list
-#         new_answer = Answer(question_id= int(question_id),body=body,user_id=user_id)
-#         db.session.add(new_answer)
-#         db.session.commit()
-       
-         
-  
-#     return jsonify({'message':'new answer posted','question_id':question_id,'body':body,'user_id':user_id}),200
-    
+        updated_exam=Exam.query.get_or_404(id)
 
-# #Viewing an answer by id
-# @questions.route("/<int:answer_id>/answers")
-# @jwt_required()
-# def single_answer(answer_id):
-#     single_answer = Answer.query.filter_by(id=answer_id).first()
-  
-#     return jsonify(single_answer),200
+        data=request.get_json()
+        mark = data.get('mark')
+        student_id = data.get('student_id')
+        course_unit_id = data.get('student_id')
+        updated_exam.update(mark,student_id,course_unit_id)
 
-# #retrieving all answers for a specific user
-# @questions.route("/answers/<int:user_id>")
-# @jwt_required()
-# def user_answers(user_id):
-#     #ensuring that a user has logged in
-#     user_id = get_jwt_identity()
-#     answers = Answer.query.filter_by(user_id=user_id).first()
-#     return jsonify(answers),200
+        return updated_exam
 
 
+    @exams.marshal_with(exams_model)
+    @jwt_required()
+    def delete(self,id):
+        """Delete a exam by id """
 
-# #retrieving all answers
-# @questions.route("/answers", methods=['GET'])
-# def all_answers():
-#     all_answers = Answer.query.all()
-#     return jsonify(all_answers),200
+        exam_deleted=Exam.query.get_or_404(id)
+
+        exam_deleted.delete()
+
+        return exam_deleted 

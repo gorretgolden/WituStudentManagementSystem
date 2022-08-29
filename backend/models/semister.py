@@ -5,10 +5,6 @@ from db import db
 
 
 class Semister(db.Model):
-   id: int
-   name: str
-   created_at:datetime
-   updated_at:datetime
 
    __tablename__ = 'semisters'   
    id = db.Column(db.Integer, primary_key=True)

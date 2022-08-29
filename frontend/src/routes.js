@@ -10,6 +10,9 @@ import Notes from "views/Notes";
 import Assignments from "views/Assignments";
 import Exams from "views/Exams";
 import Results from "views/Results";
+import CourseUnits from "views/CourseUnits";
+import Semisters from "views/Semisters";
+import Roles from "views/Roles";
 
 const dashboardRoutes = [
   {
@@ -35,18 +38,10 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path: "/students",
-    name: "Students",
+    path: "/roles",
+    name: "Roles",
     icon: "nc-icon nc-notes",
-    component: StudentList,
-    layout: "/admin"
-  },
- 
-  {
-    path: "/tutors",
-    name: "Tutors",
-    icon: "nc-icon nc-notes",
-    component: TutorsList,
+    component: Roles,
     layout: "/admin"
   },
   {
@@ -57,6 +52,13 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
+    path: "/semisters",
+    name: "Semisters",
+    icon: "nc-icon nc-atom",
+    component: Semisters,
+    layout: "/admin"
+  },
+  {
     path: "/programs",
     name: "Programs",
     icon: "nc-icon nc-atom",
@@ -64,19 +66,29 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path: "/notes",
-    name: "Notes",
-    icon: "nc-icon nc-pin-3",
-    component: Notes,
+    path: "/course_units",
+    name: "CourseUnits",
+    icon: "nc-icon nc-atom",
+    component: CourseUnits,
     layout: "/admin"
   },
   {
-    path: "/assigments",
-    name: "Assignments",
-    icon: "nc-icon nc-pin-3",
-    component: Assignments,
+    path: "/tutors",
+    name: "Tutors",
+    icon: "nc-icon nc-notes",
+    component: TutorsList,
     layout: "/admin"
   },
+  
+  {
+    path: "/students",
+    name: "Students",
+    icon: "nc-icon nc-notes",
+    component: StudentList,
+    layout: "/admin"
+  },
+ 
+
   {
     path: "/exams",
     name: "Exams",
@@ -91,13 +103,7 @@ const dashboardRoutes = [
     component: Results,
     layout: "/admin"
   },
-  // {
-  //   path: "/notifications",
-  //   name: "Notifications",
-  //   icon: "nc-icon nc-bell-55",
-  //   component: Notifications,
-  //   layout: "/admin"
-  // }
+ 
 ];
 
 export default dashboardRoutes;

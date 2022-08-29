@@ -15,6 +15,10 @@ import Login from "views/Login";
 import AddUser from "views/users/add_user";
 import { Modal } from "react-bootstrap";
 import Modals from "views/modal";
+import TutorLayout from "layouts/Tutor";
+import StudentLayout from "layouts/Student";
+import AboutUs from "views/about";
+import Contact from "views/Contact-Us";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -22,6 +26,8 @@ root.render(
   <BrowserRouter>
     <Switch>
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
+      <Route path="/tutor" render={(props) => <TutorLayout {...props}/>}/>
+      <Route path="/student" render={(props) => <StudentLayout {...props}/>}/>
 
       <Route exact path="/">
         <LandingPage />
@@ -30,13 +36,15 @@ root.render(
       <Route path="/login">
         <Login />
       </Route>
-      <Route path="/users/new">
-        <AddUser/>
+      <Route path="/about-us">
+        <AboutUs/>
+      </Route>
+     
+      <Route path="/contact-us">
+        <Contact/>
       </Route>
 
-      <Route path="/modal">
-        <Modals/>
-      </Route>
+     
     </Switch>
   </BrowserRouter>
 );

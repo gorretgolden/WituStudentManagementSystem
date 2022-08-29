@@ -4,11 +4,11 @@ import Footer from "components/Footer/Footer";
 import Sidebar from "components/Sidebar/Sidebar";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
-import routes from "routes.js";
+import tutor_routes from "tutor_routes.js";
 
 import sidebarImage from "assets/img/sidebar-3.jpg";
 
-function Tutor() {
+function TutorLayout() {
   const [image, setImage] = React.useState(sidebarImage);
   const [color, setColor] = React.useState("black");
   const [hasImage, setHasImage] = React.useState(true);
@@ -18,8 +18,8 @@ function Tutor() {
   const mainPanel = React.useRef(null);
   
   
-  const getRoutes = (routes) => {
-    return routes.map((prop, key) => {
+  const getRoutes = (tutor_routes) => {
+    return tutor_routes.map((prop, key) => {
       if (prop.layout === "/tutor") {
         return (
           <Route
@@ -49,27 +49,20 @@ function Tutor() {
   return (
     <>
       <div className="wrapper">
-        <Sidebar color={color} image={hasImage ? image : ""} routes={routes} />
+        <Sidebar color={color} image={hasImage ? image : ""} routes={tutor_routes} />
         <div className="main-panel" ref={mainPanel}>
         
           <div className="content">
             <Switch>
-              {getRoutes(routes)}
+              {getRoutes(tutor_routes)}
             </Switch>
           </div>
           <Footer />
         </div>
       </div>
-      {/* <FixedPlugin
-        hasImage={hasImage}
-        setHasImage={() => setHasImage(!hasImage)}
-        color={color}
-        setColor={(color) => setColor(color)}
-        image={image}
-        setImage={(image) => setImage(image)}
-      /> */}
+     
     </>
   );
 }
 
-export default Tutor;
+export default TutorLayout;

@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useAuth,logout } from "utils/auth";
 // react-bootstrap components
 import {
   Badge,
@@ -16,11 +17,16 @@ import {
   Carousel,
 } from "react-bootstrap";
 import Footer from "components/Footer/Footer";
+import { Link } from "react-router-dom";
+import LandingNavbar from "components/Navbars/landing";
+import LandingFooter from "components/footer";
 
 function LandingPage() {
+
+  const [logged]= useAuth()
   return (
     <>
-      <Navbar bg="light" expand="lg">
+      {/* <Navbar bg="light" expand="lg">
         <Container>
           <div className="d-flex justify-content-center align-items-center  ml-lg-0">
             <Button
@@ -77,14 +83,24 @@ function LandingPage() {
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link className="m-0" href="/login">
+
+              {logged? <><Nav.Link className="m-0" href="/login">
                 <span className="border:2px solid black">Login</span>
+              </Nav.Link></>: <>
+              <Nav.Item>
+              <Nav.Link className="m-0">
+                <span onClick={logout()} className="border:2px solid black">LogOut</span>
               </Nav.Link>
             </Nav.Item>
+              </>}
+             
+            </Nav.Item>
+
+          
           </Nav>
         </Container>
-      </Navbar>
-
+      </Navbar> */}
+     <LandingNavbar/>
       <section className="mb-5">
         <Row>
           <Col md="12">
@@ -327,56 +343,20 @@ function LandingPage() {
       <section>
         <Container>
           <Row>
-            <Col md="6">
-              <h3>Welcom</h3>
-              <p>rdtghujzwetgvaweervqweastr5yt2e3ractsr</p>
-              <p>
-                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-                aute irure dolor in reprehenderit in voluptate velit esse cillum
-                dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt
-                mollit anim id est laborum.
-              </p>
-              <p>
-                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-                aute irure dolor in reprehenderit in voluptate velit esse cillum
-                dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt
-                mollit anim id est laborum.
-              </p>
-              <p>
-                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-                aute irure dolor in reprehenderit in voluptate velit esse cillum
-                dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt
-                mollit anim id est laborum.
-              </p>
+            <Col md="3">
+              <img src=""/>
+            
             </Col>
 
-            <Col md="6">
-              <h3>Title</h3>
-              <p>
-                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-                aute irure dolor in reprehenderit in voluptate velit esse cillum
-                dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt
-                mollit anim id est laborum.
-              </p>
-              <p>
-                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-                aute irure dolor in reprehenderit in voluptate velit esse cillum
-                dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt
-                mollit anim id est laborum.
-              </p>
-              <p>
-                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-                aute irure dolor in reprehenderit in voluptate velit esse cillum
-                dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt
-                mollit anim id est laborum.
-              </p>
+            <Col md="3">
+              
             </Col>
+            <Col md="3">
+              
+              </Col>
+              <Col md="3">
+              
+              </Col>
           </Row>
         </Container>
       </section>
@@ -388,37 +368,7 @@ function LandingPage() {
           </Row>
         </Container>
       </section>
-      <section className="bg-dark text-white py-4 mt-5">
-        <Container>
-          <Row>
-            <Col md="3">
-              <h5>Quick Links</h5>
-              <p>About us</p>
-              <p>Contact us</p>
-              <p>News</p>
-            </Col>
-
-            <Col md="3">
-              <h5>Follow Us</h5>
-              <p>fb</p>
-              <p>tw</p>
-              <p>ig</p>
-            </Col>
-            <Col md="3">
-              <h5>Important Links</h5>
-              <p>Applications</p>
-              <p>Elearning</p>
-              <p>Sacholarships</p>
-            </Col>
-            <Col md="3">
-              <h5>Our Contacts</h5>
-              <p>0751547654</p>
-              <p>07767401566</p>
-              <p>witu@mail.com</p>
-            </Col>
-          </Row>
-        </Container>
-      </section>
+  <LandingFooter/>
     </>
   );
 }
